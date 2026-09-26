@@ -1,0 +1,161 @@
+source_urls:
+  federal_reserve_calendar: https://www.federalreserve.gov/newsevents/calendar.htm
+  treasury_mts_schedule: https://www.fiscal.treasury.gov/files/reports-statements/mts/mts1124.pdf
+selection_rule: >-
+  Same weekday and exact 2:00 p.m. Eastern clock time, as close as practical to
+  the matched meeting. Dates with an FOMC decision, FOMC minutes, Beige Book,
+  SCOOS, or a 2:00 p.m. Monthly Treasury Statement release are excluded. The
+  screen covers scheduled official releases; unscheduled news cannot be ruled
+  out and is retained as a limitation rather than assumed absent.
+notes: >-
+  March 12 and June 11, 2025 were rejected because the Monthly Treasury
+  Statement was scheduled for 2:00 p.m. December 11, 2024 was also not used
+  because the nearby Treasury release schedule was not cleanly distinguishable
+  from the event clock. November 27 is retained as a secondary control but
+  flagged as a pre-holiday session.
+
+placebos:
+  - placebo_id: placebo_20240124_1400
+    matched_meeting: fomc_20240131
+    placebo_time_utc: '2024-01-24T19:00:00Z'
+    request_start_utc: '2024-01-24T18:55:00Z'
+    request_end_utc: '2024-01-24T19:10:00Z'
+    quality_flag: secondary_control_same_day_fed_announcement_time_unverified
+  - placebo_id: placebo_20240207_1400
+    matched_meeting: fomc_20240131
+    placebo_time_utc: '2024-02-07T19:00:00Z'
+    request_start_utc: '2024-02-07T18:55:00Z'
+    request_end_utc: '2024-02-07T19:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20240313_1400
+    matched_meeting: fomc_20240320
+    placebo_time_utc: '2024-03-13T18:00:00Z'
+    request_start_utc: '2024-03-13T17:55:00Z'
+    request_end_utc: '2024-03-13T18:10:00Z'
+    quality_flag: secondary_control_same_day_fed_enforcement_time_unverified
+  - placebo_id: placebo_20240327_1400
+    matched_meeting: fomc_20240320
+    placebo_time_utc: '2024-03-27T18:00:00Z'
+    request_start_utc: '2024-03-27T17:55:00Z'
+    request_end_utc: '2024-03-27T18:10:00Z'
+    quality_flag: clean_at_1400_waller_speech_1800
+  - placebo_id: placebo_20240424_1400
+    matched_meeting: fomc_20240501
+    placebo_time_utc: '2024-04-24T18:00:00Z'
+    request_start_utc: '2024-04-24T17:55:00Z'
+    request_end_utc: '2024-04-24T18:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20240508_1400
+    matched_meeting: fomc_20240501
+    placebo_time_utc: '2024-05-08T18:00:00Z'
+    request_start_utc: '2024-05-08T17:55:00Z'
+    request_end_utc: '2024-05-08T18:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20240605_1400
+    matched_meeting: fomc_20240612
+    placebo_time_utc: '2024-06-05T18:00:00Z'
+    request_start_utc: '2024-06-05T17:55:00Z'
+    request_end_utc: '2024-06-05T18:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20240626_1400
+    matched_meeting: fomc_20240612
+    placebo_time_utc: '2024-06-26T18:00:00Z'
+    request_start_utc: '2024-06-26T17:55:00Z'
+    request_end_utc: '2024-06-26T18:10:00Z'
+    quality_flag: clean_at_1400_stress_test_results_1630
+  - placebo_id: placebo_20240724_1400
+    matched_meeting: fomc_20240731
+    placebo_time_utc: '2024-07-24T18:00:00Z'
+    request_start_utc: '2024-07-24T17:55:00Z'
+    request_end_utc: '2024-07-24T18:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20240807_1400
+    matched_meeting: fomc_20240731
+    placebo_time_utc: '2024-08-07T18:00:00Z'
+    request_start_utc: '2024-08-07T17:55:00Z'
+    request_end_utc: '2024-08-07T18:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20241031_1400
+    matched_meeting: fomc_20241107
+    placebo_time_utc: '2024-10-31T18:00:00Z'
+    request_start_utc: '2024-10-31T17:55:00Z'
+    request_end_utc: '2024-10-31T18:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20241121_1400
+    matched_meeting: fomc_20241107
+    placebo_time_utc: '2024-11-21T19:00:00Z'
+    request_start_utc: '2024-11-21T18:55:00Z'
+    request_end_utc: '2024-11-21T19:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20241120_1400
+    matched_meeting: fomc_20241218
+    placebo_time_utc: '2024-11-20T19:00:00Z'
+    request_start_utc: '2024-11-20T18:55:00Z'
+    request_end_utc: '2024-11-20T19:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20241127_1400
+    matched_meeting: fomc_20241218
+    placebo_time_utc: '2024-11-27T19:00:00Z'
+    request_start_utc: '2024-11-27T18:55:00Z'
+    request_end_utc: '2024-11-27T19:10:00Z'
+    quality_flag: pre_holiday_secondary_control
+  - placebo_id: placebo_20250122_1400
+    matched_meeting: fomc_20250129
+    placebo_time_utc: '2025-01-22T19:00:00Z'
+    request_start_utc: '2025-01-22T18:55:00Z'
+    request_end_utc: '2025-01-22T19:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20250205_1400
+    matched_meeting: fomc_20250129
+    placebo_time_utc: '2025-02-05T19:00:00Z'
+    request_start_utc: '2025-02-05T18:55:00Z'
+    request_end_utc: '2025-02-05T19:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20250226_1400
+    matched_meeting: fomc_20250319
+    placebo_time_utc: '2025-02-26T19:00:00Z'
+    request_start_utc: '2025-02-26T18:55:00Z'
+    request_end_utc: '2025-02-26T19:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20250326_1400
+    matched_meeting: fomc_20250319
+    placebo_time_utc: '2025-03-26T18:00:00Z'
+    request_start_utc: '2025-03-26T17:55:00Z'
+    request_end_utc: '2025-03-26T18:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20250430_1400
+    matched_meeting: fomc_20250507
+    placebo_time_utc: '2025-04-30T18:00:00Z'
+    request_start_utc: '2025-04-30T17:55:00Z'
+    request_end_utc: '2025-04-30T18:10:00Z'
+    quality_flag: clean_at_1400_gdp_released_0830
+  - placebo_id: placebo_20250514_1400
+    matched_meeting: fomc_20250507
+    placebo_time_utc: '2025-05-14T18:00:00Z'
+    request_start_utc: '2025-05-14T17:55:00Z'
+    request_end_utc: '2025-05-14T18:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20250521_1400
+    matched_meeting: fomc_20250618
+    placebo_time_utc: '2025-05-21T18:00:00Z'
+    request_start_utc: '2025-05-21T17:55:00Z'
+    request_end_utc: '2025-05-21T18:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20250625_1400
+    matched_meeting: fomc_20250618
+    placebo_time_utc: '2025-06-25T18:00:00Z'
+    request_start_utc: '2025-06-25T17:55:00Z'
+    request_end_utc: '2025-06-25T18:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20250723_1400
+    matched_meeting: fomc_20250730
+    placebo_time_utc: '2025-07-23T18:00:00Z'
+    request_start_utc: '2025-07-23T17:55:00Z'
+    request_end_utc: '2025-07-23T18:10:00Z'
+    quality_flag: clean_scheduled_release_screen
+  - placebo_id: placebo_20250806_1400
+    matched_meeting: fomc_20250730
+    placebo_time_utc: '2025-08-06T18:00:00Z'
+    request_start_utc: '2025-08-06T17:55:00Z'
+    request_end_utc: '2025-08-06T18:10:00Z'
+    quality_flag: clean_scheduled_release_screen

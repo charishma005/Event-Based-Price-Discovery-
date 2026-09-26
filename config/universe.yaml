@@ -1,0 +1,35 @@
+as_of_date: '2025-09-17'
+membership_definition: S&P 500 constituent during the pilot period
+verification:
+  status: verified
+  method: >-
+    Reconstructed membership from published constituent histories and checked the
+    official September 2025 S&P DJI rebalance announcement. All proposed names were
+    constituents during 2025-09-08 through 2025-09-19; no replacement was needed.
+  source_urls:
+    - https://press.spglobal.com/2025-09-05-AppLovin%2C-Robinhood-Markets-and-Emcor-Group-Set-to-Join-S-P-500-Others-to-Join-S-P-100%2C-S-P-MidCap-400-and-S-P-SmallCap-600
+    - https://github.com/datasets/s-and-p-500-companies/blob/main/data/constituents.csv
+
+securities:
+  - {ticker: NVDA, sector: Information Technology, theme: growth_duration_rates_sensitive, listing_venue: NASDAQ, notes: Semiconductor; theme is a hypothesis to test.}
+  - {ticker: MSFT, sector: Information Technology, theme: growth_duration_rates_sensitive, listing_venue: NASDAQ, notes: Software; theme is a hypothesis to test.}
+  - {ticker: AAPL, sector: Information Technology, theme: growth_duration_rates_sensitive, listing_venue: NASDAQ, notes: Hardware/services; theme is a hypothesis to test.}
+  - {ticker: AMZN, sector: Consumer Discretionary, theme: growth_duration_rates_sensitive, listing_venue: NASDAQ, notes: Broadline retail/cloud; theme is a hypothesis to test.}
+  - {ticker: META, sector: Communication Services, theme: growth_duration_rates_sensitive, listing_venue: NASDAQ, notes: Interactive media; theme is a hypothesis to test.}
+  - {ticker: GOOGL, sector: Communication Services, theme: growth_duration_rates_sensitive, listing_venue: NASDAQ, notes: Class A; theme is a hypothesis to test.}
+  - {ticker: AVGO, sector: Information Technology, theme: growth_duration_rates_sensitive, listing_venue: NASDAQ, notes: Semiconductor/infrastructure software; theme is a hypothesis to test.}
+  - {ticker: AMD, sector: Information Technology, theme: growth_duration_rates_sensitive, listing_venue: NASDAQ, notes: Semiconductor; theme is a hypothesis to test.}
+  - {ticker: TSLA, sector: Consumer Discretionary, theme: high_beta_interpretation_heavy, listing_venue: NASDAQ, notes: High idiosyncratic-news risk.}
+  - {ticker: NFLX, sector: Communication Services, theme: high_beta_interpretation_heavy, listing_venue: NASDAQ, notes: Streaming/media.}
+  - {ticker: JPM, sector: Financials, theme: banks_rate_sensitive, listing_venue: NYSE, notes: Money-center bank.}
+  - {ticker: BAC, sector: Financials, theme: banks_rate_sensitive, listing_venue: NYSE, notes: Money-center bank.}
+  - {ticker: GS, sector: Financials, theme: banks_rate_sensitive, listing_venue: NYSE, notes: Capital markets.}
+  - {ticker: COST, sector: Consumer Staples, theme: consumer_macro, listing_venue: NASDAQ, notes: Membership warehouse retail.}
+  - {ticker: WMT, sector: Consumer Staples, theme: consumer_macro, listing_venue: NYSE, notes: Pilot-period venue. A later venue change must not be back-applied.}
+  - {ticker: HD, sector: Consumer Discretionary, theme: consumer_macro, listing_venue: NYSE, notes: Housing-linked retail.}
+  - {ticker: XOM, sector: Energy, theme: energy_inflation, listing_venue: NYSE, notes: Integrated energy.}
+  - {ticker: CVX, sector: Energy, theme: energy_inflation, listing_venue: NYSE, notes: Integrated energy.}
+  - {ticker: PLD, sector: Real Estate, theme: real_estate_long_duration, listing_venue: NYSE, notes: Industrial REIT.}
+  - {ticker: AMT, sector: Real Estate, theme: real_estate_long_duration, listing_venue: NYSE, notes: Tower REIT.}
+  - {ticker: CAT, sector: Industrials, theme: industrial_cyclical, listing_venue: NYSE, notes: Machinery.}
+  - {ticker: BA, sector: Industrials, theme: industrial_cyclical, listing_venue: NYSE, notes: Aerospace; high idiosyncratic-news risk.}

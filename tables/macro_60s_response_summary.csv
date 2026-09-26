@@ -1,0 +1,13 @@
+release,instrument,events,median_abs_60s_bp
+cpi,ES.v.0,20,38.166054207854074
+cpi,NQ.v.0,20,46.08195941166007
+cpi,ZN.v.0,20,28.405002303904695
+employment_situation,ES.v.0,20,20.329851461083628
+employment_situation,NQ.v.0,20,24.28004255585501
+employment_situation,ZN.v.0,20,33.23691263929655
+ppi,ES.v.0,20,13.958447262284732
+ppi,NQ.v.0,20,14.850882089335563
+ppi,ZN.v.0,20,11.045683289835589
+retail_sales,ES.v.0,17,3.4212597411955086
+retail_sales,NQ.v.0,17,5.081139554841672
+retail_sales,ZN.v.0,17,9.39815720719865

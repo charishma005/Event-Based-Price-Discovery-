@@ -1,0 +1,92 @@
+description: >-
+  Source-verified corporate announcements discovered through Alpha Vantage.
+  Event clocks come from originating company or wire pages; provider clocks are
+  retained separately. Controls use nearby same-clock sessions screened against
+  the cached Alpha Vantage ticker history and scheduled macro calendars.
+
+events:
+  - label: nvda_intel_announcement
+    instrument: NVDA
+    event_time_utc: '2025-09-18T11:00:00Z'
+    placebo_label: nvda_intel_placebo_20250917
+    placebo_time_utc: '2025-09-17T11:00:00Z'
+    article_id: b70af7031968fbae1c63a249
+    alpha_vantage_time_utc: '2025-09-18T00:00:00Z'
+    source_url: https://www.globenewswire.com/news-release/2025/09/18/3152283/0/en/index.html
+    announcement_category: product_strategy
+    representation_class: narrative_text
+    scheduled_indicator: false
+    existing_cache: true
+
+  - label: meta_dividend_announcement
+    instrument: META
+    event_time_utc: '2025-09-11T20:35:00Z'
+    placebo_label: meta_dividend_placebo_20250904
+    placebo_time_utc: '2025-09-04T20:35:00Z'
+    article_id: 519c54b1b33c2eef79d4f929
+    alpha_vantage_time_utc: '2025-09-11T10:57:28Z'
+    source_url: https://www.prnewswire.com/news-releases/meta-announces-quarterly-cash-dividend-302554438.html
+    announcement_category: capital_distribution
+    representation_class: numeric_corporate_announcement
+    scheduled_indicator: false
+    existing_cache: true
+    post_minutes: 6
+
+  - label: googl_qualcomm_announcement
+    instrument: GOOGL
+    event_time_utc: '2025-09-08T12:30:00Z'
+    placebo_label: googl_qualcomm_placebo_20250818
+    placebo_time_utc: '2025-08-18T12:30:00Z'
+    article_id: 2275a2f15064d12f62457ff0
+    alpha_vantage_time_utc: '2025-09-08T08:30:00Z'
+    source_url: https://www.googlecloudpresscorner.com/2025-09-08-Qualcomm-and-Google-Cloud-Deepen-Collaboration-to-Bring-Agentic-AI-Experiences-to-the-Auto-Industry
+    announcement_category: product_strategy
+    representation_class: narrative_text
+    scheduled_indicator: false
+    existing_cache: false
+
+  - label: nvda_q4fy25_earnings
+    instrument: NVDA
+    event_time_utc: '2025-02-26T21:20:00Z'
+    placebo_label: nvda_q4fy25_earnings_placebo_20250219
+    placebo_time_utc: '2025-02-19T21:20:00Z'
+    article_id: f3ede4ad4cc4855f33964c8a
+    alpha_vantage_time_utc: '2025-02-26T00:00:00Z'
+    source_url: https://www.globenewswire.com/news-release/2025/02/26/3033384/0/en/NVIDIA-Announces-Financial-Results-for-Fourth-Quarter-and-Fiscal-2025.html
+    announcement_category: earnings_guidance
+    representation_class: multidimensional_numeric_corporate
+    scheduled_indicator: true
+    existing_cache: false
+
+  - label: amd_buyback_announcement
+    instrument: AMD
+    event_time_utc: '2025-05-14T13:00:00Z'
+    placebo_label: amd_buyback_placebo_20250507
+    placebo_time_utc: '2025-05-07T13:00:00Z'
+    article_id: ee967f97ef7224ec196cbc5a
+    alpha_vantage_time_utc: '2025-05-14T09:00:00Z'
+    source_url: https://www.globenewswire.com/news-release/2025/05/14/3081199/0/en/AMD-Announces-New-6-Billion-Share-Repurchase-Authorization.html
+    announcement_category: capital_distribution
+    representation_class: scalar_numeric_corporate
+    scheduled_indicator: false
+    existing_cache: false
+
+  - label: amd_absci_announcement
+    instrument: AMD
+    event_time_utc: '2025-09-11T12:00:00Z'
+    placebo_label: amd_absci_placebo_20250904
+    placebo_time_utc: '2025-09-04T12:00:00Z'
+    article_id: 4542d5583c823f3ca00f596d
+    alpha_vantage_time_utc: '2025-09-11T08:00:00Z'
+    source_url: https://www.globenewswire.com/news-release/2025/09/11/3148492/0/en/index.html
+    announcement_category: product_strategy
+    representation_class: narrative_text
+    scheduled_indicator: false
+    existing_cache: false
+
+request:
+  dataset: XNAS.ITCH
+  schema: mbp-1
+  stype_in: raw_symbol
+  pre_minutes: 5
+  post_minutes: 10

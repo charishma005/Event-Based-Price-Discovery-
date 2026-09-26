@@ -1,0 +1,63 @@
+519c54b1b33c2eef79d4f929:
+  ticker: META
+  alpha_vantage_time_utc: '2025-09-11T10:57:28Z'
+  source_time_utc: '2025-09-11T20:35:00Z'
+  validation_status: source_time_verified_alpha_mismatch
+  source_url: https://www.prnewswire.com/news-releases/meta-announces-quarterly-cash-dividend-302554438.html
+  notes: Originating wire shows Sep 11, 2025, 16:35 ET; Alpha Vantage is 9h37m32s earlier.
+
+a179fbf470ef6705fefe4f81:
+  ticker: MSFT
+  alpha_vantage_time_utc: '2025-09-17T18:01:09Z'
+  source_time_utc: null
+  validation_status: source_date_only
+  source_url: https://blogs.microsoft.com/on-the-issues/2025/09/17/our-new-collaboration-with-maryland-will-accelerate-scalable-quantum-computing/
+  notes: Microsoft page confirms September 17 but exposes no publication clock time.
+
+fcd549063d393b197d170b12:
+  ticker: AVGO
+  alpha_vantage_time_utc: '2025-09-17T16:49:46Z'
+  source_time_utc: null
+  validation_status: source_time_not_exposed
+  source_url: https://www.broadcom.com/company/news/product-releases/63506
+  notes: Broadcom source confirms the story but did not expose a machine-readable publication time in the audit.
+
+2275a2f15064d12f62457ff0:
+  ticker: GOOGL
+  alpha_vantage_time_utc: '2025-09-08T08:30:00Z'
+  source_time_utc: '2025-09-08T12:30:00Z'
+  validation_status: source_time_verified_alpha_mismatch
+  source_url: https://www.googlecloudpresscorner.com/2025-09-08-Qualcomm-and-Google-Cloud-Deepen-Collaboration-to-Bring-Agentic-AI-Experiences-to-the-Auto-Industry
+  notes: Google Cloud's press corner and the PR Newswire listing show 08:30 ET; Alpha Vantage interpreted the wall clock as UTC and is four hours early.
+
+b70af7031968fbae1c63a249:
+  ticker: NVDA
+  alpha_vantage_time_utc: '2025-09-18T00:00:00Z'
+  source_time_utc: '2025-09-18T11:00:00Z'
+  validation_status: source_time_verified_alpha_mismatch
+  source_url: https://www.globenewswire.com/news-release/2025/09/18/3152283/0/en/index.html
+  notes: The originating NVIDIA release was distributed by GlobeNewswire at 07:00 ET; Alpha Vantage supplies a date-midnight value eleven hours early.
+
+f3ede4ad4cc4855f33964c8a:
+  ticker: NVDA
+  alpha_vantage_time_utc: '2025-02-26T00:00:00Z'
+  source_time_utc: '2025-02-26T21:20:00Z'
+  validation_status: source_time_verified_alpha_mismatch
+  source_url: https://www.globenewswire.com/news-release/2025/02/26/3033384/0/en/NVIDIA-Announces-Financial-Results-for-Fourth-Quarter-and-Fiscal-2025.html
+  notes: Originating GlobeNewswire distribution is stamped 16:20 ET; Alpha Vantage supplies a date-midnight placeholder.
+
+ee967f97ef7224ec196cbc5a:
+  ticker: AMD
+  alpha_vantage_time_utc: '2025-05-14T09:00:00Z'
+  source_time_utc: '2025-05-14T13:00:00Z'
+  validation_status: source_time_verified_alpha_mismatch
+  source_url: https://www.globenewswire.com/news-release/2025/05/14/3081199/0/en/AMD-Announces-New-6-Billion-Share-Repurchase-Authorization.html
+  notes: Originating GlobeNewswire distribution is stamped 09:00 ET; Alpha Vantage interpreted the wall clock as UTC and is four hours early.
+
+4542d5583c823f3ca00f596d:
+  ticker: AMD
+  alpha_vantage_time_utc: '2025-09-11T08:00:00Z'
+  source_time_utc: '2025-09-11T12:00:00Z'
+  validation_status: source_time_verified_alpha_mismatch
+  source_url: https://www.globenewswire.com/news-release/2025/09/11/3148492/0/en/index.html
+  notes: Originating GlobeNewswire distribution is stamped 08:00 ET; Alpha Vantage interpreted the wall clock as UTC and is four hours early.

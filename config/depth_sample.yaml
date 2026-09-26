@@ -1,0 +1,10 @@
+notes: >-
+  Pre-specified eleven-minute MBP-10 windows for deeper-book robustness. The
+  five-minute pre-event segment is required to estimate a stable baseline before
+  comparing the final pre-announcement minute. Events were selected to span CPI,
+  employment, and FOMC communication, not after inspecting MBP-10 outcomes.
+  Retrieval remains subject to the standard cost guards.
+events:
+  - {event_id: cpi_20250212, event_time_utc: '2025-02-12T13:30:00Z', request_start_utc: '2025-02-12T13:25:00Z', request_end_utc: '2025-02-12T13:36:00Z', reason: largest recurring scalar response class}
+  - {event_id: employment_20250801, event_time_utc: '2025-08-01T12:30:00Z', request_start_utc: '2025-08-01T12:25:00Z', request_end_utc: '2025-08-01T12:36:00Z', reason: multi-dimensional employment release}
+  - {event_id: fomc_20250319, event_time_utc: '2025-03-19T18:00:00Z', request_start_utc: '2025-03-19T17:55:00Z', request_end_utc: '2025-03-19T18:06:00Z', reason: written policy statement with SEP}

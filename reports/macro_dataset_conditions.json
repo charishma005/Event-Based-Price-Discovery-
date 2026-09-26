@@ -1,0 +1,194 @@
+{
+  "dataset": "GLBX.MDP3",
+  "configured_event_dates": [
+    "2025-01-10",
+    "2025-01-14",
+    "2025-01-15",
+    "2025-01-16",
+    "2025-02-07",
+    "2025-02-12",
+    "2025-02-13",
+    "2025-02-14",
+    "2025-03-07",
+    "2025-03-12",
+    "2025-03-13",
+    "2025-03-17",
+    "2025-04-04",
+    "2025-04-10",
+    "2025-04-11",
+    "2025-04-16",
+    "2025-05-02",
+    "2025-05-13",
+    "2025-05-15",
+    "2025-06-06",
+    "2025-06-11",
+    "2025-06-12",
+    "2025-06-17",
+    "2025-07-03",
+    "2025-07-15",
+    "2025-07-16",
+    "2025-07-17",
+    "2025-08-01",
+    "2025-08-12",
+    "2025-08-14",
+    "2025-08-15"
+  ],
+  "conditions": [
+    {
+      "date": "2025-01-10",
+      "condition": "available",
+      "last_modified_date": "2026-09-04"
+    },
+    {
+      "date": "2025-01-14",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-01-15",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-01-16",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-02-07",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-02-12",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-02-13",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-02-14",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-03-07",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-03-12",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-03-13",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-03-17",
+      "condition": "available",
+      "last_modified_date": "2026-08-27"
+    },
+    {
+      "date": "2025-04-04",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-04-10",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-04-11",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-04-16",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-05-02",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-05-13",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-05-15",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-06-06",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-06-11",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-06-12",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-06-17",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-07-03",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-07-15",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-07-16",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-07-17",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-08-01",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-08-12",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-08-14",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    },
+    {
+      "date": "2025-08-15",
+      "condition": "available",
+      "last_modified_date": "2026-08-28"
+    }
+  ],
+  "missing_dates": []
+}

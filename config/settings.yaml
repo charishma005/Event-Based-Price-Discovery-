@@ -1,0 +1,51 @@
+project:
+  timezone: America/New_York
+  canonical_timezone: UTC
+  pilot_start: '2025-09-08'
+  pilot_end: '2025-09-19'
+
+event_windows:
+  exploratory_minutes: [-30, 60]
+  top_of_book_minutes: [-10, 30]
+  full_depth_seconds: [-60, 300]
+  signed_flow_buckets_ms: [100, 250, 500, 1000, 5000]
+
+cost_control:
+  # Downloads always require --execute as well. These are additional tripwires.
+  max_auto_cost_usd: 1.00
+  max_auto_billable_bytes: 250000000
+  never_overwrite_raw: true
+
+news:
+  primary_provider: Alpha Vantage
+  pilot_time_from_utc: '20250908T0000'
+  pilot_time_to_utc: '20250920T0000'
+  contamination_window_minutes: [-120, 120]
+  minimum_ticker_relevance_for_review: 0.60
+  high_confidence_ticker_relevance: 0.80
+  require_source_timestamp_validation_for_unscheduled_events: true
+
+pilot_instruments:
+  futures:
+    - symbol: ES.v.0
+      stype_in: continuous
+      dataset: GLBX.MDP3
+      asset_class: equity_index_future
+      note: Resolve the mapped raw contract for each date before Q1 estimation.
+    - symbol: NQ.v.0
+      stype_in: continuous
+      dataset: GLBX.MDP3
+      asset_class: equity_index_future
+      note: Resolve the mapped raw contract for each date before Q1 estimation.
+    - symbol: ZN.v.0
+      stype_in: continuous
+      dataset: GLBX.MDP3
+      asset_class: treasury_future
+      note: Resolve the mapped raw contract for each date before Q1 estimation.
+  equities:
+    - symbol: SPY
+      dataset: EQUS.MINI
+    - symbol: NVDA
+      dataset: XNAS.ITCH
+    - symbol: JPM
+      dataset: EQUS.MINI

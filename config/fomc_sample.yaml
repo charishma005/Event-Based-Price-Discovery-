@@ -1,0 +1,121 @@
+source_url: https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm
+notes: >-
+  Statement and press-conference times are official 2:00 p.m. and 2:30 p.m.
+  Eastern release times. SEP meetings release projections simultaneously with
+  the statement, so statement-versus-SEP effects are not separately identified.
+
+meetings:
+  - label: fomc_20240131
+    meeting_date: '2024-01-31'
+    statement_time_utc: '2024-01-31T19:00:00Z'
+    press_conference_time_utc: '2024-01-31T19:30:00Z'
+    request_start_utc: '2024-01-31T18:55:00Z'
+    request_end_utc: '2024-01-31T19:40:00Z'
+    sep_release: false
+    policy_change_bps: 0
+  - label: fomc_20240320
+    meeting_date: '2024-03-20'
+    statement_time_utc: '2024-03-20T18:00:00Z'
+    press_conference_time_utc: '2024-03-20T18:30:00Z'
+    request_start_utc: '2024-03-20T17:55:00Z'
+    request_end_utc: '2024-03-20T18:40:00Z'
+    sep_release: true
+    policy_change_bps: 0
+  - label: fomc_20240501
+    meeting_date: '2024-05-01'
+    statement_time_utc: '2024-05-01T18:00:00Z'
+    press_conference_time_utc: '2024-05-01T18:30:00Z'
+    request_start_utc: '2024-05-01T17:55:00Z'
+    request_end_utc: '2024-05-01T18:40:00Z'
+    sep_release: false
+    policy_change_bps: 0
+  - label: fomc_20240612
+    meeting_date: '2024-06-12'
+    statement_time_utc: '2024-06-12T18:00:00Z'
+    press_conference_time_utc: '2024-06-12T18:30:00Z'
+    request_start_utc: '2024-06-12T17:55:00Z'
+    request_end_utc: '2024-06-12T18:40:00Z'
+    sep_release: true
+    policy_change_bps: 0
+  - label: fomc_20240731
+    meeting_date: '2024-07-31'
+    statement_time_utc: '2024-07-31T18:00:00Z'
+    press_conference_time_utc: '2024-07-31T18:30:00Z'
+    request_start_utc: '2024-07-31T17:55:00Z'
+    request_end_utc: '2024-07-31T18:40:00Z'
+    sep_release: false
+    policy_change_bps: 0
+  - label: fomc_20240918
+    meeting_date: '2024-09-18'
+    statement_time_utc: '2024-09-18T18:00:00Z'
+    press_conference_time_utc: '2024-09-18T18:30:00Z'
+    request_start_utc: '2024-09-18T17:55:00Z'
+    request_end_utc: '2024-09-18T18:40:00Z'
+    sep_release: true
+    policy_change_bps: -50
+    dataset_condition: degraded
+  - label: fomc_20241107
+    meeting_date: '2024-11-07'
+    statement_time_utc: '2024-11-07T19:00:00Z'
+    press_conference_time_utc: '2024-11-07T19:30:00Z'
+    request_start_utc: '2024-11-07T18:55:00Z'
+    request_end_utc: '2024-11-07T19:40:00Z'
+    sep_release: false
+    policy_change_bps: -25
+  - label: fomc_20241218
+    meeting_date: '2024-12-18'
+    statement_time_utc: '2024-12-18T19:00:00Z'
+    press_conference_time_utc: '2024-12-18T19:30:00Z'
+    request_start_utc: '2024-12-18T18:55:00Z'
+    request_end_utc: '2024-12-18T19:40:00Z'
+    sep_release: true
+    policy_change_bps: -25
+  - label: fomc_20250129
+    meeting_date: '2025-01-29'
+    statement_time_utc: '2025-01-29T19:00:00Z'
+    press_conference_time_utc: '2025-01-29T19:30:00Z'
+    request_start_utc: '2025-01-29T18:55:00Z'
+    request_end_utc: '2025-01-29T19:40:00Z'
+    sep_release: false
+    policy_change_bps: 0
+  - label: fomc_20250319
+    meeting_date: '2025-03-19'
+    statement_time_utc: '2025-03-19T18:00:00Z'
+    press_conference_time_utc: '2025-03-19T18:30:00Z'
+    request_start_utc: '2025-03-19T17:55:00Z'
+    request_end_utc: '2025-03-19T18:40:00Z'
+    sep_release: true
+    policy_change_bps: 0
+  - label: fomc_20250507
+    meeting_date: '2025-05-07'
+    statement_time_utc: '2025-05-07T18:00:00Z'
+    press_conference_time_utc: '2025-05-07T18:30:00Z'
+    request_start_utc: '2025-05-07T17:55:00Z'
+    request_end_utc: '2025-05-07T18:40:00Z'
+    sep_release: false
+    policy_change_bps: 0
+  - label: fomc_20250618
+    meeting_date: '2025-06-18'
+    statement_time_utc: '2025-06-18T18:00:00Z'
+    press_conference_time_utc: '2025-06-18T18:30:00Z'
+    request_start_utc: '2025-06-18T17:55:00Z'
+    request_end_utc: '2025-06-18T18:40:00Z'
+    sep_release: true
+    policy_change_bps: 0
+  - label: fomc_20250730
+    meeting_date: '2025-07-30'
+    statement_time_utc: '2025-07-30T18:00:00Z'
+    press_conference_time_utc: '2025-07-30T18:30:00Z'
+    request_start_utc: '2025-07-30T17:55:00Z'
+    request_end_utc: '2025-07-30T18:40:00Z'
+    sep_release: false
+    policy_change_bps: 0
+  - label: fomc_20250917
+    meeting_date: '2025-09-17'
+    statement_time_utc: '2025-09-17T18:00:00Z'
+    press_conference_time_utc: '2025-09-17T18:30:00Z'
+    request_start_utc: '2025-09-17T17:50:00Z'
+    request_end_utc: '2025-09-17T19:00:00Z'
+    sep_release: true
+    policy_change_bps: -25
+    dataset_condition: degraded

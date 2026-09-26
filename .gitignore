@@ -1,0 +1,21 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.matplotlib/
+.DS_Store
+
+# Raw provider payloads and derived research data are local-only.
+data/raw/databento/*
+data/raw/alphavantage/*
+data/processed/*
+!data/raw/databento/.gitkeep
+!data/raw/alphavantage/.gitkeep
+!data/processed/.gitkeep
+
+# Generated figures and transient files.
+figures/*
+!figures/.gitkeep
+tmp/

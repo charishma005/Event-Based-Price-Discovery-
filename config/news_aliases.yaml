@@ -1,0 +1,26 @@
+aliases:
+  NVDA: [NVIDIA]
+  MSFT: [Microsoft]
+  AAPL: [Apple]
+  AMZN: [Amazon]
+  META: [Meta, Facebook, Instagram, WhatsApp]
+  GOOGL: [Google, Alphabet]
+  AVGO: [Broadcom, VMware]
+  AMD: [AMD, Advanced Micro Devices]
+  TSLA: [Tesla]
+  NFLX: [Netflix]
+  JPM: [JPMorgan, J.P. Morgan, JP Morgan]
+  BAC: [Bank of America, BofA]
+  GS: [Goldman Sachs]
+  COST: [Costco]
+  WMT: [Walmart, Wal-Mart]
+  HD: [Home Depot]
+  XOM: [Exxon, ExxonMobil]
+  CVX: [Chevron]
+  PLD: [Prologis]
+  AMT: [American Tower]
+  CAT: [Caterpillar]
+  BA: [Boeing]
+
+# These aliases are screening rules, not entity-resolution truth. Every positive
+# contamination flag remains a review candidate rather than an automatic deletion.

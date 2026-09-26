@@ -1,0 +1,35 @@
+sample_start: 2024-09-01
+sample_end: 2025-09-19
+
+# Release/decision dates used only for descriptive daily event sensitivity.
+# These do not contain consensus surprises and therefore cannot identify H3/H5/H6.
+event_classes:
+  fomc_statement:
+    source_url: https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm
+    dates:
+      - 2024-09-18
+      - 2024-11-07
+      - 2024-12-18
+      - 2025-01-29
+      - 2025-03-19
+      - 2025-05-07
+      - 2025-06-18
+      - 2025-07-30
+      - 2025-09-17
+  cpi_release:
+    source_url: https://www.bls.gov/schedule/news_release/cpi.htm
+    archive_pattern: https://www.bls.gov/news.release/archives/cpi_MMDDYYYY.htm
+    dates:
+      - 2024-09-11
+      - 2024-10-10
+      - 2024-11-13
+      - 2024-12-11
+      - 2025-01-15
+      - 2025-02-12
+      - 2025-03-12
+      - 2025-04-10
+      - 2025-05-13
+      - 2025-06-11
+      - 2025-07-15
+      - 2025-08-12
+      - 2025-09-11

@@ -1,0 +1,2735 @@
+{
+  "pilot_range": [
+    "2025-09-08",
+    "2025-09-20"
+  ],
+  "available_datasets": [
+    "ARCX.PILLAR",
+    "BATS.PITCH",
+    "BATY.PITCH",
+    "DBEQ.BASIC",
+    "EDGA.PITCH",
+    "EDGX.PITCH",
+    "EPRL.DOM",
+    "EQUS.MINI",
+    "EQUS.SUMMARY",
+    "GLBX.MDP3",
+    "IEXG.TOPS",
+    "IFEU.IMPACT",
+    "IFLL.IMPACT",
+    "IFUS.IMPACT",
+    "MEMX.MEMOIR",
+    "NDEX.IMPACT",
+    "OCEA.MEMOIR",
+    "OPRA.PILLAR",
+    "XASE.PILLAR",
+    "XBOS.ITCH",
+    "XCBF.PITCH",
+    "XCHI.PILLAR",
+    "XCIS.TRADESBBO",
+    "XEEE.EOBI",
+    "XEUR.EOBI",
+    "XNAS.BASIC",
+    "XNAS.ITCH",
+    "XNYS.PILLAR",
+    "XPSX.ITCH"
+  ],
+  "datasets": {
+    "GLBX.MDP3": {
+      "available_to_account": true,
+      "schemas": [
+        "mbo",
+        "mbp-1",
+        "mbp-10",
+        "tbbo",
+        "trades",
+        "bbo-1s",
+        "bbo-1m",
+        "ohlcv-1s",
+        "ohlcv-1m",
+        "ohlcv-1h",
+        "ohlcv-1d",
+        "definition",
+        "statistics",
+        "status",
+        "cmbp-1",
+        "cbbo-1s",
+        "cbbo-1m"
+      ],
+      "range": {
+        "start": "2010-06-06T00:00:00.000000000Z",
+        "end": "2026-09-23T21:46:48.519872000Z",
+        "schema": {
+          "mbo": {
+            "start": "2017-05-21T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "mbp-1": {
+            "start": "2010-06-06T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "mbp-10": {
+            "start": "2010-06-06T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "tbbo": {
+            "start": "2010-06-06T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "trades": {
+            "start": "2010-06-06T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "bbo-1s": {
+            "start": "2010-06-06T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "bbo-1m": {
+            "start": "2010-06-06T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "ohlcv-1s": {
+            "start": "2010-06-06T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "ohlcv-1m": {
+            "start": "2010-06-06T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "ohlcv-1h": {
+            "start": "2010-06-06T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "ohlcv-1d": {
+            "start": "2010-06-06T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "definition": {
+            "start": "2010-06-06T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "statistics": {
+            "start": "2010-06-06T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "status": {
+            "start": "2010-06-06T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "cmbp-1": {
+            "start": "2017-05-21T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "cbbo-1s": {
+            "start": "2017-05-21T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          },
+          "cbbo-1m": {
+            "start": "2017-05-21T00:00:00.000000000Z",
+            "end": "2026-09-23T21:46:48.519872000Z"
+          }
+        }
+      },
+      "pilot_conditions": [
+        {
+          "date": "2025-09-08",
+          "condition": "available",
+          "last_modified_date": "2026-08-28"
+        },
+        {
+          "date": "2025-09-09",
+          "condition": "available",
+          "last_modified_date": "2026-08-28"
+        },
+        {
+          "date": "2025-09-10",
+          "condition": "available",
+          "last_modified_date": "2026-08-28"
+        },
+        {
+          "date": "2025-09-11",
+          "condition": "available",
+          "last_modified_date": "2026-08-28"
+        },
+        {
+          "date": "2025-09-12",
+          "condition": "available",
+          "last_modified_date": "2026-08-28"
+        },
+        {
+          "date": "2025-09-14",
+          "condition": "available",
+          "last_modified_date": "2026-08-28"
+        },
+        {
+          "date": "2025-09-15",
+          "condition": "available",
+          "last_modified_date": "2026-08-28"
+        },
+        {
+          "date": "2025-09-16",
+          "condition": "available",
+          "last_modified_date": "2026-08-27"
+        },
+        {
+          "date": "2025-09-17",
+          "condition": "degraded",
+          "last_modified_date": "2026-08-28"
+        },
+        {
+          "date": "2025-09-18",
+          "condition": "available",
+          "last_modified_date": "2026-08-28"
+        },
+        {
+          "date": "2025-09-19",
+          "condition": "available",
+          "last_modified_date": "2026-08-28"
+        }
+      ],
+      "unit_prices": [
+        {
+          "mode": "historical",
+          "unit_prices": {
+            "mbo": 1.8,
+            "mbp-1": 1.8,
+            "mbp-10": 0.5,
+            "tbbo": 28.0,
+            "trades": 28.0,
+            "bbo-1s": 18.0,
+            "bbo-1m": 18.0,
+            "ohlcv-1s": 70.0,
+            "ohlcv-1m": 70.0,
+            "ohlcv-1h": 190.0,
+            "ohlcv-1d": 190.0,
+            "definition": 1.7,
+            "statistics": 1.0,
+            "status": 4.0,
+            "cmbp-1": 1.8,
+            "cbbo-1s": 18.0,
+            "cbbo-1m": 18.0
+          }
+        },
+        {
+          "mode": "historical-streaming",
+          "unit_prices": {
+            "mbo": 1.8,
+            "mbp-1": 1.8,
+            "mbp-10": 0.5,
+            "tbbo": 28.0,
+            "trades": 28.0,
+            "bbo-1s": 18.0,
+            "bbo-1m": 18.0,
+            "ohlcv-1s": 70.0,
+            "ohlcv-1m": 70.0,
+            "ohlcv-1h": 190.0,
+            "ohlcv-1d": 190.0,
+            "definition": 1.7,
+            "statistics": 1.0,
+            "status": 4.0,
+            "cmbp-1": 1.8,
+            "cbbo-1s": 18.0,
+            "cbbo-1m": 18.0
+          }
+        },
+        {
+          "mode": "live",
+          "unit_prices": {
+            "mbo": 2.16,
+            "mbp-1": 2.16,
+            "mbp-10": 0.6,
+            "tbbo": 33.6,
+            "trades": 33.6,
+            "bbo-1s": 21.6,
+            "bbo-1m": 21.6,
+            "ohlcv-1s": 84.0,
+            "ohlcv-1m": 84.0,
+            "ohlcv-1h": 228.0,
+            "ohlcv-1d": 228.0,
+            "definition": 2.04,
+            "statistics": 1.2,
+            "status": 4.0,
+            "cmbp-1": 2.16,
+            "cbbo-1s": 21.6,
+            "cbbo-1m": 21.6
+          }
+        }
+      ],
+      "fields": {
+        "mbo": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "order_id",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "channel_id",
+            "type": "uint8_t"
+          },
+          {
+            "name": "action",
+            "type": "char"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "ts_in_delta",
+            "type": "int32_t"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          }
+        ],
+        "mbp-1": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "action",
+            "type": "char"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "depth",
+            "type": "uint8_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "ts_in_delta",
+            "type": "int32_t"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_00",
+            "type": "uint32_t"
+          }
+        ],
+        "mbp-10": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "action",
+            "type": "char"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "depth",
+            "type": "uint8_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "ts_in_delta",
+            "type": "int32_t"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_01",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_01",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_01",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_01",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_01",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_01",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_02",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_02",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_02",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_02",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_02",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_02",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_03",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_03",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_03",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_03",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_03",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_03",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_04",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_04",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_04",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_04",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_04",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_04",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_05",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_05",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_05",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_05",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_05",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_05",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_06",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_06",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_06",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_06",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_06",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_06",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_07",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_07",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_07",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_07",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_07",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_07",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_08",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_08",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_08",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_08",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_08",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_08",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_09",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_09",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_09",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_09",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_09",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_09",
+            "type": "uint32_t"
+          }
+        ],
+        "tbbo": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "action",
+            "type": "char"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "depth",
+            "type": "uint8_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "ts_in_delta",
+            "type": "int32_t"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_00",
+            "type": "uint32_t"
+          }
+        ],
+        "trades": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "action",
+            "type": "char"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "depth",
+            "type": "uint8_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "ts_in_delta",
+            "type": "int32_t"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          }
+        ],
+        "bbo-1s": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "_reserved1",
+            "type": "uint8_t"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "_reserved2",
+            "type": "uint8_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "_reserved3",
+            "type": "char[4]"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_00",
+            "type": "uint32_t"
+          }
+        ],
+        "ohlcv-1s": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "open",
+            "type": "int64_t"
+          },
+          {
+            "name": "high",
+            "type": "int64_t"
+          },
+          {
+            "name": "low",
+            "type": "int64_t"
+          },
+          {
+            "name": "close",
+            "type": "int64_t"
+          },
+          {
+            "name": "volume",
+            "type": "uint64_t"
+          }
+        ],
+        "status": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "action",
+            "type": "uint16_t"
+          },
+          {
+            "name": "reason",
+            "type": "uint16_t"
+          },
+          {
+            "name": "trading_event",
+            "type": "uint16_t"
+          },
+          {
+            "name": "is_trading",
+            "type": "char"
+          },
+          {
+            "name": "is_quoting",
+            "type": "char"
+          },
+          {
+            "name": "is_short_sell_restricted",
+            "type": "char"
+          },
+          {
+            "name": "_reserved",
+            "type": "char[7]"
+          }
+        ]
+      }
+    },
+    "XNAS.ITCH": {
+      "available_to_account": true,
+      "schemas": [
+        "mbo",
+        "mbp-1",
+        "mbp-10",
+        "bbo-1s",
+        "bbo-1m",
+        "tbbo",
+        "trades",
+        "ohlcv-1s",
+        "ohlcv-1m",
+        "ohlcv-1h",
+        "ohlcv-1d",
+        "definition",
+        "statistics",
+        "status",
+        "imbalance"
+      ],
+      "range": {
+        "start": "2018-05-01T00:00:00.000000000Z",
+        "end": "2026-09-24T00:00:00.000000000Z",
+        "schema": {
+          "mbo": {
+            "start": "2018-05-01T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "mbp-1": {
+            "start": "2018-05-01T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "mbp-10": {
+            "start": "2018-05-01T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "bbo-1s": {
+            "start": "2018-05-01T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "bbo-1m": {
+            "start": "2018-05-01T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "tbbo": {
+            "start": "2018-05-01T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "trades": {
+            "start": "2018-05-01T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "ohlcv-1s": {
+            "start": "2018-05-01T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "ohlcv-1m": {
+            "start": "2018-05-01T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "ohlcv-1h": {
+            "start": "2018-05-01T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "ohlcv-1d": {
+            "start": "2018-05-01T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "definition": {
+            "start": "2018-05-01T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "statistics": {
+            "start": "2018-05-01T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "status": {
+            "start": "2018-05-01T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "imbalance": {
+            "start": "2018-05-01T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          }
+        }
+      },
+      "pilot_conditions": [
+        {
+          "date": "2025-09-08",
+          "condition": "available",
+          "last_modified_date": "2025-11-28"
+        },
+        {
+          "date": "2025-09-09",
+          "condition": "available",
+          "last_modified_date": "2025-11-28"
+        },
+        {
+          "date": "2025-09-10",
+          "condition": "available",
+          "last_modified_date": "2025-11-28"
+        },
+        {
+          "date": "2025-09-11",
+          "condition": "available",
+          "last_modified_date": "2025-11-28"
+        },
+        {
+          "date": "2025-09-12",
+          "condition": "available",
+          "last_modified_date": "2025-11-28"
+        },
+        {
+          "date": "2025-09-15",
+          "condition": "available",
+          "last_modified_date": "2025-11-28"
+        },
+        {
+          "date": "2025-09-16",
+          "condition": "available",
+          "last_modified_date": "2025-11-28"
+        },
+        {
+          "date": "2025-09-17",
+          "condition": "available",
+          "last_modified_date": "2025-11-28"
+        },
+        {
+          "date": "2025-09-18",
+          "condition": "available",
+          "last_modified_date": "2025-11-28"
+        },
+        {
+          "date": "2025-09-19",
+          "condition": "available",
+          "last_modified_date": "2025-11-28"
+        }
+      ],
+      "unit_prices": [
+        {
+          "mode": "historical",
+          "unit_prices": {
+            "mbo": 1.2,
+            "mbp-1": 1.2,
+            "mbp-10": 0.4,
+            "bbo-1s": 4.0,
+            "bbo-1m": 4.0,
+            "tbbo": 6.0,
+            "trades": 6.0,
+            "ohlcv-1s": 12.0,
+            "ohlcv-1m": 12.0,
+            "ohlcv-1h": 30.0,
+            "ohlcv-1d": 30.0,
+            "definition": 16.0,
+            "statistics": 16.0,
+            "status": 16.0,
+            "imbalance": 16.0
+          }
+        },
+        {
+          "mode": "historical-streaming",
+          "unit_prices": {
+            "mbo": 1.2,
+            "mbp-1": 1.2,
+            "mbp-10": 0.4,
+            "bbo-1s": 4.0,
+            "bbo-1m": 4.0,
+            "tbbo": 6.0,
+            "trades": 6.0,
+            "ohlcv-1s": 12.0,
+            "ohlcv-1m": 12.0,
+            "ohlcv-1h": 30.0,
+            "ohlcv-1d": 30.0,
+            "definition": 16.0,
+            "statistics": 16.0,
+            "status": 16.0,
+            "imbalance": 16.0
+          }
+        },
+        {
+          "mode": "live",
+          "unit_prices": {
+            "mbo": 1.44,
+            "mbp-1": 1.44,
+            "mbp-10": 0.48,
+            "bbo-1s": 4.8,
+            "bbo-1m": 4.8,
+            "tbbo": 7.2,
+            "trades": 7.2,
+            "ohlcv-1s": 14.4,
+            "ohlcv-1m": 14.4,
+            "ohlcv-1h": 36.0,
+            "ohlcv-1d": 36.0,
+            "definition": 19.2,
+            "statistics": 19.2,
+            "status": 19.2,
+            "imbalance": 19.2
+          }
+        }
+      ],
+      "fields": {
+        "mbo": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "order_id",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "channel_id",
+            "type": "uint8_t"
+          },
+          {
+            "name": "action",
+            "type": "char"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "ts_in_delta",
+            "type": "int32_t"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          }
+        ],
+        "mbp-1": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "action",
+            "type": "char"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "depth",
+            "type": "uint8_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "ts_in_delta",
+            "type": "int32_t"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_00",
+            "type": "uint32_t"
+          }
+        ],
+        "mbp-10": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "action",
+            "type": "char"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "depth",
+            "type": "uint8_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "ts_in_delta",
+            "type": "int32_t"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_01",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_01",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_01",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_01",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_01",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_01",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_02",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_02",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_02",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_02",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_02",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_02",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_03",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_03",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_03",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_03",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_03",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_03",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_04",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_04",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_04",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_04",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_04",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_04",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_05",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_05",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_05",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_05",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_05",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_05",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_06",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_06",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_06",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_06",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_06",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_06",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_07",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_07",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_07",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_07",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_07",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_07",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_08",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_08",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_08",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_08",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_08",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_08",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_09",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_09",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_09",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_09",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_09",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_09",
+            "type": "uint32_t"
+          }
+        ],
+        "bbo-1s": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "_reserved1",
+            "type": "uint8_t"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "_reserved2",
+            "type": "uint8_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "_reserved3",
+            "type": "char[4]"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_00",
+            "type": "uint32_t"
+          }
+        ],
+        "tbbo": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "action",
+            "type": "char"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "depth",
+            "type": "uint8_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "ts_in_delta",
+            "type": "int32_t"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_00",
+            "type": "uint32_t"
+          }
+        ],
+        "trades": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "action",
+            "type": "char"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "depth",
+            "type": "uint8_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "ts_in_delta",
+            "type": "int32_t"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          }
+        ],
+        "ohlcv-1s": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "open",
+            "type": "int64_t"
+          },
+          {
+            "name": "high",
+            "type": "int64_t"
+          },
+          {
+            "name": "low",
+            "type": "int64_t"
+          },
+          {
+            "name": "close",
+            "type": "int64_t"
+          },
+          {
+            "name": "volume",
+            "type": "uint64_t"
+          }
+        ],
+        "status": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "action",
+            "type": "uint16_t"
+          },
+          {
+            "name": "reason",
+            "type": "uint16_t"
+          },
+          {
+            "name": "trading_event",
+            "type": "uint16_t"
+          },
+          {
+            "name": "is_trading",
+            "type": "char"
+          },
+          {
+            "name": "is_quoting",
+            "type": "char"
+          },
+          {
+            "name": "is_short_sell_restricted",
+            "type": "char"
+          },
+          {
+            "name": "_reserved",
+            "type": "char[7]"
+          }
+        ]
+      }
+    },
+    "EQUS.MINI": {
+      "available_to_account": true,
+      "schemas": [
+        "mbp-1",
+        "tbbo",
+        "trades",
+        "bbo-1s",
+        "bbo-1m",
+        "ohlcv-1s",
+        "ohlcv-1m",
+        "ohlcv-1h",
+        "ohlcv-1d",
+        "definition"
+      ],
+      "range": {
+        "start": "2023-03-28T00:00:00.000000000Z",
+        "end": "2026-09-24T00:00:00.000000000Z",
+        "schema": {
+          "mbp-1": {
+            "start": "2023-03-28T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "tbbo": {
+            "start": "2023-03-28T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "trades": {
+            "start": "2023-03-28T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "bbo-1s": {
+            "start": "2023-03-28T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "bbo-1m": {
+            "start": "2023-03-28T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "ohlcv-1s": {
+            "start": "2023-03-28T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "ohlcv-1m": {
+            "start": "2023-03-28T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "ohlcv-1h": {
+            "start": "2023-03-28T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "ohlcv-1d": {
+            "start": "2023-03-28T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          },
+          "definition": {
+            "start": "2023-03-28T00:00:00.000000000Z",
+            "end": "2026-09-24T00:00:00.000000000Z"
+          }
+        }
+      },
+      "pilot_conditions": [
+        {
+          "date": "2025-09-08",
+          "condition": "degraded",
+          "last_modified_date": "2025-09-09"
+        },
+        {
+          "date": "2025-09-09",
+          "condition": "available",
+          "last_modified_date": "2025-09-10"
+        },
+        {
+          "date": "2025-09-10",
+          "condition": "available",
+          "last_modified_date": "2025-09-11"
+        },
+        {
+          "date": "2025-09-11",
+          "condition": "available",
+          "last_modified_date": "2025-09-12"
+        },
+        {
+          "date": "2025-09-12",
+          "condition": "degraded",
+          "last_modified_date": "2025-09-13"
+        },
+        {
+          "date": "2025-09-15",
+          "condition": "available",
+          "last_modified_date": "2025-09-16"
+        },
+        {
+          "date": "2025-09-16",
+          "condition": "available",
+          "last_modified_date": "2025-09-17"
+        },
+        {
+          "date": "2025-09-17",
+          "condition": "available",
+          "last_modified_date": "2025-09-18"
+        },
+        {
+          "date": "2025-09-18",
+          "condition": "available",
+          "last_modified_date": "2025-09-19"
+        },
+        {
+          "date": "2025-09-19",
+          "condition": "available",
+          "last_modified_date": "2025-09-20"
+        }
+      ],
+      "unit_prices": [
+        {
+          "mode": "historical",
+          "unit_prices": {
+            "mbp-1": 1.2,
+            "tbbo": 6.0,
+            "trades": 6.0,
+            "bbo-1s": 4.0,
+            "bbo-1m": 4.0,
+            "ohlcv-1s": 12.0,
+            "ohlcv-1m": 12.0,
+            "ohlcv-1h": 30.0,
+            "ohlcv-1d": 30.0,
+            "definition": 16.0
+          }
+        },
+        {
+          "mode": "historical-streaming",
+          "unit_prices": {
+            "mbp-1": 1.2,
+            "tbbo": 6.0,
+            "trades": 6.0,
+            "bbo-1s": 4.0,
+            "bbo-1m": 4.0,
+            "ohlcv-1s": 12.0,
+            "ohlcv-1m": 12.0,
+            "ohlcv-1h": 30.0,
+            "ohlcv-1d": 30.0,
+            "definition": 16.0
+          }
+        },
+        {
+          "mode": "live",
+          "unit_prices": {
+            "mbp-1": 1.44,
+            "tbbo": 7.2,
+            "trades": 7.2,
+            "bbo-1s": 4.8,
+            "bbo-1m": 4.8,
+            "ohlcv-1s": 14.4,
+            "ohlcv-1m": 14.4,
+            "ohlcv-1h": 36.0,
+            "ohlcv-1d": 36.0,
+            "definition": 19.2
+          }
+        }
+      ],
+      "fields": {
+        "mbp-1": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "action",
+            "type": "char"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "depth",
+            "type": "uint8_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "ts_in_delta",
+            "type": "int32_t"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_00",
+            "type": "uint32_t"
+          }
+        ],
+        "tbbo": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "action",
+            "type": "char"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "depth",
+            "type": "uint8_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "ts_in_delta",
+            "type": "int32_t"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_00",
+            "type": "uint32_t"
+          }
+        ],
+        "trades": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "action",
+            "type": "char"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "depth",
+            "type": "uint8_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "ts_in_delta",
+            "type": "int32_t"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          }
+        ],
+        "bbo-1s": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "price",
+            "type": "int64_t"
+          },
+          {
+            "name": "size",
+            "type": "uint32_t"
+          },
+          {
+            "name": "_reserved1",
+            "type": "uint8_t"
+          },
+          {
+            "name": "side",
+            "type": "char"
+          },
+          {
+            "name": "flags",
+            "type": "uint8_t"
+          },
+          {
+            "name": "_reserved2",
+            "type": "uint8_t"
+          },
+          {
+            "name": "ts_recv",
+            "type": "uint64_t"
+          },
+          {
+            "name": "_reserved3",
+            "type": "char[4]"
+          },
+          {
+            "name": "sequence",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "ask_px_00",
+            "type": "int64_t"
+          },
+          {
+            "name": "bid_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_sz_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "bid_ct_00",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ask_ct_00",
+            "type": "uint32_t"
+          }
+        ],
+        "ohlcv-1s": [
+          {
+            "name": "length",
+            "type": "uint8_t"
+          },
+          {
+            "name": "rtype",
+            "type": "uint8_t"
+          },
+          {
+            "name": "publisher_id",
+            "type": "uint16_t"
+          },
+          {
+            "name": "instrument_id",
+            "type": "uint32_t"
+          },
+          {
+            "name": "ts_event",
+            "type": "uint64_t"
+          },
+          {
+            "name": "open",
+            "type": "int64_t"
+          },
+          {
+            "name": "high",
+            "type": "int64_t"
+          },
+          {
+            "name": "low",
+            "type": "int64_t"
+          },
+          {
+            "name": "close",
+            "type": "int64_t"
+          },
+          {
+            "name": "volume",
+            "type": "uint64_t"
+          }
+        ]
+      }
+    }
+  },
+  "continuous_to_instrument_id": {
+    "result": {
+      "ES.v.0": [
+        {
+          "d0": "2025-09-08",
+          "d1": "2025-09-17",
+          "s": "14160"
+        },
+        {
+          "d0": "2025-09-17",
+          "d1": "2025-09-20",
+          "s": "294973"
+        }
+      ],
+      "NQ.v.0": [
+        {
+          "d0": "2025-09-08",
+          "d1": "2025-09-18",
+          "s": "42008487"
+        },
+        {
+          "d0": "2025-09-18",
+          "d1": "2025-09-20",
+          "s": "158704"
+        }
+      ],
+      "ZN.v.0": [
+        {
+          "d0": "2025-09-08",
+          "d1": "2025-09-20",
+          "s": "42002111"
+        }
+      ]
+    },
+    "symbols": [
+      "ES.v.0",
+      "NQ.v.0",
+      "ZN.v.0"
+    ],
+    "stype_in": "continuous",
+    "stype_out": "instrument_id",
+    "start_date": "2025-09-08",
+    "end_date": "2025-09-20",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "instrument_id_to_raw_symbol": {
+    "result": {
+      "14160": [
+        {
+          "d0": "2025-09-08",
+          "d1": "2025-09-20",
+          "s": "ESU5"
+        }
+      ],
+      "158704": [
+        {
+          "d0": "2025-09-08",
+          "d1": "2025-09-20",
+          "s": "NQZ5"
+        }
+      ],
+      "294973": [
+        {
+          "d0": "2025-09-08",
+          "d1": "2025-09-20",
+          "s": "ESZ5"
+        }
+      ],
+      "42002111": [
+        {
+          "d0": "2025-09-08",
+          "d1": "2025-09-20",
+          "s": "ZNZ5"
+        }
+      ],
+      "42008487": [
+        {
+          "d0": "2025-09-08",
+          "d1": "2025-09-20",
+          "s": "NQU5"
+        }
+      ]
+    },
+    "symbols": [
+      "14160",
+      "158704",
+      "294973",
+      "42002111",
+      "42008487"
+    ],
+    "stype_in": "instrument_id",
+    "stype_out": "raw_symbol",
+    "start_date": "2025-09-08",
+    "end_date": "2025-09-20",
+    "partial": [],
+    "not_found": [],
+    "message": "OK",
+    "status": 0
+  },
+  "request_estimates": [
+    {
+      "dataset": "GLBX.MDP3",
+      "schema": "ohlcv-1s",
+      "symbols": [
+        "ES.v.0",
+        "NQ.v.0",
+        "ZN.v.0"
+      ],
+      "stype_in": "continuous",
+      "start": "2025-09-17T17:30:00+00:00",
+      "end": "2025-09-17T19:30:00+00:00",
+      "request_id": "6ed5fca61b6588eb",
+      "billable_bytes": 896112,
+      "cost_usd": 0.0,
+      "cached": false
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "schema": "bbo-1s",
+      "symbols": [
+        "ES.v.0",
+        "NQ.v.0",
+        "ZN.v.0"
+      ],
+      "stype_in": "continuous",
+      "start": "2025-09-17T17:50:00+00:00",
+      "end": "2025-09-17T19:00:00+00:00",
+      "request_id": "74c6bfb36a4934f1",
+      "billable_bytes": 1140000,
+      "cost_usd": 0.0,
+      "cached": false
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "schema": "mbp-1",
+      "symbols": [
+        "ES.v.0",
+        "NQ.v.0",
+        "ZN.v.0"
+      ],
+      "stype_in": "continuous",
+      "start": "2025-09-17T17:50:00+00:00",
+      "end": "2025-09-17T18:10:00+00:00",
+      "request_id": "0055628d87519646",
+      "billable_bytes": 67511200,
+      "cost_usd": 0.0,
+      "cached": false
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "schema": "mbp-1",
+      "symbols": [
+        "ES.v.0",
+        "NQ.v.0",
+        "ZN.v.0"
+      ],
+      "stype_in": "continuous",
+      "start": "2025-09-17T18:25:00+00:00",
+      "end": "2025-09-17T19:00:00+00:00",
+      "request_id": "83dffc22155fd260",
+      "billable_bytes": 308776640,
+      "cost_usd": 0.0,
+      "cached": false
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "schema": "mbo",
+      "symbols": [
+        "ES.v.0",
+        "NQ.v.0",
+        "ZN.v.0"
+      ],
+      "stype_in": "continuous",
+      "start": "2025-09-17T17:59:00+00:00",
+      "end": "2025-09-17T18:05:00+00:00",
+      "request_id": "67a63997f8a2bd19",
+      "billable_bytes": 90078408,
+      "cost_usd": 0.0,
+      "cached": false
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "schema": "status",
+      "symbols": [
+        "ES.v.0",
+        "NQ.v.0",
+        "ZN.v.0"
+      ],
+      "stype_in": "continuous",
+      "start": "2025-09-17T17:50:00+00:00",
+      "end": "2025-09-17T19:00:00+00:00",
+      "request_id": "4cf8696c1ba78aeb",
+      "billable_bytes": 800,
+      "cost_usd": 0.0,
+      "cached": false
+    },
+    {
+      "dataset": "EQUS.MINI",
+      "schema": "mbp-1",
+      "symbols": [
+        "SPY",
+        "JPM"
+      ],
+      "stype_in": "raw_symbol",
+      "start": "2025-09-17T17:50:00+00:00",
+      "end": "2025-09-17T18:10:00+00:00",
+      "request_id": "7d2e62e38a70c7c7",
+      "billable_bytes": 10194640,
+      "cost_usd": 0.0,
+      "cached": false
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "schema": "mbp-1",
+      "symbols": [
+        "NVDA"
+      ],
+      "stype_in": "raw_symbol",
+      "start": "2025-09-17T17:50:00+00:00",
+      "end": "2025-09-17T18:10:00+00:00",
+      "request_id": "4e5b7434a7d37b55",
+      "billable_bytes": 17226160,
+      "cost_usd": 0.0,
+      "cached": false
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "schema": "status",
+      "symbols": [
+        "NVDA"
+      ],
+      "stype_in": "raw_symbol",
+      "start": "2025-09-17T17:50:00+00:00",
+      "end": "2025-09-17T18:10:00+00:00",
+      "request_id": "6f08811dc33e06f9",
+      "billable_bytes": 160,
+      "cost_usd": 0.0,
+      "cached": false
+    }
+  ]
+}

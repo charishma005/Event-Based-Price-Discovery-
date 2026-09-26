@@ -1,0 +1,218 @@
+statement:
+  event_id: fomc_statement_20250917
+  time_utc: '2025-09-17T18:00:00Z'
+  event_type: monetary_policy
+  representation_class: narrative_text
+  dataset_condition:
+    futures: degraded
+    equities: available
+  notes: Statement and SEP arrive simultaneously, so their price effects are not separately identified.
+
+press_conference:
+  event_id: fomc_press_conference_20250917
+  time_utc: '2025-09-17T18:30:00Z'
+  event_type: monetary_policy
+  representation_class: extemporaneous_speech
+  dataset_condition:
+    futures: degraded
+    equities: available
+
+ppi_20250910:
+  event_id: ppi_20250910
+  time_utc: '2025-09-10T12:30:00Z'
+  event_type: macro_inflation
+  representation_class: scalar_numeric
+  dataset_condition:
+    futures: available
+    equities: available
+
+cpi_20250911:
+  event_id: cpi_20250911
+  time_utc: '2025-09-11T12:30:00Z'
+  event_type: macro_inflation
+  representation_class: scalar_numeric
+  dataset_condition:
+    futures: available
+    equities: available
+  notes: Real earnings and weekly claims arrive at the same timestamp.
+
+retail_sales_20250916:
+  event_id: retail_sales_20250916
+  time_utc: '2025-09-16T12:30:00Z'
+  event_type: macro_consumption
+  representation_class: multi_dimensional_numeric
+  dataset_condition:
+    futures: available
+    equities: available
+  notes: Import and export prices arrive at the same timestamp.
+
+industrial_production_20250916:
+  event_id: industrial_production_20250916
+  time_utc: '2025-09-16T13:15:00Z'
+  event_type: macro_activity
+  representation_class: multi_dimensional_numeric
+  dataset_condition:
+    futures: available
+    equities: available
+
+housing_20250917:
+  event_id: housing_20250917
+  time_utc: '2025-09-17T12:30:00Z'
+  event_type: macro_housing
+  representation_class: multi_dimensional_numeric
+  dataset_condition:
+    futures: degraded
+    equities: available
+
+placebo_20250909_0830:
+  event_id: placebo_20250909_0830
+  time_utc: '2025-09-09T12:30:00Z'
+  event_type: matched_placebo
+  representation_class: placebo
+  dataset_condition:
+    futures: available
+    equities: available
+  notes: No 8:30 ET release listed in the official BLS or Census calendars; listed releases begin at 10:00 ET.
+
+placebo_20250909_0915:
+  event_id: placebo_20250909_0915
+  time_utc: '2025-09-09T13:15:00Z'
+  event_type: matched_placebo
+  representation_class: placebo
+  dataset_condition:
+    futures: available
+    equities: available
+  notes: Matched-clock control for industrial production; no Federal Reserve G.17 release on this date.
+
+placebo_20250910_1400:
+  event_id: placebo_20250910_1400
+  time_utc: '2025-09-10T18:00:00Z'
+  event_type: matched_placebo
+  representation_class: placebo
+  dataset_condition:
+    futures: available
+    equities: available
+
+nvda_intel_announcement:
+  event_id: nvda_intel_announcement_20250918
+  time_utc: '2025-09-18T11:00:00Z'
+  event_type: unscheduled_corporate_news
+  representation_class: narrative_text
+  analysis_group: unscheduled_news
+  dataset_condition:
+    futures: available
+    equities: available
+  source_article_id: b70af7031968fbae1c63a249
+  source_timestamp_status: source_time_verified_alpha_mismatch
+  notes: NVIDIA–Intel partnership; GlobeNewswire clock is 07:00 ET. Alpha Vantage's date-midnight timestamp is eleven hours early.
+
+nvda_intel_placebo_20250917:
+  event_id: nvda_intel_placebo_20250917
+  time_utc: '2025-09-17T11:00:00Z'
+  event_type: matched_placebo
+  representation_class: placebo
+  analysis_group: unscheduled_news
+  dataset_condition:
+    futures: available
+    equities: available
+  notes: Prior-day same-clock NVDA control; no direct high-relevance NVDA article within one hour in the cached Alpha Vantage panel.
+
+meta_dividend_announcement:
+  event_id: meta_dividend_announcement_20250911
+  time_utc: '2025-09-11T20:35:00Z'
+  event_type: unscheduled_corporate_news
+  representation_class: numeric_corporate_announcement
+  analysis_group: unscheduled_news
+  dataset_condition:
+    futures: available
+    equities: available
+  source_article_id: 519c54b1b33c2eef79d4f929
+  source_timestamp_status: source_time_verified_alpha_mismatch
+  notes: Meta quarterly dividend declaration; original PR Newswire distribution is stamped 16:35 ET. This after-hours case is retained as a low-information and sparse-trading counterexample.
+
+meta_dividend_placebo_20250904:
+  event_id: meta_dividend_placebo_20250904
+  time_utc: '2025-09-04T20:35:00Z'
+  event_type: matched_placebo
+  representation_class: placebo
+  analysis_group: unscheduled_news
+  dataset_condition:
+    futures: available
+    equities: available
+  notes: Prior-week same-weekday and same-clock META control; no direct high-relevance META article within one hour in the cached Alpha Vantage panel.
+
+googl_qualcomm_announcement:
+  event_id: googl_qualcomm_announcement_20250908
+  time_utc: '2025-09-08T12:30:00Z'
+  event_type: unscheduled_corporate_news
+  representation_class: narrative_text
+  analysis_group: unscheduled_news
+  dataset_condition: {futures: available, equities: available}
+  source_article_id: 2275a2f15064d12f62457ff0
+  source_timestamp_status: source_time_verified_alpha_mismatch
+  notes: Google Cloud–Qualcomm collaboration; source is stamped 08:30 ET, four hours after the Alpha Vantage clock.
+
+googl_qualcomm_placebo_20250818:
+  event_id: googl_qualcomm_placebo_20250818
+  time_utc: '2025-08-18T12:30:00Z'
+  event_type: matched_placebo
+  representation_class: placebo
+  analysis_group: unscheduled_news
+  dataset_condition: {futures: available, equities: available}
+
+nvda_q4fy25_earnings:
+  event_id: nvda_q4fy25_earnings_20250226
+  time_utc: '2025-02-26T21:20:00Z'
+  event_type: scheduled_corporate_news
+  representation_class: multidimensional_numeric_corporate
+  analysis_group: unscheduled_news
+  dataset_condition: {futures: available, equities: available}
+  source_article_id: f3ede4ad4cc4855f33964c8a
+  source_timestamp_status: source_time_verified_alpha_mismatch
+  notes: Originating GlobeNewswire earnings release is stamped 16:20 ET; Alpha Vantage supplies a date-midnight placeholder.
+
+nvda_q4fy25_earnings_placebo_20250219:
+  event_id: nvda_q4fy25_earnings_placebo_20250219
+  time_utc: '2025-02-19T21:20:00Z'
+  event_type: matched_placebo
+  representation_class: placebo
+  analysis_group: unscheduled_news
+  dataset_condition: {futures: available, equities: available}
+
+amd_buyback_announcement:
+  event_id: amd_buyback_announcement_20250514
+  time_utc: '2025-05-14T13:00:00Z'
+  event_type: unscheduled_corporate_news
+  representation_class: scalar_numeric_corporate
+  analysis_group: unscheduled_news
+  dataset_condition: {futures: available, equities: available}
+  source_article_id: ee967f97ef7224ec196cbc5a
+  source_timestamp_status: source_time_verified_alpha_mismatch
+  notes: AMD $6 billion buyback authorization; source is stamped 09:00 ET, four hours after the Alpha Vantage clock.
+
+amd_buyback_placebo_20250507:
+  event_id: amd_buyback_placebo_20250507
+  time_utc: '2025-05-07T13:00:00Z'
+  event_type: matched_placebo
+  representation_class: placebo
+  analysis_group: unscheduled_news
+  dataset_condition: {futures: available, equities: available}
+
+amd_absci_announcement:
+  event_id: amd_absci_announcement_20250911
+  time_utc: '2025-09-11T12:00:00Z'
+  event_type: unscheduled_corporate_news
+  representation_class: narrative_text
+  analysis_group: unscheduled_news
+  dataset_condition: {futures: available, equities: available}
+  source_article_id: 4542d5583c823f3ca00f596d
+  source_timestamp_status: source_time_verified_alpha_mismatch
+  notes: Absci/Oracle/AMD collaboration; source is stamped 08:00 ET, four hours after the Alpha Vantage clock.
+
+amd_absci_placebo_20250904:
+  event_id: amd_absci_placebo_20250904
+  time_utc: '2025-09-04T12:00:00Z'
+  event_type: matched_placebo
+  representation_class: placebo
+  analysis_group: unscheduled_news
+  dataset_condition: {futures: available, equities: available}
