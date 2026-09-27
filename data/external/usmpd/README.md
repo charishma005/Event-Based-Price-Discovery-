@@ -1,7 +1,12 @@
 # USMPD monetary policy surprises
 
-Source: U.S. Monetary Policy Event-Study Database (USMPD), Michael Bauer and
-Caroline Foshee, Federal Reserve Bank of San Francisco.
+Source: U.S. Monetary Policy Event-Study Database (USMPD), Federal Reserve Bank
+of San Francisco, https://sffed.us/usmpd. Cite: Acosta, Ajello, Bauer, Loria,
+and Miranda-Agrippino (2025), "Financial Market Effects of FOMC Communication:
+Evidence from a New Event-Study Database," FRBSF Working Paper 2025-30. The
+factor scripts in `source_scripts/` are by Michael Bauer and Caroline Foshee.
+Coverage is FOMC communication only (statements, press conferences, minutes);
+there are no macro-release surprises.
 
 | File | Contents |
 | --- | --- |

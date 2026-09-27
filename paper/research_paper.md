@@ -132,7 +132,7 @@ The liquidity comparison challenges a schedule-specific interpretation. All five
 
 ### 4.8 Policy surprises, speed, and asymmetry
 
-H5 and H6 require a surprise sign and magnitude for each event. For FOMC meetings these come from the U.S. Monetary Policy Event-Study Database (USMPD) of Bauer and Foshee: the statement surprise (STMT) and press-conference surprise (PC) are the first principal component of intraday federal funds and eurodollar/SOFR futures changes, scaled to the one-year Treasury yield, and positive values are hawkish. Recomputing STMT from the USMPD futures reproduces the published series exactly. Because the published factors are estimated on the full 1994-2026 sample, each test is repeated with real-time factors that re-estimate the principal component and scaling using only events up to each meeting; for statements the two series have identical rankings across the twelve meetings. The GSS (2005) target and path factors are also reported. The raw MP1 surprise is exactly zero in seven of twelve meetings, and the target factor is positive in eleven of twelve, so neither can support a magnitude or sign test in this sample. These are market-implied surprises, not the proposal's realized-minus-consensus survey surprise, and with twelve meetings every estimate is suggestive.
+H5 and H6 require a surprise sign and magnitude for each event. For FOMC meetings these come from the U.S. Monetary Policy Event-Study Database (USMPD; Acosta, Ajello, Bauer, Loria, and Miranda-Agrippino, 2025): the statement surprise (STMT) and press-conference surprise (PC) are the first principal component of intraday federal funds and eurodollar/SOFR futures changes, scaled to the one-year Treasury yield, and positive values are hawkish. Recomputing STMT from the USMPD futures reproduces the published series exactly. Because the published factors are estimated on the full 1994-2026 sample, each test is repeated with real-time factors that re-estimate the principal component and scaling using only events up to each meeting; for statements the two series have identical rankings across the twelve meetings. The GSS (2005) target and path factors are also reported. The raw MP1 surprise is exactly zero in seven of twelve meetings, and the target factor is positive in eleven of twelve, so neither can support a magnitude or sign test in this sample. These are market-implied surprises, not the proposal's realized-minus-consensus survey surprise, and with twelve meetings every estimate is suggestive.
 
 H5 is not supported. After written statements, larger absolute surprises are associated with faster, not slower, 50% crossings: Spearman rho is -0.60 in ES (two-sided p = 0.050), -0.74 in NQ (p = 0.015), -0.30 in ZN (p = 0.34), and -0.79 for the meeting-average log horizon (p = 0.002). The December 18, 2024 meeting, the largest statement surprise in the sample and one driven almost entirely by the path factor (path 0.337 against target -0.001), reaches 50% of its five-minute move within one second in all three contracts. The sign weakens at the 90% crossing (meeting-average rho = -0.45) and vanishes for the stable-within-10% measure (0.08). Clear statement surprises are therefore priced almost immediately, while small surprises produce slower and noisier paths. At press-conference openings the evidence is mixed: the meeting-average correlation is positive (0.44, p = 0.15 with the published factor; 0.62, p = 0.033 with the real-time factor), but ES and NQ correlations are near zero and change sign across the two factor versions.
 
@@ -166,6 +166,8 @@ The minimum remaining input for a full proposal claim is a licensed vintage cons
 
 ## References
 
+Acosta, M., Ajello, A., Bauer, M., Loria, F., and Miranda-Agrippino, S. (2025). Financial market effects of FOMC communication: Evidence from a new event-study database. *Federal Reserve Bank of San Francisco Working Paper* 2025-30.
+
 Andersen, T., Bollerslev, T., Diebold, F., and Vega, C. (2003). Micro effects of macroeconomic announcements. *American Economic Review*.
 
 Balduzzi, P., Elton, E., and Green, T. C. (2001). Economic news and bond prices. *Journal of Financial and Quantitative Analysis*.
@@ -181,8 +183,6 @@ Hasbrouck, J. (1993). Assessing the quality of a security market. *Review of Fin
 Hasbrouck, J. (1995). One security, many markets. *Journal of Finance*.
 
 Kim, O., and Verrecchia, R. (1994). Market liquidity and volume around earnings announcements. *Journal of Accounting and Economics*.
-
-Bauer, M., and Foshee, C. U.S. Monetary Policy Event-Study Database (USMPD). Federal Reserve Bank of San Francisco.
 
 Kuttner, K. (2001). Monetary policy surprises and interest rates. *Journal of Monetary Economics*.
 

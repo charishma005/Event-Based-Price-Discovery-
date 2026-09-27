@@ -1,4 +1,4 @@
-"""High-frequency monetary policy surprises from the USMPD (Bauer and Foshee).
+"""High-frequency monetary policy surprises from the SF Fed USMPD (Acosta et al., 2025).
 
 ``mps.csv`` holds the published statement (STMT), press-conference (PC) and
 monetary-event (ME) surprises. When ``USMPD.xlsx`` is available locally, the
