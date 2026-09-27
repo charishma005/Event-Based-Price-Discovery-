@@ -2,7 +2,7 @@
 
 ## Bottom line
 
-The project is ready to submit as a serious empirical research draft, provided it is described as a twenty-month message-level study rather than the proposal's full five-to-ten-year implementation. Q1 is implemented directly; Q2-Q4 have credible descriptive or matched-control evidence; Q5 and H3/H5/H6 remain unidentified because Databento and Alpha Vantage do not contain vintage consensus distributions.
+The project is ready to submit as a serious empirical research draft, provided it is described as a twenty-month message-level study rather than the proposal's full five-to-ten-year implementation. Q1 is implemented directly; Q2-Q4 have credible descriptive or matched-control evidence; H3 remains unidentified because Databento and Alpha Vantage do not contain vintage consensus distributions; H5 and H6 are tested for FOMC meetings with USMPD policy surprises (H5 not supported, H6 inconclusive).
 
 ## Strong findings
 
@@ -20,7 +20,7 @@ The project is ready to submit as a serious empirical research draft, provided i
 
 ## Remaining work for a full proposal execution
 
-1. License vintage consensus and dispersion data for H3, H5, H6, and Q5.
+1. License vintage consensus and dispersion data for H3 and for macro-release versions of H5, H6, and Q5.
 2. Extend the sample toward five to ten years if the professor expects the originally proposed horizon.
 3. Expand corporate news using a random or pre-declared sampling rule with multiple controls per event.
 4. Add more MBP-10 windows if deeper-book population claims are required.

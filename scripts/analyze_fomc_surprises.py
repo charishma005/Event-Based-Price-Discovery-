@@ -93,11 +93,15 @@ def _h5_rows(data: pd.DataFrame) -> list[dict[str, object]]:
                 "observations": len(sample),
                 "spearman_rho_abs_surprise": np.nan,
                 "one_sided_p_positive": np.nan,
+                "two_sided_p": np.nan,
             }
             if len(sample) >= MIN_OBS and sample[measure].abs().nunique() > 1:
                 result = spearmanr(sample[measure].abs(), sample["seconds"], alternative="greater")
                 row["spearman_rho_abs_surprise"] = float(result.statistic)
                 row["one_sided_p_positive"] = float(result.pvalue)
+                row["two_sided_p"] = float(
+                    spearmanr(sample[measure].abs(), sample["seconds"]).pvalue
+                )
             rows.append(row)
     return rows
 

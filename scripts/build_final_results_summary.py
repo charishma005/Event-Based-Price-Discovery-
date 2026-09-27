@@ -99,8 +99,8 @@ def main() -> None:
             ["H2", "Supported in sample", "Narrative first-quote share is below 40%", "statement p=4.2e-6; press p=3.5e-7"],
             ["H3", "Not identified", "Needs vintage forecast dispersion", "Unavailable from current providers"],
             ["H4", "Partly supported", "Withdrawal occurs before scheduled events", "FOMC p=0.00024; macro p=1.9e-6; unscheduled also p=0.031"],
-            ["H5", "Not identified", "Needs standardized surprise magnitudes", "Unavailable from current providers"],
-            ["H6", "Not identified", "Needs signed, magnitude-matched surprises", "Unavailable from current providers"],
+            ["H5", "Not supported", "FOMC statement horizons shorten, not lengthen, with |surprise|", "STMT meeting-average rho=-0.79, two-sided p=0.002; press mixed"],
+            ["H6", "Inconclusive", "Hawkish press surprises slower only in ES/NQ 50% crossings", "ES p=0.003, NQ p=0.012; absent at 90%/stable, in ZN and statements"],
         ],
         columns=["hypothesis", "status", "finding", "evidence"],
     )
@@ -110,7 +110,7 @@ def main() -> None:
             ["Q2", "Completed descriptively", "Crossing, stable-band, and overshoot metrics; paired speed tests"],
             ["Q3", "Completed descriptively", "100 ms timing and first-material-move tests; no structural information share"],
             ["Q4", "Completed with caveat", "Touch and selected MBP-10 depth plus scheduled and corporate placebos"],
-            ["Q5", "Not identified", "Vintage consensus surprise sign and magnitude are unavailable"],
+            ["Q5", "Partly answered", "FOMC only, via USMPD policy surprises; macro needs vintage consensus"],
         ],
         columns=["question", "status", "evidence"],
     )
@@ -123,7 +123,7 @@ def main() -> None:
 
 ## Bottom line
 
-The project is ready to submit as a serious empirical research draft, provided it is described as a twenty-month message-level study rather than the proposal's full five-to-ten-year implementation. Q1 is implemented directly; Q2-Q4 have credible descriptive or matched-control evidence; Q5 and H3/H5/H6 remain unidentified because Databento and Alpha Vantage do not contain vintage consensus distributions.
+The project is ready to submit as a serious empirical research draft, provided it is described as a twenty-month message-level study rather than the proposal's full five-to-ten-year implementation. Q1 is implemented directly; Q2-Q4 have credible descriptive or matched-control evidence; H3 remains unidentified because Databento and Alpha Vantage do not contain vintage consensus distributions; H5 and H6 are tested for FOMC meetings with USMPD policy surprises (H5 not supported, H6 inconclusive).
 
 ## Strong findings
 
@@ -141,7 +141,7 @@ The project is ready to submit as a serious empirical research draft, provided i
 
 ## Remaining work for a full proposal execution
 
-1. License vintage consensus and dispersion data for H3, H5, H6, and Q5.
+1. License vintage consensus and dispersion data for H3 and for macro-release versions of H5, H6, and Q5.
 2. Extend the sample toward five to ten years if the professor expects the originally proposed horizon.
 3. Expand corporate news using a random or pre-declared sampling rule with multiple controls per event.
 4. Add more MBP-10 windows if deeper-book population claims are required.
