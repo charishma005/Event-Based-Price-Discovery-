@@ -398,7 +398,7 @@ def _build_story() -> list[object]:
                 )
             )
             inserted.add("corporate_news")
-        if current_heading == "4.8 Proposal-wide hypothesis assessment" and "cannot be estimated" in line and "hypothesis_status" not in inserted:
+        if current_heading == "4.9 Proposal-wide hypothesis assessment" and "cannot be estimated" in line and "hypothesis_status" not in inserted:
             flush()
             hypothesis_table = pd.read_csv(PROJECT_ROOT / "tables" / "hypothesis_status.csv")
             story.extend(

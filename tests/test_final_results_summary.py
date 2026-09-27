@@ -11,7 +11,21 @@ def test_hypothesis_status_distinguishes_unidentified_from_rejected() -> None:
     )
     assert status.loc["H1", "status"] == "Rejected"
     assert status.loc["H2", "status"] == "Supported in sample"
-    assert status.loc[["H3", "H5", "H6"], "status"].eq("Not identified").all()
+    assert status.loc["H3", "status"] == "Not identified"
+    assert status.loc["H5", "status"] == "Not supported"
+    assert status.loc["H6", "status"] == "Inconclusive"
+
+
+def test_h5_claim_matches_surprise_speed_table() -> None:
+    h5 = pd.read_csv(PROJECT_ROOT / "tables" / "fomc_h5_surprise_speed.csv")
+    row = h5.loc[
+        h5["subevent"].eq("statement")
+        & h5["metric"].eq("first_crossing_50_seconds")
+        & h5["instrument"].eq("meeting_average")
+        & h5["measure"].eq("STMT")
+    ].iloc[0]
+    assert row["spearman_rho_abs_surprise"] < 0
+    assert row["two_sided_p"] < 0.01
 
 
 def test_h2_and_speed_claims_match_reproducible_tables() -> None:
