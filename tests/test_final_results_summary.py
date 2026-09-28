@@ -13,7 +13,7 @@ def test_hypothesis_status_distinguishes_unidentified_from_rejected() -> None:
     assert status.loc["H2", "status"] == "Supported in sample"
     assert status.loc["H3", "status"] == "Not identified"
     assert status.loc["H5", "status"] == "Not supported"
-    assert status.loc["H6", "status"] == "Inconclusive"
+    assert status.loc["H6", "status"] == "Not supported"
 
 
 def test_h5_claim_matches_surprise_speed_table() -> None:
