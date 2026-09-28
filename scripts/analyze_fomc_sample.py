@@ -238,14 +238,14 @@ def main() -> None:
     impacts, mechanisms = _mechanism_rows(timing, horizons, intervals)
     summary = _summary_table(mechanisms)
     speed = _speed_metrics(intervals, horizons)
-    for name, frame in (
+    for table, frame in (
         ("impact_coefficients_loo", impacts),
         ("mechanism_estimates_loo", mechanisms),
         ("mechanism_summary_60s", summary),
         ("speed_metrics", speed),
     ):
-        frame.to_parquet(root / f"{name}.parquet", index=False)
-        frame.to_csv(root / f"{name}.csv", index=False)
+        frame.to_parquet(root / f"{table}.parquet", index=False)
+        frame.to_csv(root / f"{table}.csv", index=False)
     figure_dir = PROJECT_ROOT / "figures" / name
     figure_dir.mkdir(parents=True, exist_ok=True)
     _response_figure(horizons, figure_dir / "fomc_response_60s_heatmap.png")

@@ -43,7 +43,9 @@ def main() -> None:
         "--meetings", nargs="*", help="Optional meeting labels; default processes every cached meeting"
     )
     parser.add_argument("--config", default="fomc_sample.yaml", help="File under config/")
-    parser.add_argument("--output-dir", help="Folder under data/processed/ (default: config name)")
+    parser.add_argument(
+        "--output-name", default="fomc_sample", help="Folder under data/processed/"
+    )
     args = parser.parse_args()
     try:
         import databento as db
@@ -142,7 +144,7 @@ def main() -> None:
 
     if not timing_rows:
         raise RuntimeError("No cached FOMC sample files matched the configured windows")
-    output = PROJECT_ROOT / "data" / "processed" / (args.output_dir or args.config.removesuffix(".yaml"))
+    output = PROJECT_ROOT / "data" / "processed" / args.output_name
     output.mkdir(parents=True, exist_ok=True)
     products = {
         "timing_liquidity": pd.DataFrame(timing_rows),
