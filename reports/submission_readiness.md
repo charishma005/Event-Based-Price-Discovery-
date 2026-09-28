@@ -2,13 +2,13 @@
 
 ## Bottom line
 
-The project is ready to submit as a serious empirical research draft, provided it is described as a twenty-month message-level study rather than the proposal's full five-to-ten-year implementation. Q1 is implemented directly; Q2-Q4 have credible descriptive or matched-control evidence; H3 remains unidentified because Databento and Alpha Vantage do not contain vintage consensus distributions; H5 and H6 are tested for FOMC meetings with USMPD policy surprises (H5 not supported, H6 inconclusive).
+The project is ready to submit as a serious empirical research draft, provided it is described as a twenty-month message-level study rather than the proposal's full five-to-ten-year implementation. Q1 is implemented directly; Q2-Q4 have credible descriptive or matched-control evidence; H3 remains unidentified because Databento and Alpha Vantage do not contain vintage consensus distributions; H5 and H6 are tested for FOMC meetings with USMPD policy surprises (H5 not supported, H6 not supported). A 93-meeting (2015-2026) FOMC extension confirms H2 and H4 at scale and shows the original 12-meeting H6 asymmetry does not replicate.
 
 ## Strong findings
 
 - H1 is rejected under the proposal's literal first-quote definition. The quote fraction is near zero, not above 70%.
-- H2 is supported in the current FOMC sample. Every eligible 60-second statement and press observation has an absolute first-quote fraction below 40%.
-- Scheduled depth withdrawal is highly significant in independent FOMC and macro samples.
+- H2 is supported in the current FOMC sample and strengthens under the 93-meeting (2015-2026) extension (statement p=2.40e-32, press p=1.80e-34).
+- Scheduled depth withdrawal is highly significant in independent FOMC and macro samples, and holds at 93 meetings (statement p=4.07e-17, press p=2.72e-8).
 - Written statements reach 50% of their five-minute move faster than press openings by paired Wilcoxon tests in ES, NQ, and ZN.
 
 ## Important qualifications
