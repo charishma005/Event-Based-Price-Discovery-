@@ -42,13 +42,15 @@ def main() -> None:
     parser.add_argument(
         "--meetings", nargs="*", help="Optional meeting labels; default processes every cached meeting"
     )
+    parser.add_argument("--config", default="fomc_sample.yaml", help="File under config/")
+    parser.add_argument("--output-dir", help="Folder under data/processed/ (default: config name)")
     args = parser.parse_args()
     try:
         import databento as db
     except ImportError as exc:
         raise RuntimeError("Install requirements.txt before reading DBN") from exc
 
-    config = load_yaml(PROJECT_ROOT / "config" / "fomc_sample.yaml")
+    config = load_yaml(PROJECT_ROOT / "config" / args.config)
     selected = set(args.meetings or [])
     timing_rows: list[dict[str, object]] = []
     horizon_frames: list[pd.DataFrame] = []
@@ -86,14 +88,17 @@ def main() -> None:
                 }
             )
             statement_time = pd.Timestamp(meeting["statement_time_utc"])
-            for subevent, event_time, representation in (
-                ("statement", statement_time, "narrative_text"),
-                (
-                    "press_conference",
-                    pd.Timestamp(meeting["press_conference_time_utc"]),
-                    "extemporaneous_speech",
-                ),
-            ):
+            subevents = [("statement", statement_time, "narrative_text")]
+            # Before 2019 most meetings had no press conference.
+            if meeting.get("press_conference_time_utc"):
+                subevents.append(
+                    (
+                        "press_conference",
+                        pd.Timestamp(meeting["press_conference_time_utc"]),
+                        "extemporaneous_speech",
+                    )
+                )
+            for subevent, event_time, representation in subevents:
                 event_label = f"{label}_{subevent}"
                 timing = timing_and_liquidity_summary(
                     messages, event_time, instrument, event_label
@@ -137,7 +142,7 @@ def main() -> None:
 
     if not timing_rows:
         raise RuntimeError("No cached FOMC sample files matched the configured windows")
-    output = PROJECT_ROOT / "data" / "processed" / "fomc_sample"
+    output = PROJECT_ROOT / "data" / "processed" / (args.output_dir or args.config.removesuffix(".yaml"))
     output.mkdir(parents=True, exist_ok=True)
     products = {
         "timing_liquidity": pd.DataFrame(timing_rows),
