@@ -208,18 +208,20 @@ MPLCONFIGDIR=/tmp/t3-mpl-cache python -m scripts.make_paper_outputs
 
 To reproduce provider retrieval rather than use the cache, first run `python -m scripts.download_fomc_sample` and `python -m scripts.download_fomc_placebos` without `--execute`. They print every window, byte estimate, price estimate, and cache status. The five added meeting windows were estimated at 947.42 MiB and the ten added controls at 287.17 MiB; both portfolios were $0.00 and every individual request passed the guard.
 
-10b. Extend the FOMC sample to 2015-2025 (87 scheduled meetings, 71 with press conferences) and rerun H5/H6 against the USMPD surprises. `config/fomc_sample_2015.yaml` is generated from the USMPD statement and press-conference clocks; pre-2019 meetings without a press conference get a statement-only window. Every step writes to `fomc_sample_2015` folders and `_2015` tables, so the 2024-2025 results are untouched. At roughly 190 MiB per meeting window, expect about 15-17 GB of raw DBN files.
+10b. Extend the FOMC sample to 2015 through September 2026 (93 scheduled meetings, 77 with press conferences) and rerun H5/H6 against the USMPD surprises. `config/fomc_sample_2015_2026.yaml` is generated from the USMPD statement and press-conference clocks; pre-2019 meetings without a press conference get a statement-only window. fomc_20240918 is marked `degraded` by hand, as in the 2024-2025 config; regenerating the config drops that flag unless it comes from a `--conditions` report. Every step writes to `fomc_sample_2015_2026` folders and `_2015_2026` tables, so the 2024-2025 results are untouched. At roughly 200 MiB per meeting window, expect about 18-19 GB of raw DBN files.
 
 ```bash
 python -m scripts.build_fomc_sample_config                       # already committed; rerun only to change dates
-python -m scripts.audit_macro_conditions --config fomc_sample_2015.yaml --output fomc_2015_dataset_conditions.json
-python -m scripts.build_fomc_sample_config --conditions fomc_2015_dataset_conditions.json
-python -m scripts.download_fomc_sample --config fomc_sample_2015.yaml             # estimate only
-python -m scripts.download_fomc_sample --config fomc_sample_2015.yaml --execute   # after reviewing cost
-MPLCONFIGDIR=/tmp/t3-mpl-cache python -m scripts.process_fomc_sample --config fomc_sample_2015.yaml
-MPLCONFIGDIR=/tmp/t3-mpl-cache python -m scripts.analyze_fomc_sample --config fomc_sample_2015.yaml
-python -m scripts.analyze_fomc_surprises --config fomc_sample_2015.yaml
+python -m scripts.audit_macro_conditions --config fomc_sample_2015_2026.yaml --output fomc_2015_2026_dataset_conditions.json
+python -m scripts.build_fomc_sample_config --conditions fomc_2015_2026_dataset_conditions.json
+python -m scripts.download_fomc_sample --config fomc_sample_2015_2026.yaml             # estimate only
+python -m scripts.download_fomc_sample --config fomc_sample_2015_2026.yaml --execute   # after reviewing cost
+MPLCONFIGDIR=/tmp/t3-mpl-cache python -m scripts.process_fomc_sample --config fomc_sample_2015_2026.yaml --output-name fomc_sample_2015_2026
+MPLCONFIGDIR=/tmp/t3-mpl-cache python -m scripts.analyze_fomc_sample --config fomc_sample_2015_2026.yaml
+python -m scripts.analyze_fomc_surprises --config fomc_sample_2015_2026.yaml
 ```
+
+`process_fomc_sample` writes to `data/processed/fomc_sample` unless `--output-name` is given, so always pass it for other configs.
 
 11. Reproduce the January 2024-August 2025 macro sample, sub-second flow models, and the independently screened 8:30 a.m. controls:
 

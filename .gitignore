@@ -36,3 +36,11 @@ data/processed/fomc_sample_2015_2026/*
 !data/processed/fomc_sample_2015_2026/response_horizons.csv
 !data/processed/fomc_sample_2015_2026/timing_liquidity.csv
 !figures/fomc_sample_2015_2026/
+
+# Superseded by the 2015-2026 sample; kept locally only.
+config/fomc_sample_2015.yaml
+config/fomc_sample_2015_2023.yaml
+tables/*_2015.csv
+tables/*_2015.tex
+tables/*_2015_2023.csv
+tables/*_2015_2023.tex
