@@ -53,6 +53,7 @@ POLICY_CHANGES_BPS = {
     "2025-09-17": -25,
     "2025-10-29": -25,
     "2025-12-10": -25,
+    "2026-09-16": 25,
 }
 PRE_EVENT = pd.Timedelta(minutes=5)
 POST_PRESS = pd.Timedelta(minutes=10)
@@ -109,8 +110,8 @@ def build_meetings(start: str, end: str, conditions: dict[str, str] | None = Non
 def main() -> None:
     parser = argparse.ArgumentParser(description="Write an FOMC sample config from USMPD event times")
     parser.add_argument("--start", default="2015-01-01")
-    parser.add_argument("--end", default="2025-12-31")
-    parser.add_argument("--output", default="fomc_sample_2015.yaml", help="File under config/")
+    parser.add_argument("--end", default="2026-09-30")
+    parser.add_argument("--output", default="fomc_sample_2015_2026.yaml", help="File under config/")
     parser.add_argument("--conditions", help="Condition report under reports/ from audit_macro_conditions.py")
     args = parser.parse_args()
 

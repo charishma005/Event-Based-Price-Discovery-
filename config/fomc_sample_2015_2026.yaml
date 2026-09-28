@@ -603,6 +603,7 @@ meetings:
   request_end_utc: '2024-09-18T18:40:00Z'
   sep_release: true
   policy_change_bps: -50
+  dataset_condition: degraded
 - label: fomc_20241107
   meeting_date: '2024-11-07'
   statement_time_utc: '2024-11-07T19:00:00Z'
@@ -683,3 +684,51 @@ meetings:
   request_end_utc: '2025-12-10T19:40:00Z'
   sep_release: true
   policy_change_bps: -25
+- label: fomc_20260128
+  meeting_date: '2026-01-28'
+  statement_time_utc: '2026-01-28T19:00:00Z'
+  press_conference_time_utc: '2026-01-28T19:30:00Z'
+  request_start_utc: '2026-01-28T18:55:00Z'
+  request_end_utc: '2026-01-28T19:40:00Z'
+  sep_release: false
+  policy_change_bps: 0
+- label: fomc_20260318
+  meeting_date: '2026-03-18'
+  statement_time_utc: '2026-03-18T18:00:00Z'
+  press_conference_time_utc: '2026-03-18T18:30:00Z'
+  request_start_utc: '2026-03-18T17:55:00Z'
+  request_end_utc: '2026-03-18T18:40:00Z'
+  sep_release: true
+  policy_change_bps: 0
+- label: fomc_20260429
+  meeting_date: '2026-04-29'
+  statement_time_utc: '2026-04-29T18:00:00Z'
+  press_conference_time_utc: '2026-04-29T18:30:00Z'
+  request_start_utc: '2026-04-29T17:55:00Z'
+  request_end_utc: '2026-04-29T18:40:00Z'
+  sep_release: false
+  policy_change_bps: 0
+- label: fomc_20260617
+  meeting_date: '2026-06-17'
+  statement_time_utc: '2026-06-17T18:00:00Z'
+  press_conference_time_utc: '2026-06-17T18:30:00Z'
+  request_start_utc: '2026-06-17T17:55:00Z'
+  request_end_utc: '2026-06-17T18:40:00Z'
+  sep_release: true
+  policy_change_bps: 0
+- label: fomc_20260729
+  meeting_date: '2026-07-29'
+  statement_time_utc: '2026-07-29T18:00:00Z'
+  press_conference_time_utc: '2026-07-29T18:30:00Z'
+  request_start_utc: '2026-07-29T17:55:00Z'
+  request_end_utc: '2026-07-29T18:40:00Z'
+  sep_release: false
+  policy_change_bps: 0
+- label: fomc_20260916
+  meeting_date: '2026-09-16'
+  statement_time_utc: '2026-09-16T18:00:00Z'
+  press_conference_time_utc: '2026-09-16T18:30:00Z'
+  request_start_utc: '2026-09-16T17:55:00Z'
+  request_end_utc: '2026-09-16T18:40:00Z'
+  sep_release: true
+  policy_change_bps: 25

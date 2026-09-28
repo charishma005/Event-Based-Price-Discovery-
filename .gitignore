@@ -28,10 +28,19 @@ data/processed/fomc_sample/*
 !data/processed/fomc_sample/raw_coverage.csv
 !data/processed/fomc_sample/response_horizons.csv
 !data/processed/fomc_sample/timing_liquidity.csv
-!data/processed/fomc_sample_2015/
-data/processed/fomc_sample_2015/*
-!data/processed/fomc_sample_2015/speed_metrics.parquet
-!data/processed/fomc_sample_2015/mechanism_summary_60s.parquet
-!data/processed/fomc_sample_2015/raw_coverage.csv
-!data/processed/fomc_sample_2015/response_horizons.csv
-!data/processed/fomc_sample_2015/timing_liquidity.csv
+!data/processed/fomc_sample_2015_2026/
+data/processed/fomc_sample_2015_2026/*
+!data/processed/fomc_sample_2015_2026/speed_metrics.parquet
+!data/processed/fomc_sample_2015_2026/mechanism_summary_60s.parquet
+!data/processed/fomc_sample_2015_2026/raw_coverage.csv
+!data/processed/fomc_sample_2015_2026/response_horizons.csv
+!data/processed/fomc_sample_2015_2026/timing_liquidity.csv
+!figures/fomc_sample_2015_2026/
+
+# Superseded by the 2015-2026 sample; kept locally only.
+config/fomc_sample_2015.yaml
+config/fomc_sample_2015_2023.yaml
+tables/*_2015.csv
+tables/*_2015.tex
+tables/*_2015_2023.csv
+tables/*_2015_2023.tex

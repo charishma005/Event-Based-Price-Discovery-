@@ -1,0 +1,9 @@
+subevent,instrument,observations,meetings,median_absolute_quote_fraction,count_below_40pct,one_sided_wilcoxon_below_40pct_p
+press_conference,ES.v.0,61,61,0.0,61,1.6226718897313782e-14
+press_conference,NQ.v.0,67,67,0.0,66,1.2973239613837984e-12
+press_conference,ZN.v.0,46,46,0.0,46,1.4210854715202004e-14
+press_conference,pooled,174,75,0.0,173,1.8014468017722566e-34
+statement,ES.v.0,54,54,0.0,54,1.6092111303980787e-13
+statement,NQ.v.0,46,46,0.0,46,1.4210854715202004e-14
+statement,ZN.v.0,55,55,0.0,55,2.2735927627127617e-13
+statement,pooled,155,84,0.0,155,2.395214231337864e-32
