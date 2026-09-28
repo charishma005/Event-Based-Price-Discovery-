@@ -13,9 +13,10 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Cost-estimate or retrieve FOMC meeting windows")
     parser.add_argument("--execute", action="store_true")
     parser.add_argument("--meetings", nargs="*")
+    parser.add_argument("--config", default="fomc_sample.yaml", help="File under config/")
     args = parser.parse_args()
     selected = set(args.meetings or [])
-    config = load_yaml(PROJECT_ROOT / "config" / "fomc_sample.yaml")
+    config = load_yaml(PROJECT_ROOT / "config" / args.config)
     estimates = []
     for meeting in config["meetings"]:
         if selected and meeting["label"] not in selected:

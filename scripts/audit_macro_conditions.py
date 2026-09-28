@@ -13,7 +13,9 @@ def main() -> None:
     parser.add_argument("--output", default="macro_dataset_conditions.json", help="File under reports/")
     args = parser.parse_args()
     config = load_yaml(PROJECT_ROOT / "config" / args.config)
-    dates = sorted({event["event_date"] for event in config["events"]})
+    # Macro configs list "events"; FOMC configs list "meetings".
+    items = config.get("events") or config.get("meetings") or []
+    dates = sorted({item.get("event_date") or item["meeting_date"] for item in items})
     conditions = historical_client().metadata.get_dataset_condition(
         dataset="GLBX.MDP3",
         start_date=dates[0],

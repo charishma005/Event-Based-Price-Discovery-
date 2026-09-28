@@ -15,6 +15,8 @@ With only 10-12 meetings these tests are suggestive, not confirmatory.
 
 from __future__ import annotations
 
+import argparse
+
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
@@ -33,8 +35,8 @@ MEASURES = {
 MIN_OBS = 6
 
 
-def _meetings() -> pd.DataFrame:
-    config = load_yaml(PROJECT_ROOT / "config" / "fomc_sample.yaml")
+def _meetings(config_name: str = "fomc_sample.yaml") -> pd.DataFrame:
+    config = load_yaml(PROJECT_ROOT / "config" / config_name)
     return pd.DataFrame(
         [
             {
@@ -56,10 +58,8 @@ def _check_recomputation(panel: pd.DataFrame) -> None:
         raise ValueError("Recomputed STMT does not match mps.csv; check USMPD/y1 vintages")
 
 
-def _speed_panel(surprises: pd.DataFrame) -> pd.DataFrame:
-    speed = pd.read_parquet(
-        PROJECT_ROOT / "data" / "processed" / "fomc_sample" / "speed_metrics.parquet"
-    )
+def _speed_panel(surprises: pd.DataFrame, speed_path) -> pd.DataFrame:
+    speed = pd.read_parquet(speed_path)
     speed = speed.loc[speed["instrument"].isin(INSTRUMENTS)]
     long = speed.melt(
         id_vars=["meeting", "subevent", "instrument"],
@@ -158,13 +158,22 @@ def _write(frame: pd.DataFrame, name: str) -> None:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Test H5/H6 against USMPD policy surprises")
+    parser.add_argument("--config", default="fomc_sample.yaml", help="File under config/")
+    parser.add_argument("--root", help="Folder under data/processed/ (default: config name)")
+    parser.add_argument("--suffix", help="Appended to table names (default: config name after fomc_sample)")
+    args = parser.parse_args()
+    stem = args.config.removesuffix(".yaml")
+    root = args.root or stem
+    suffix = args.suffix if args.suffix is not None else stem.removeprefix("fomc_sample")
+
     (PROJECT_ROOT / "tables").mkdir(parents=True, exist_ok=True)
-    panel = build_surprise_panel(_meetings())
+    panel = build_surprise_panel(_meetings(args.config))
     _check_recomputation(panel)
     missing = panel.loc[panel["STMT"].isna(), "meeting"].tolist()
     if missing:
         print(f"Meetings without a USMPD statement surprise: {missing}")
-    _write(panel.drop(columns=["STMT_recomputed"], errors="ignore"), "fomc_surprise_panel")
+    _write(panel.drop(columns=["STMT_recomputed"], errors="ignore"), f"fomc_surprise_panel{suffix}")
     if "MP1" not in panel:
         print("USMPD.xlsx not found: MP1, GSS target/path and real-time factors skipped")
     mps = load_mps()
@@ -173,7 +182,7 @@ def main() -> None:
         f"STMT={mps['STMT'].std():.4f}, PC={mps['PC'].std():.4f}"
     )
 
-    speed_path = PROJECT_ROOT / "data" / "processed" / "fomc_sample" / "speed_metrics.parquet"
+    speed_path = PROJECT_ROOT / "data" / "processed" / root / "speed_metrics.parquet"
     if not speed_path.exists():
         print(f"{speed_path} not found; run scripts/analyze_fomc_sample.py first")
         return
@@ -181,11 +190,11 @@ def main() -> None:
     surprises = panel.loc[panel["dataset_condition"].eq("available")].drop(
         columns=["meeting_date", "dataset_condition", "STMT_recomputed"], errors="ignore"
     )
-    data = _speed_panel(surprises)
+    data = _speed_panel(surprises, speed_path)
     h5 = pd.DataFrame(_h5_rows(data))
     h6 = pd.DataFrame(_h6_rows(data))
-    _write(h5, "fomc_h5_surprise_speed")
-    _write(h6, "fomc_h6_surprise_asymmetry")
+    _write(h5, f"fomc_h5_surprise_speed{suffix}")
+    _write(h6, f"fomc_h6_surprise_asymmetry{suffix}")
 
     headline = h5.loc[
         h5["metric"].eq("first_crossing_50_seconds") & h5["instrument"].eq("meeting_average")

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import argparse
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -47,11 +49,14 @@ def _mechanism_rows(
                 }
             )
             for subevent in ("statement", "press_conference"):
-                timing_row = timing.loc[
+                timing_rows = timing.loc[
                     timing["meeting"].eq(meeting)
                     & timing["instrument"].eq(instrument)
                     & timing["subevent"].eq(subevent)
-                ].iloc[0]
+                ]
+                if timing_rows.empty:  # e.g. no press conference before 2019
+                    continue
+                timing_row = timing_rows.iloc[0]
                 event_horizons = horizons.loc[
                     horizons["meeting"].eq(meeting)
                     & horizons["instrument"].eq(instrument)
@@ -221,7 +226,12 @@ def _response_figure(horizons: pd.DataFrame, output) -> None:
 
 
 def main() -> None:
-    root = PROJECT_ROOT / "data" / "processed" / "fomc_sample"
+    parser = argparse.ArgumentParser(description="Analyze processed FOMC tick summaries")
+    parser.add_argument("--config", default="fomc_sample.yaml", help="Config whose output to analyze")
+    parser.add_argument("--root", help="Folder under data/processed/ (default: config name)")
+    args = parser.parse_args()
+    name = args.root or args.config.removesuffix(".yaml")
+    root = PROJECT_ROOT / "data" / "processed" / name
     timing = pd.read_parquet(root / "timing_liquidity.parquet")
     horizons = pd.read_parquet(root / "response_horizons.parquet")
     intervals = pd.read_parquet(root / "one_second_intervals.parquet")
@@ -236,7 +246,7 @@ def main() -> None:
     ):
         frame.to_parquet(root / f"{name}.parquet", index=False)
         frame.to_csv(root / f"{name}.csv", index=False)
-    figure_dir = PROJECT_ROOT / "figures" / "fomc_sample"
+    figure_dir = PROJECT_ROOT / "figures" / name
     figure_dir.mkdir(parents=True, exist_ok=True)
     _response_figure(horizons, figure_dir / "fomc_response_60s_heatmap.png")
     print(
