@@ -53,6 +53,7 @@ POLICY_CHANGES_BPS = {
     "2025-09-17": -25,
     "2025-10-29": -25,
     "2025-12-10": -25,
+    "2026-09-16": 25,
 }
 PRE_EVENT = pd.Timedelta(minutes=5)
 POST_PRESS = pd.Timedelta(minutes=10)

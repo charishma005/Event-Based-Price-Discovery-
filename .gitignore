@@ -43,3 +43,12 @@ data/processed/fomc_sample_2015_2023/*
 !data/processed/fomc_sample_2015_2023/response_horizons.csv
 !data/processed/fomc_sample_2015_2023/timing_liquidity.csv
 !figures/fomc_sample_2015_2023/
+!data/processed/fomc_sample_2015_2026/
+data/processed/fomc_sample_2015_2026/*
+!data/processed/fomc_sample_2015_2026/speed_metrics.parquet
+!data/processed/fomc_sample_2015_2026/mechanism_summary_60s.parquet
+!data/processed/fomc_sample_2015_2026/raw_coverage.csv
+!data/processed/fomc_sample_2015_2026/response_horizons.csv
+!data/processed/fomc_sample_2015_2026/timing_liquidity.csv
+!figures/fomc_sample_2015/
+!figures/fomc_sample_2015_2026/
