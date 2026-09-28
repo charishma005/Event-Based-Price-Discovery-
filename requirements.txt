@@ -11,3 +11,4 @@ PyYAML>=6,<7
 python-dotenv>=1,<2
 pytest>=8,<9
 
+openpyxl>=3.1
