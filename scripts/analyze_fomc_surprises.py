@@ -11,6 +11,14 @@ Inputs:
 - data/processed/fomc_sample/speed_metrics.parquet (from analyze_fomc_sample.py)
 
 With only 10-12 meetings these tests are suggestive, not confirmatory.
+
+Every H5/H6 table carries Holm and Benjamini-Hochberg adjusted p-values across
+all cells of that table. Two robustness variants address known artifacts:
+``equity_average`` averages ES and NQ only, because the USMPD surprise is built
+from rate-futures moves in the same window as the ZN outcome; and the
+``_large_moves`` tables drop observations whose five-minute move is near zero or
+in the bottom quartile of its subevent/instrument cell, because a crossing time
+defined as a fraction of a tiny terminal move is mostly noise.
 """
 
 from __future__ import annotations
@@ -21,6 +29,7 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 from scipy.stats import mannwhitneyu, spearmanr
+from statsmodels.stats.multitest import multipletests
 
 from src.events.surprises import build_surprise_panel, load_mps
 from src.utils.config import PROJECT_ROOT, load_yaml
@@ -33,6 +42,8 @@ MEASURES = {
     "press_conference": ("PC", "PC_real_time"),
 }
 MIN_OBS = 6
+EQUITY = ("ES.v.0", "NQ.v.0")
+SMALL_MOVE_QUANTILE = 0.25
 
 
 def _meetings(config_name: str = "fomc_sample.yaml") -> pd.DataFrame:
@@ -58,8 +69,16 @@ def _check_recomputation(panel: pd.DataFrame) -> None:
         raise ValueError("Recomputed STMT does not match mps.csv; check USMPD/y1 vintages")
 
 
-def _speed_panel(surprises: pd.DataFrame, speed_path) -> pd.DataFrame:
-    speed = pd.read_parquet(speed_path)
+def _large_moves(speed: pd.DataFrame) -> pd.DataFrame:
+    """Drop near-zero moves and the bottom quartile of |5-minute move| per cell."""
+    magnitude = speed["terminal_300s_bp"].abs()
+    cutoff = magnitude.groupby([speed["subevent"], speed["instrument"]]).transform(
+        lambda values: values.quantile(SMALL_MOVE_QUANTILE)
+    )
+    return speed.loc[~speed["near_zero_terminal"].astype(bool) & magnitude.gt(cutoff)]
+
+
+def _speed_panel(surprises: pd.DataFrame, speed: pd.DataFrame) -> pd.DataFrame:
     speed = speed.loc[speed["instrument"].isin(INSTRUMENTS)]
     long = speed.melt(
         id_vars=["meeting", "subevent", "instrument"],
@@ -68,14 +87,32 @@ def _speed_panel(surprises: pd.DataFrame, speed_path) -> pd.DataFrame:
         value_name="seconds",
     ).dropna(subset=["seconds"])
     long["log_seconds"] = np.log1p(long["seconds"])
-    # Cross-instrument summary: mean log horizon per meeting, as in the depth tables.
-    average = (
-        long.groupby(["meeting", "subevent", "metric"], as_index=False)["log_seconds"]
-        .mean()
-        .assign(instrument="meeting_average")
-    )
-    average["seconds"] = np.expm1(average["log_seconds"])
-    return pd.concat([long, average], ignore_index=True).merge(surprises, on="meeting")
+    # Cross-instrument summaries: mean log horizon per meeting, as in the depth
+    # tables, over all three contracts and over the two equity contracts only.
+    averages = []
+    for label, members in (("meeting_average", INSTRUMENTS), ("equity_average", EQUITY)):
+        average = (
+            long.loc[long["instrument"].isin(members)]
+            .groupby(["meeting", "subevent", "metric"], as_index=False)["log_seconds"]
+            .mean()
+            .assign(instrument=label)
+        )
+        average["seconds"] = np.expm1(average["log_seconds"])
+        averages.append(average)
+    return pd.concat([long, *averages], ignore_index=True).merge(surprises, on="meeting")
+
+
+def _adjust(frame: pd.DataFrame, column: str) -> pd.DataFrame:
+    """Holm and Benjamini-Hochberg adjustment across every cell of one table."""
+    frame = frame.copy()
+    frame["holm_p"] = np.nan
+    frame["bh_q"] = np.nan
+    tested = frame[column].notna()
+    if tested.any():
+        values = frame.loc[tested, column].to_numpy()
+        frame.loc[tested, "holm_p"] = multipletests(values, method="holm")[1]
+        frame.loc[tested, "bh_q"] = multipletests(values, method="fdr_bh")[1]
+    return frame
 
 
 def _h5_rows(data: pd.DataFrame) -> list[dict[str, object]]:
@@ -190,11 +227,24 @@ def main() -> None:
     surprises = panel.loc[panel["dataset_condition"].eq("available")].drop(
         columns=["meeting_date", "dataset_condition", "STMT_recomputed"], errors="ignore"
     )
-    data = _speed_panel(surprises, speed_path)
-    h5 = pd.DataFrame(_h5_rows(data))
-    h6 = pd.DataFrame(_h6_rows(data))
-    _write(h5, f"fomc_h5_surprise_speed{suffix}")
-    _write(h6, f"fomc_h6_surprise_asymmetry{suffix}")
+    speed = pd.read_parquet(speed_path)
+    large = _large_moves(speed)
+    print(f"Large-move robustness keeps {len(large)} of {len(speed)} speed rows")
+    tables = {}
+    for variant, frame in (("", speed), ("_large_moves", large)):
+        data = _speed_panel(surprises, frame)
+        h5 = _adjust(pd.DataFrame(_h5_rows(data)), "two_sided_p")
+        h6 = _adjust(pd.DataFrame(_h6_rows(data)), "mannwhitney_p_two_sided")
+        _write(h5, f"fomc_h5_surprise_speed{variant}{suffix}")
+        _write(h6, f"fomc_h6_surprise_asymmetry{variant}{suffix}")
+        tables[variant] = (h5, h6)
+    h5, h6 = tables[""]
+    for name, table, column in (("H5", h5, "two_sided_p"), ("H6", h6, "mannwhitney_p_two_sided")):
+        tested = table[column].notna()
+        print(
+            f"{name}: {int(tested.sum())} tests, {int(table.loc[tested, column].lt(0.05).sum())} raw p<0.05, "
+            f"{int(table['holm_p'].lt(0.05).sum())} Holm p<0.05, {int(table['bh_q'].lt(0.05).sum())} BH q<0.05"
+        )
 
     headline = h5.loc[
         h5["metric"].eq("first_crossing_50_seconds") & h5["instrument"].eq("meeting_average")

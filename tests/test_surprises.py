@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from scripts.analyze_fomc_surprises import _h5_rows, _h6_rows, _meetings
+from scripts.analyze_fomc_surprises import _adjust, _h5_rows, _h6_rows, _large_moves, _meetings
 from src.events.surprises import (
     FUTNAMES,
     build_surprise_panel,
@@ -85,3 +85,24 @@ def test_h5_and_h6_rows_detect_constructed_relationships() -> None:
     assert h5["one_sided_p_positive"].iloc[0] < 0.01
     assert h6["hawkish_log_coef_given_magnitude"].iloc[0] > 0
     assert h6["hawkish_count"].iloc[0] == 6
+
+
+def test_adjust_adds_holm_and_bh_columns_and_skips_missing() -> None:
+    frame = pd.DataFrame({"p": [0.01, 0.04, np.nan, 0.03]})
+    adjusted = _adjust(frame, "p")
+    assert np.isnan(adjusted.loc[2, "holm_p"])
+    assert adjusted.loc[0, "holm_p"] == pytest.approx(0.03)
+    assert (adjusted["bh_q"].dropna() >= frame["p"].dropna()).all()
+
+
+def test_large_moves_drops_near_zero_and_bottom_quartile_per_cell() -> None:
+    speed = pd.DataFrame(
+        {
+            "subevent": ["statement"] * 4 + ["press_conference"] * 4,
+            "instrument": ["ES.v.0"] * 8,
+            "terminal_300s_bp": [1.0, 2.0, 3.0, -4.0, 10.0, 20.0, 30.0, 40.0],
+            "near_zero_terminal": [False] * 7 + [True],
+        }
+    )
+    kept = _large_moves(speed)
+    assert set(kept["terminal_300s_bp"]) == {2.0, 3.0, -4.0, 20.0, 30.0}
