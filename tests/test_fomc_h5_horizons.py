@@ -118,3 +118,20 @@ def test_h6_asymmetry_recovers_constructed_hawkish_effect() -> None:
     table = asymmetry_rows(frame, "y", surprises)
     assert table["hawkish_coef_given_magnitude"].between(0.9, 1.1).all()
     assert table["hawkish_coef_p_two_sided"].lt(1e-6).all()
+
+
+def test_h6_extra_equal_slopes_test_detects_asymmetry() -> None:
+    from scripts.analyze_fomc_h5_h6_extra import h6_extra
+
+    rng = np.random.default_rng(1)
+    meetings = [f"m{i}" for i in range(60)]
+    stmt = np.where(np.arange(60) % 2 == 0, 1, -1) * rng.uniform(0.01, 0.05, 60)
+    # Hawkish surprises move prices three times as much per bp as dovish ones.
+    signed = np.where(stmt > 0, -30, -10) * stmt * 100 + rng.normal(0, 0.5, 60)
+    returns = pd.DataFrame(
+        {"meeting": meetings, "instrument": "ES.v.0", "horizon_seconds": 5,
+         "log_return_bp": signed, "abs_return_bp": np.abs(signed)}
+    )
+    table = h6_extra(returns, pd.DataFrame({"meeting": meetings, "STMT": stmt}))
+    assert table["slope_hawkish_bp_per_bp"].iloc[0] < table["slope_dovish_bp_per_bp"].iloc[0]
+    assert table["equal_slopes_wald_p"].iloc[0] < 1e-6

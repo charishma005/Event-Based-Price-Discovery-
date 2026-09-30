@@ -229,6 +229,7 @@ Multi-horizon H5 (statements only). `process_fomc_sample` now also records state
 MPLCONFIGDIR=/tmp/t3-mpl-cache python -m scripts.process_fomc_sample --config fomc_sample_2015_2026.yaml --output-name fomc_sample_2015_2026
 python -m scripts.analyze_fomc_h5_horizons --config fomc_sample_2015_2026.yaml
 python -m scripts.analyze_fomc_h6_horizons --config fomc_sample_2015_2026.yaml
+python -m scripts.analyze_fomc_h5_h6_extra --config fomc_sample_2015_2026.yaml   # extra p-value tests, ~1-2 minutes
 MPLBACKEND=Agg python -m scripts.make_slide_figures
 ```
 
