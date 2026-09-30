@@ -342,12 +342,54 @@ def h5_response_profile() -> None:
         )
 
 
+HAWKISH, DOVISH = "#e34948", BLUE
+
+
+def h6_direction_profile() -> None:
+    """Median signed return after hawkish vs dovish statements, by horizon."""
+    profile = pd.read_csv(TABLES / "fomc_h6_direction_profile_2015_2026.csv")
+    horizons = sorted(profile["horizon_seconds"].unique())
+    labels = profile.drop_duplicates("horizon_seconds").set_index("horizon_seconds")["horizon"]
+    counts = profile.loc[profile["horizon_seconds"].eq(horizons[-1]) & profile["instrument"].eq("equity_average")]
+    counts = counts.set_index("direction")["observations"]
+    fig, axes = _figure(
+        "Hawkish surprises push prices down, dovish surprises push them up",
+        f"Statements 2015-2026 without the smallest 25% of surprises: {counts.get('hawkish', 0)} hawkish, "
+        f"{counts.get('dovish', 0)} dovish. Median return.",
+        ncols=2,
+    )
+    x = np.arange(len(horizons))
+    for ax, (instrument, label) in zip(axes, (("equity_average", "ES + NQ average"), ("ZN.v.0", "ZN (10-year Treasury)"))):
+        rows = profile.loc[profile["instrument"].eq(instrument)]
+        ax.axhline(0, color=INK_2, linewidth=1)
+        for direction, color, name in (("hawkish", HAWKISH, "Hawkish"), ("dovish", DOVISH, "Dovish")):
+            line = rows.loc[rows["direction"].eq(direction)].set_index("horizon_seconds")["median_return_bp"].reindex(horizons)
+            ax.plot(x, line, color=color, linewidth=2.5, marker="o", markersize=8,
+                    markeredgecolor=SURFACE, markeredgewidth=2, zorder=3)
+            last = line.last_valid_index()
+            if last is not None:
+                ax.text(horizons.index(last) + 0.15, line[last], name, va="center", fontsize=13,
+                        color=INK, fontweight="bold", path_effects=HALO)
+        ax.set_xticks(x, [labels[h] for h in horizons])
+        ax.set_xlim(-0.3, len(horizons) + 0.6)
+        ax.set_xlabel("Time after the 2:00 p.m. statement")
+        ax.set_title(label, loc="left", fontsize=16, pad=14, color=INK, fontweight="bold")
+        _grid(ax)
+    axes[0].set_ylabel("Median return (basis points)")
+    _save(
+        fig,
+        "h6_direction_profile.png",
+        "Hawkish = positive USMPD statement surprise. Source: tables/fomc_h6_direction_profile_2015_2026.csv; tests in fomc_h6a/h6b tables.",
+    )
+
+
 def main() -> None:
     slide_15_depth()
     slide_16_first_quote()
     slide_17_surprise_speed()
     slide_18_multiple_testing()
     h5_response_profile()
+    h6_direction_profile()
 
 
 if __name__ == "__main__":
