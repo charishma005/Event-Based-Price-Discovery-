@@ -96,11 +96,11 @@ def main() -> None:
     hypothesis = pd.DataFrame(
         [
             ["H1", "Rejected", "Scalar first-quote share is not above 70%", "ES/NQ/ZN opposite-direction p < 4.8e-7"],
-            ["H2", "Supported in sample", "Narrative first-quote share is below 40%", "12-meeting: statement p=4.2e-6, press p=3.5e-7; 93-meeting (2015-2026): statement p=2.40e-32, press p=1.80e-34"],
+            ["H2", "Supported in sample", "Narrative first-quote share is below 40%; measure is ~0 for all event types", "12-meeting: statement p=4.2e-6, press p=3.5e-7; 93-meeting per-instrument p<1e-12; does not test scalar-vs-narrative contrast"],
             ["H3", "Not identified", "Needs vintage forecast dispersion", "Unavailable from current providers"],
-            ["H4", "Partly supported", "Withdrawal occurs before scheduled events", "FOMC (12-meeting) p=0.00024; 93-meeting (2015-2026) statement p=4.07e-17, press p=2.72e-8; macro p=1.9e-6; unscheduled also p=0.031"],
-            ["H5", "Not supported", "FOMC statement horizons shorten, not lengthen, with |surprise|", "12-meeting STMT meeting-average rho=-0.79, p=0.002; 93-meeting (2015-2026) STMT rho=-0.284, p=0.0061; press mixed in both"],
-            ["H6", "Not supported", "12-meeting ES/NQ press asymmetry does not replicate at 93 meetings", "12-meeting: ES p=0.003, NQ p=0.012; 93-meeting (2015-2026): ES p=0.75, NQ p=0.52, ZN p=0.32; only ZN stable-within-10% cell significant (p=0.0104)"],
+            ["H4", "Partly supported", "Withdrawal occurs before scheduled events", "FOMC vs matched controls (12-meeting) p=0.00024; macro p=1.9e-6; 93-meeting within-event only, no controls (statement p=4.1e-17); unscheduled also p=0.031"],
+            ["H5", "Not supported", "No robust relation between |surprise| and discovery speed", "No equity cell survives Holm; equity-average STMT rho=-0.12, p=0.28 (93 meetings); only ZN survives, where surprise and outcome share inputs"],
+            ["H6", "Not supported", "No hawkish-dovish speed asymmetry", "No cell survives Holm in either sample; 12-meeting ES/NQ press p=0.003/0.012 raw, absent at 93 meetings (p=0.75/0.52)"],
         ],
         columns=["hypothesis", "status", "finding", "evidence"],
     )
@@ -123,18 +123,19 @@ def main() -> None:
 
 ## Bottom line
 
-The project is ready to submit as a serious empirical research draft, provided it is described as a twenty-month message-level study rather than the proposal's full five-to-ten-year implementation. Q1 is implemented directly; Q2-Q4 have credible descriptive or matched-control evidence; H3 remains unidentified because Databento and Alpha Vantage do not contain vintage consensus distributions; H5 and H6 are tested for FOMC meetings with USMPD policy surprises (H5 not supported, H6 not supported). A 93-meeting (2015-2026) FOMC extension confirms H2 and H4 at scale and shows the original 12-meeting H6 asymmetry does not replicate.
+The project is ready to submit as a serious empirical research draft, provided it is described as a twenty-month message-level study rather than the proposal's full five-to-ten-year implementation. Q1 is implemented directly; Q2-Q4 have credible descriptive or matched-control evidence; H3 remains unidentified because Databento and Alpha Vantage do not contain vintage consensus distributions; H5 and H6 are tested for FOMC meetings with USMPD policy surprises (H5 and H6 not supported; no cell survives a Holm correction outside ZN, where surprise and outcome share inputs). A 93-meeting (2015-2026) FOMC extension is consistent with H2 and H4, but its H4 test has no matched controls.
 
 ## Strong findings
 
 - H1 is rejected under the proposal's literal first-quote definition. The quote fraction is near zero, not above 70%.
-- H2 is supported in the current FOMC sample and strengthens under the 93-meeting (2015-2026) extension (statement p=2.40e-32, press p=1.80e-34).
-- Scheduled depth withdrawal is highly significant in independent FOMC and macro samples, and holds at 93 meetings (statement p=4.07e-17, press p=2.72e-8).
+- H2 is supported in the current FOMC sample and stays consistent at 93 meetings, but the first-quote measure is near zero for every event type, so it does not test the scalar-versus-narrative contrast.
+- Scheduled depth withdrawal is highly significant against matched controls in independent FOMC and macro samples. The 93-meeting extension agrees on a within-event test only.
 - Written statements reach 50% of their five-minute move faster than press openings by paired Wilcoxon tests in ES, NQ, and ZN.
 
 ## Important qualifications
 
 - The stable-within-10% speed measure is not significant; early crossings include overshoot and reversal.
+- H5/H6 tables hold about 100 cells each; use the Holm and Benjamini-Hochberg columns. ZN results share inputs with the USMPD surprise, and crossing horizons are noisy for small moves (see the `_large_moves` tables).
 - Five selected nominally unscheduled events also show lower pre-event depth than controls. Withdrawal is robust, but scheduled-event specificity is not established.
 - The flow component is predictive rather than structural and leaves a material residual.
 - Q3 is a cross-asset timing result, not a Hasbrouck information share.

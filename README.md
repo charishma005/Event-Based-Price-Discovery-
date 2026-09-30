@@ -223,6 +223,8 @@ python -m scripts.analyze_fomc_surprises --config fomc_sample_2015_2026.yaml
 
 `process_fomc_sample` writes to `data/processed/fomc_sample` unless `--output-name` is given, so always pass it for other configs.
 
+`analyze_fomc_surprises` also writes `_large_moves` versions of the H5/H6 tables (near-zero and bottom-quartile five-minute moves dropped) and an `equity_average` row (ES and NQ only, since ZN shares inputs with the USMPD surprise). Every H5/H6 table has `holm_p` and `bh_q` columns adjusted across all of its cells; read those rather than raw p-values.
+
 11. Reproduce the January 2024-August 2025 macro sample, sub-second flow models, and the independently screened 8:30 a.m. controls:
 
 ```bash
