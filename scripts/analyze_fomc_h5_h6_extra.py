@@ -76,6 +76,7 @@ def h5_extra(returns: pd.DataFrame, surprises: pd.DataFrame, sep: pd.Series) -> 
         plain = _ols(group["abs_return_bp"], group[["abs_surprise_bp"]])
         controlled = _ols(group["abs_return_bp"], group[["abs_surprise_bp", "sep"]])
         by_group = [group.loc[group["group"].eq(g), "abs_return_bp"] for g in ("small", "medium", "large")]
+        low, high = plain.conf_int().loc["abs_surprise_bp"]
         rows.append(
             {
                 "instrument": instrument,
@@ -83,6 +84,8 @@ def h5_extra(returns: pd.DataFrame, surprises: pd.DataFrame, sep: pd.Series) -> 
                 "horizon_seconds": int(horizon),
                 "observations": len(group),
                 "slope_bp_per_bp_surprise": float(plain.params["abs_surprise_bp"]),
+                "slope_ci_low": float(low),
+                "slope_ci_high": float(high),
                 "slope_p": float(plain.pvalues["abs_surprise_bp"]),
                 "slope_with_sep_control": float(controlled.params["abs_surprise_bp"]),
                 "slope_with_sep_control_p": float(controlled.pvalues["abs_surprise_bp"]),
@@ -118,6 +121,7 @@ def h6_extra(returns: pd.DataFrame, surprises: pd.DataFrame) -> pd.DataFrame:
             continue
         fit = _ols(group["log_return_bp"], group[["hawkish_part", "dovish_part"]])
         equal = fit.t_test("hawkish_part - dovish_part = 0")
+        interval = fit.conf_int()
         table = [
             [int(group.loc[hawkish, "expected"].sum()), int((~group.loc[hawkish, "expected"]).sum())],
             [int(group.loc[~hawkish, "expected"].sum()), int((~group.loc[~hawkish, "expected"]).sum())],
@@ -132,6 +136,10 @@ def h6_extra(returns: pd.DataFrame, surprises: pd.DataFrame) -> pd.DataFrame:
                 "dovish_count": int((~hawkish).sum()),
                 "slope_hawkish_bp_per_bp": float(fit.params["hawkish_part"]),
                 "slope_dovish_bp_per_bp": float(fit.params["dovish_part"]),
+                "slope_hawkish_ci_low": float(interval.loc["hawkish_part", 0]),
+                "slope_hawkish_ci_high": float(interval.loc["hawkish_part", 1]),
+                "slope_dovish_ci_low": float(interval.loc["dovish_part", 0]),
+                "slope_dovish_ci_high": float(interval.loc["dovish_part", 1]),
                 "equal_slopes_wald_p": float(np.asarray(equal.pvalue).item()),
                 "median_abs_hawkish_bp": float(group.loc[hawkish, "abs_return_bp"].median()),
                 "median_abs_dovish_bp": float(group.loc[~hawkish, "abs_return_bp"].median()),
