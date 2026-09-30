@@ -342,12 +342,145 @@ def h5_response_profile() -> None:
         )
 
 
+HAWKISH, DOVISH = "#e34948", BLUE
+
+
+def h6_direction_profile() -> None:
+    """Median signed return after hawkish vs dovish statements, by horizon."""
+    profile = pd.read_csv(TABLES / "fomc_h6_direction_profile_2015_2026.csv")
+    horizons = sorted(profile["horizon_seconds"].unique())
+    labels = profile.drop_duplicates("horizon_seconds").set_index("horizon_seconds")["horizon"]
+    counts = profile.loc[profile["horizon_seconds"].eq(horizons[-1]) & profile["instrument"].eq("equity_average")]
+    counts = counts.set_index("direction")["observations"]
+    fig, axes = _figure(
+        "Hawkish surprises push prices down, dovish surprises push them up",
+        f"Statements 2015-2026 without the smallest 25% of surprises: {counts.get('hawkish', 0)} hawkish, "
+        f"{counts.get('dovish', 0)} dovish. Median return.",
+        ncols=2,
+    )
+    x = np.arange(len(horizons))
+    for ax, (instrument, label) in zip(axes, (("equity_average", "ES + NQ average"), ("ZN.v.0", "ZN (10-year Treasury)"))):
+        rows = profile.loc[profile["instrument"].eq(instrument)]
+        ax.axhline(0, color=INK_2, linewidth=1)
+        for direction, color, name in (("hawkish", HAWKISH, "Hawkish"), ("dovish", DOVISH, "Dovish")):
+            line = rows.loc[rows["direction"].eq(direction)].set_index("horizon_seconds")["median_return_bp"].reindex(horizons)
+            ax.plot(x, line, color=color, linewidth=2.5, marker="o", markersize=8,
+                    markeredgecolor=SURFACE, markeredgewidth=2, zorder=3)
+            last = line.last_valid_index()
+            if last is not None:
+                ax.text(horizons.index(last) + 0.15, line[last], name, va="center", fontsize=13,
+                        color=INK, fontweight="bold", path_effects=HALO)
+        ax.set_xticks(x, [labels[h] for h in horizons])
+        ax.set_xlim(-0.3, len(horizons) + 0.6)
+        ax.set_xlabel("Time after the 2:00 p.m. statement")
+        ax.set_title(label, loc="left", fontsize=16, pad=14, color=INK, fontweight="bold")
+        _grid(ax)
+    axes[0].set_ylabel("Median return (basis points)")
+    _save(
+        fig,
+        "h6_direction_profile.png",
+        "Hawkish = positive USMPD statement surprise. Source: tables/fomc_h6_direction_profile_2015_2026.csv; tests in fomc_h6a/h6b tables.",
+    )
+
+
+def _offsets(n: int, width: float = 0.32) -> list[float]:
+    return list(np.linspace(-width / 2, width / 2, n)) if n > 1 else [0.0]
+
+
+def h5_slope_plot() -> None:
+    """Coefficient plot: bp of |move| per 1 bp of |surprise| by horizon, with 95% CIs."""
+    table = pd.read_csv(TABLES / "fomc_h5_extra_tests_2015_2026.csv")
+    horizons = sorted(table["horizon_seconds"].unique())
+    labels = table.drop_duplicates("horizon_seconds").set_index("horizon_seconds")["horizon"]
+    equity = table.loc[table["instrument"].eq("equity_average")].set_index("horizon_seconds")
+    last = horizons[-1]
+    robust = equity[["spearman_permutation_p_holm", "kruskal_wallis_p_holm", "large_vs_small_mannwhitney_p_holm"]].lt(0.05).all(axis=1)
+    fig, (ax,) = _figure(
+        f"Each 1 bp of statement surprise moves stocks about {equity.loc[last, 'slope_bp_per_bp_surprise']:.0f} bp by {labels[last]}",
+        "Regression slope of |price move| on |USMPD surprise|, FOMC statements 2015-2026. Bars = 95% confidence interval.",
+        left=0.09,
+    )
+    x = np.arange(len(horizons))
+    series = (("equity_average", BLUE, "ES + NQ average"), ("ZN.v.0", AQUA, "ZN (10-year Treasury)"))
+    for (instrument, color, name), dx in zip(series, _offsets(len(series))):
+        rows = table.loc[table["instrument"].eq(instrument)].set_index("horizon_seconds").reindex(horizons)
+        significant = rows["slope_p_holm"].lt(0.05)
+        ax.vlines(x + dx, rows["slope_ci_low"], rows["slope_ci_high"], color=color, linewidth=3, zorder=2)
+        ax.scatter((x + dx)[significant], rows.loc[significant, "slope_bp_per_bp_surprise"], s=110, color=color,
+                   edgecolor=SURFACE, linewidth=2, zorder=3)
+        ax.scatter((x + dx)[~significant], rows.loc[~significant, "slope_bp_per_bp_surprise"], s=110, color=SURFACE,
+                   edgecolor=color, linewidth=2.5, zorder=3)
+        ax.text(x[-1] + dx + 0.12, rows["slope_bp_per_bp_surprise"].iloc[-1], name, va="center", fontsize=13,
+                color=INK, fontweight="bold", path_effects=HALO)
+    ax.axhline(0, color=INK_2, linewidth=1)
+    ax.set_xticks(x, [labels[h] for h in horizons])
+    ax.set_xlim(-0.5, len(horizons) + 0.9)
+    ax.set_xlabel("Time after the 2:00 p.m. statement")
+    ax.set_ylabel("bp of price move per 1 bp of surprise")
+    _grid(ax)
+    passed = ", ".join(labels[h] for h in horizons if robust.get(h, False))
+    _save(
+        fig,
+        "h5_slope_by_horizon.png",
+        f"Filled dot: slope significant after Holm correction; hollow: not. Permutation, Kruskal-Wallis and large-vs-small tests "
+        f"all significant (Holm) at: {passed}.",
+    )
+
+
+def h6_slope_plot() -> None:
+    """Hawkish vs dovish sensitivity by horizon, with 95% CIs and the equal-slopes p-value."""
+    table = pd.read_csv(TABLES / "fomc_h6_extra_tests_2015_2026.csv")
+    horizons = sorted(table["horizon_seconds"].unique())
+    labels = table.drop_duplicates("horizon_seconds").set_index("horizon_seconds")["horizon"]
+    none_survive = bool(table["equal_slopes_wald_p_holm"].ge(0.05).all())
+    counts = table.iloc[0]
+    fig, axes = _figure(
+        "Hawkish and dovish surprises: no significant difference per basis point" if none_survive
+        else "Hawkish vs dovish price sensitivity",
+        f"Price move per 1 bp of surprise, in the direction the news implies. "
+        f"{int(counts['hawkish_count'])} hawkish, {int(counts['dovish_count'])} dovish statements.",
+        ncols=2,
+    )
+    x = np.arange(len(horizons))
+    for ax, (instrument, label) in zip(axes, (("equity_average", "ES + NQ average"), ("ZN.v.0", "ZN (10-year Treasury)"))):
+        rows = table.loc[table["instrument"].eq(instrument)].set_index("horizon_seconds").reindex(horizons)
+        for (side, color, name), dx in zip((("hawkish", HAWKISH, "Hawkish"), ("dovish", DOVISH, "Dovish")), _offsets(2, 0.3)):
+            # Both slopes are negative (price falls as the surprise rises); flip so "moves as expected" is positive.
+            value = -rows[f"slope_{side}_bp_per_bp"]
+            low, high = -rows[f"slope_{side}_ci_high"], -rows[f"slope_{side}_ci_low"]
+            ax.vlines(x + dx, low, high, color=color, linewidth=3, zorder=2)
+            ax.scatter(x + dx, value, s=100, color=color, edgecolor=SURFACE, linewidth=2, zorder=3)
+            ax.text(x[-1] + dx + 0.14, value.iloc[-1], name, va="center", fontsize=12, color=INK,
+                    fontweight="bold", path_effects=HALO)
+        top = max((-rows["slope_hawkish_ci_low"]).max(), (-rows["slope_dovish_ci_low"]).max())
+        bottom = min((-rows["slope_hawkish_ci_high"]).min(), (-rows["slope_dovish_ci_high"]).min(), 0)
+        for xi, p in zip(x, rows["equal_slopes_wald_p"]):
+            ax.text(xi, top * 1.06, f"p={p:.2f}", ha="center", fontsize=11, color=INK_2)
+        ax.axhline(0, color=INK_2, linewidth=1)
+        ax.set_ylim(bottom - 0.05 * (top - bottom), top * 1.14)
+        ax.set_xticks(x, [labels[h] for h in horizons])
+        ax.set_xlim(-0.5, len(horizons) + 0.6)
+        ax.set_xlabel("Time after the 2:00 p.m. statement")
+        ax.set_title(label, loc="left", fontsize=16, pad=14, color=INK, fontweight="bold")
+        _grid(ax)
+    axes[0].set_ylabel("bp move per 1 bp of surprise")
+    _save(
+        fig,
+        "h6_slope_by_horizon.png",
+        "p = test that hawkish and dovish slopes are equal (HC1). Bars = 95% confidence interval. "
+        "Source: tables/fomc_h6_extra_tests_2015_2026.csv.",
+    )
+
+
 def main() -> None:
     slide_15_depth()
     slide_16_first_quote()
     slide_17_surprise_speed()
     slide_18_multiple_testing()
     h5_response_profile()
+    h6_direction_profile()
+    h5_slope_plot()
+    h6_slope_plot()
 
 
 if __name__ == "__main__":

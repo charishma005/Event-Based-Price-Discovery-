@@ -80,3 +80,58 @@ def test_correlations_detect_constructed_positive_relation() -> None:
     assert table["spearman_rho"].gt(0.99).all()
     assert table["one_sided_p_positive"].lt(0.001).all()
     assert {"holm_p", "bh_q"} <= set(table.columns)
+
+
+def test_h6_clear_surprises_drop_smallest_quartile_and_flag_hawkish() -> None:
+    from scripts.analyze_fomc_h6_horizons import clear_surprises
+
+    surprises = pd.DataFrame({"meeting": [f"m{i}" for i in range(8)], "STMT": [-0.4, -0.3, -0.2, -0.01, 0.0, 0.02, 0.3, 0.5]})
+    kept = clear_surprises(surprises, "STMT")
+    assert {"m3", "m4"}.isdisjoint(kept["meeting"])
+    assert kept.set_index("meeting")["hawkish"].to_dict()["m7"] == 1.0
+    assert kept.set_index("meeting")["hawkish"].to_dict()["m0"] == 0.0
+
+
+def test_h6_direction_counts_moves_that_match_the_news() -> None:
+    from scripts.analyze_fomc_h6_horizons import direction_rows
+
+    meetings = [f"m{i}" for i in range(10)]
+    stmt = np.array([0.5, 0.4, 0.3, 0.2, 0.1, -0.1, -0.2, -0.3, -0.4, -0.5])
+    surprises = pd.DataFrame({"meeting": meetings, "STMT": stmt, "STMT_real_time": stmt})
+    # Hawkish -> price falls, dovish -> price rises: every move is in the expected direction.
+    returns = pd.DataFrame(
+        {"meeting": meetings, "instrument": "ES.v.0", "horizon_seconds": 5, "log_return_bp": -10 * stmt}
+    )
+    table = direction_rows(returns, surprises)
+    assert table["expected_direction_share"].eq(1.0).all()
+
+
+def test_h6_asymmetry_recovers_constructed_hawkish_effect() -> None:
+    from scripts.analyze_fomc_h6_horizons import asymmetry_rows
+
+    rng = np.random.default_rng(0)
+    meetings = [f"m{i}" for i in range(40)]
+    stmt = np.where(np.arange(40) % 2 == 0, 1, -1) * rng.uniform(0.2, 1.0, 40)
+    surprises = pd.DataFrame({"meeting": meetings, "STMT": stmt, "STMT_real_time": stmt})
+    outcome = np.abs(stmt) + np.where(stmt > 0, 1.0, 0.0) + rng.normal(0, 0.05, 40)
+    frame = pd.DataFrame({"meeting": meetings, "instrument": "ES.v.0", "horizon_seconds": 5, "y": outcome})
+    table = asymmetry_rows(frame, "y", surprises)
+    assert table["hawkish_coef_given_magnitude"].between(0.9, 1.1).all()
+    assert table["hawkish_coef_p_two_sided"].lt(1e-6).all()
+
+
+def test_h6_extra_equal_slopes_test_detects_asymmetry() -> None:
+    from scripts.analyze_fomc_h5_h6_extra import h6_extra
+
+    rng = np.random.default_rng(1)
+    meetings = [f"m{i}" for i in range(60)]
+    stmt = np.where(np.arange(60) % 2 == 0, 1, -1) * rng.uniform(0.01, 0.05, 60)
+    # Hawkish surprises move prices three times as much per bp as dovish ones.
+    signed = np.where(stmt > 0, -30, -10) * stmt * 100 + rng.normal(0, 0.5, 60)
+    returns = pd.DataFrame(
+        {"meeting": meetings, "instrument": "ES.v.0", "horizon_seconds": 5,
+         "log_return_bp": signed, "abs_return_bp": np.abs(signed)}
+    )
+    table = h6_extra(returns, pd.DataFrame({"meeting": meetings, "STMT": stmt}))
+    assert table["slope_hawkish_bp_per_bp"].iloc[0] < table["slope_dovish_bp_per_bp"].iloc[0]
+    assert table["equal_slopes_wald_p"].iloc[0] < 1e-6

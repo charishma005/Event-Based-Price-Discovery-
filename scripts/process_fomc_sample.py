@@ -64,7 +64,8 @@ def main() -> None:
     interval_frames: list[pd.DataFrame] = []
     coverage_rows: list[dict[str, object]] = []
 
-    for meeting in config["meetings"]:
+    total = len(config["meetings"])
+    for number, meeting in enumerate(config["meetings"], start=1):
         label = meeting["label"]
         if selected and label not in selected:
             continue
@@ -72,6 +73,7 @@ def main() -> None:
         if path is None:
             print(f"Skipping {label}: matching immutable DBN file is not cached.")
             continue
+        print(f"[{number}/{total}] {label}", flush=True)
         frame = db.DBNStore.from_file(path).to_df()
         for instrument in INSTRUMENTS:
             instrument_frame = frame.loc[frame["symbol"].eq(instrument)]

@@ -228,10 +228,12 @@ Multi-horizon H5 (statements only). `process_fomc_sample` now also records state
 ```bash
 MPLCONFIGDIR=/tmp/t3-mpl-cache python -m scripts.process_fomc_sample --config fomc_sample_2015_2026.yaml --output-name fomc_sample_2015_2026
 python -m scripts.analyze_fomc_h5_horizons --config fomc_sample_2015_2026.yaml
+python -m scripts.analyze_fomc_h6_horizons --config fomc_sample_2015_2026.yaml
+python -m scripts.analyze_fomc_h5_h6_extra --config fomc_sample_2015_2026.yaml   # extra p-value tests, ~1-2 minutes
 MPLBACKEND=Agg python -m scripts.make_slide_figures
 ```
 
-This writes `tables/fomc_h5a_response_magnitude_2015_2026` (|surprise| vs |return| at 1s-30m), `fomc_h5b_response_fraction_2015_2026` (|surprise| vs the share of the 30-minute move already done; events with bottom-quartile 30-minute moves excluded), and `fomc_h5_response_profile_2015_2026` (small/medium/large surprise terciles), plus the H5 profile figures.
+This writes `tables/fomc_h5a_response_magnitude_2015_2026` (|surprise| vs |return| at 1s-30m), `fomc_h5b_response_fraction_2015_2026` (|surprise| vs the share of the 30-minute move already done; events with bottom-quartile 30-minute moves excluded), and `fomc_h5_response_profile_2015_2026` (small/medium/large surprise terciles), plus the H5 profile figures. `analyze_fomc_h6_horizons` uses the same returns for H6, dropping the smallest 25% of surprises: `fomc_h6a_direction_2015_2026` (share of meetings moving the way the news implies), `fomc_h6b_size_asymmetry_2015_2026` (hawkish effect on move size, given surprise size) and, once the 30-minute horizon exists, `fomc_h6c_speed_asymmetry_2015_2026` (hawkish effect on the share of the 30-minute move done early).
 
 `analyze_fomc_surprises` also writes `_large_moves` versions of the H5/H6 tables (near-zero and bottom-quartile five-minute moves dropped) and an `equity_average` row (ES and NQ only, since ZN shares inputs with the USMPD surprise). Every H5/H6 table has `holm_p` and `bh_q` columns adjusted across all of its cells; read those rather than raw p-values.
 
