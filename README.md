@@ -223,6 +223,16 @@ python -m scripts.analyze_fomc_surprises --config fomc_sample_2015_2026.yaml
 
 `process_fomc_sample` writes to `data/processed/fomc_sample` unless `--output-name` is given, so always pass it for other configs.
 
+Multi-horizon H5 (statements only). `process_fomc_sample` now also records statement returns at 10, 20 and 30 minutes; 30 minutes is the press-conference start, so it is the last horizon before new scheduled information. Only the 77 meetings with a press conference have windows that long (statement-only meetings end 15 minutes after the statement). Rebuild the processed files from the raw cache, then run:
+
+```bash
+MPLCONFIGDIR=/tmp/t3-mpl-cache python -m scripts.process_fomc_sample --config fomc_sample_2015_2026.yaml --output-name fomc_sample_2015_2026
+python -m scripts.analyze_fomc_h5_horizons --config fomc_sample_2015_2026.yaml
+MPLBACKEND=Agg python -m scripts.make_slide_figures
+```
+
+This writes `tables/fomc_h5a_response_magnitude_2015_2026` (|surprise| vs |return| at 1s-30m), `fomc_h5b_response_fraction_2015_2026` (|surprise| vs the share of the 30-minute move already done; events with bottom-quartile 30-minute moves excluded), and `fomc_h5_response_profile_2015_2026` (small/medium/large surprise terciles), plus the H5 profile figures.
+
 `analyze_fomc_surprises` also writes `_large_moves` versions of the H5/H6 tables (near-zero and bottom-quartile five-minute moves dropped) and an `equity_average` row (ES and NQ only, since ZN shares inputs with the USMPD surprise). Every H5/H6 table has `holm_p` and `bh_q` columns adjusted across all of its cells; read those rather than raw p-values.
 
 11. Reproduce the January 2024-August 2025 macro sample, sub-second flow models, and the independently screened 8:30 a.m. controls:

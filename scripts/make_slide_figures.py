@@ -281,11 +281,73 @@ def slide_18_multiple_testing() -> None:
     )
 
 
+TERCILE_COLOR = {"small": "#86b6ef", "medium": BLUE, "large": "#104281"}
+TERCILE_NAME = {"small": "Small surprise", "medium": "Medium", "large": "Large surprise"}
+
+
+def h5_response_profile() -> None:
+    """Median |R_h| by surprise tercile; a second figure for the share of the 30-minute move when present."""
+    profile = pd.read_csv(TABLES / "fomc_h5_response_profile_2015_2026.csv")
+    h5a = pd.read_csv(TABLES / "fomc_h5a_response_magnitude_2015_2026.csv")
+    horizons = sorted(profile["horizon_seconds"].unique())
+    labels = profile.drop_duplicates("horizon_seconds").set_index("horizon_seconds")["horizon"]
+    headline = h5a.loc[h5a["measure"].eq("STMT") & h5a["instrument"].isin(["equity_average", "ZN.v.0"])]
+    robust = bool(headline["spearman_rho"].gt(0).all() and headline["holm_p"].lt(0.05).all())
+    span = f"{labels[horizons[0]]} to {labels[horizons[-1]]}"
+    panels = (("equity_average", "ES + NQ average"), ("ZN.v.0", "ZN (10-year Treasury)"))
+
+    def draw(column: str, ylabel: str, name: str, title: str, subtitle: str, source: str) -> None:
+        fig, axes = _figure(title, subtitle, ncols=2)
+        for ax, (instrument, label) in zip(axes, panels):
+            rows = profile.loc[profile["instrument"].eq(instrument)]
+            ends = []
+            for group in ("small", "medium", "large"):
+                line = rows.loc[rows["surprise_group"].eq(group)].set_index("horizon_seconds")[column].reindex(horizons)
+                x = np.arange(len(horizons))
+                ax.plot(x, line, color=TERCILE_COLOR[group], linewidth=2.5, marker="o", markersize=8,
+                        markeredgecolor=SURFACE, markeredgewidth=2, zorder=3)
+                last = line.last_valid_index()
+                if last is not None:
+                    ends.append([line[last], horizons.index(last), TERCILE_NAME[group]])
+            # Direct labels at line ends, pushed apart so they never overlap.
+            low, high = ax.get_ylim()
+            gap = 0.06 * (high - low)
+            ends.sort()
+            for i in range(1, len(ends)):
+                ends[i][0] = max(ends[i][0], ends[i - 1][0] + gap)
+            for y, x, text in ends:
+                ax.text(x + 0.15, y, text, va="center", fontsize=12, color=INK, path_effects=HALO)
+            ax.set_xticks(np.arange(len(horizons)), [labels[h] for h in horizons])
+            ax.set_xlim(-0.3, len(horizons) + 0.9)
+            ax.set_ylim(bottom=0)
+            ax.set_xlabel("Time after the 2:00 p.m. statement")
+            ax.set_title(label, loc="left", fontsize=16, pad=14, color=INK, fontweight="bold")
+            _grid(ax)
+        axes[0].set_ylabel(ylabel)
+        _save(fig, name, source)
+
+    draw(
+        "median_abs_return_bp", "Median |return| (basis points)", "h5a_response_profile.png",
+        "Larger statement surprises move prices more at every horizon" if robust else "Response size by statement surprise size",
+        f"FOMC statements 2015-2026, meetings split into thirds by |USMPD statement surprise|. Horizons {span}.",
+        "Source: tables/fomc_h5_response_profile_2015_2026.csv; tests in tables/fomc_h5a_response_magnitude_2015_2026.csv.",
+    )
+    if "median_fraction_of_30m" in profile and profile["median_fraction_of_30m"].notna().any():
+        profile.loc[profile["horizon_seconds"].eq(1800), "median_fraction_of_30m"] = 1.0
+        draw(
+            "median_fraction_of_30m", "Median share of the 30-minute move", "h5b_fraction_profile.png",
+            "How much of the 30-minute move is done early, by surprise size",
+            "|R_h| / |R_30m|. Events with the smallest 30-minute moves (bottom quartile) are excluded.",
+            "Source: tables/fomc_h5_response_profile_2015_2026.csv; tests in tables/fomc_h5b_response_fraction_2015_2026.csv.",
+        )
+
+
 def main() -> None:
     slide_15_depth()
     slide_16_first_quote()
     slide_17_surprise_speed()
     slide_18_multiple_testing()
+    h5_response_profile()
 
 
 if __name__ == "__main__":

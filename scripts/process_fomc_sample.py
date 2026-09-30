@@ -16,6 +16,11 @@ from src.utils.config import PROJECT_ROOT, load_yaml
 
 
 INSTRUMENTS = ("ES.v.0", "NQ.v.0", "ZN.v.0")
+# Statements also get 10/20/30-minute horizons for the multi-horizon H5 test.
+# The press conference starts 30 minutes after the statement, so 30 minutes is
+# the last horizon before new information; statement-only meetings (15-minute
+# windows) report those horizons as not covered.
+STATEMENT_HORIZONS = (0.1, 0.25, 0.5, 1, 5, 30, 60, 300, 600, 1200, 1800)
 
 
 def _matching_raw_file(meeting: dict[str, object]) -> Path | None:
@@ -120,7 +125,8 @@ def main() -> None:
                 )
                 timing_rows.append(timing)
                 horizons = summarize_horizons(
-                    messages, event_time, instrument, event_label
+                    messages, event_time, instrument, event_label,
+                    **({"horizons_seconds": STATEMENT_HORIZONS} if subevent == "statement" else {}),
                 )
                 horizons["meeting"] = label
                 horizons["subevent"] = subevent
