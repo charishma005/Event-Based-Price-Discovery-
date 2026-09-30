@@ -9,6 +9,9 @@ H5 (|surprise| vs |R_h|), all statement meetings:
 - permutation p-value for Spearman rho (meeting labels shuffled)
 - Kruskal-Wallis across small/medium/large surprise terciles
 - Mann-Whitney, large vs small tercile (one-sided: large moves more)
+- kinked slope: |R_h| = a + b_small*|S| + b_extra*max(|S| - k, 0), with k the
+  cutoff of the large-surprise tercile; tests whether large surprises get a
+  disproportionately steeper reaction (b_extra > 0)
 
 H6 (direction), smallest 25% of |surprise| dropped as in analyze_fomc_h6_horizons:
 - R_h = a + b_hawk * S+ + b_dove * S- (HC1), Wald test b_hawk = b_dove
@@ -69,6 +72,8 @@ def h5_extra(returns: pd.DataFrame, surprises: pd.DataFrame, sep: pd.Series) -> 
     terciles = surprise_terciles(surprises).rename("group").reset_index()
     data = returns.merge(surprises[["meeting", MEASURE]].dropna(), on="meeting").merge(terciles, on="meeting")
     data = data.assign(abs_surprise_bp=data[MEASURE].abs() * BP, sep=data["meeting"].map(sep).astype(float))
+    kink = float((surprises[MEASURE].dropna().abs() * BP).quantile(2 / 3))
+    data = data.assign(above_kink_bp=(data["abs_surprise_bp"] - kink).clip(lower=0))
     rows = []
     for number, ((instrument, horizon), group) in enumerate(data.groupby(["instrument", "horizon_seconds"])):
         if len(group) < MIN_OBS:
@@ -77,6 +82,7 @@ def h5_extra(returns: pd.DataFrame, surprises: pd.DataFrame, sep: pd.Series) -> 
         controlled = _ols(group["abs_return_bp"], group[["abs_surprise_bp", "sep"]])
         by_group = [group.loc[group["group"].eq(g), "abs_return_bp"] for g in ("small", "medium", "large")]
         low, high = plain.conf_int().loc["abs_surprise_bp"]
+        kinked = _ols(group["abs_return_bp"], group[["abs_surprise_bp", "above_kink_bp"]])
         rows.append(
             {
                 "instrument": instrument,
@@ -89,6 +95,14 @@ def h5_extra(returns: pd.DataFrame, surprises: pd.DataFrame, sep: pd.Series) -> 
                 "slope_p": float(plain.pvalues["abs_surprise_bp"]),
                 "slope_with_sep_control": float(controlled.params["abs_surprise_bp"]),
                 "slope_with_sep_control_p": float(controlled.pvalues["abs_surprise_bp"]),
+                "slope_se": float(plain.bse["abs_surprise_bp"]),
+                "slope_t": float(plain.tvalues["abs_surprise_bp"]),
+                "r_squared": float(plain.rsquared),
+                "kink_bp": kink,
+                "slope_below_kink": float(kinked.params["abs_surprise_bp"]),
+                "slope_above_kink": float(kinked.params["abs_surprise_bp"] + kinked.params["above_kink_bp"]),
+                "extra_slope_above_kink_p": float(kinked.pvalues["above_kink_bp"]),
+                "r_squared_kinked": float(kinked.rsquared),
                 "spearman_rho": float(spearmanr(group["abs_surprise_bp"], group["abs_return_bp"]).statistic),
                 "spearman_permutation_p": _permutation_spearman_p(
                     group["abs_surprise_bp"].to_numpy(), group["abs_return_bp"].to_numpy(), seed=number
