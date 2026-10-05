@@ -45,6 +45,9 @@ def main() -> None:
         estimates.append((placebo, estimate))
         print(f"\n{placebo['placebo_id']} -> {placebo['matched_meeting']}")
         print_summary(estimate)
+        if args.execute:  # download as we go so a later failure keeps earlier files
+            path = download_request(estimate, execute=True)
+            print(f"{placebo['placebo_id']}: {path.name}")
 
     if not estimates:
         raise RuntimeError("No configured placebo requests were selected")
@@ -68,9 +71,6 @@ def main() -> None:
     ]
     if oversized:
         raise RuntimeError(f"Configured cost guard rejected: {', '.join(oversized)}")
-    for placebo, estimate in estimates:
-        path = download_request(estimate, execute=True)
-        print(f"{placebo['placebo_id']}: {path.name}")
 
 
 if __name__ == "__main__":
