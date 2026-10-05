@@ -25,9 +25,10 @@ def main() -> None:
         help="Retrieve only after every request passes the configured cost and size guards",
     )
     parser.add_argument("--placebos", nargs="*", help="Optional placebo IDs")
+    parser.add_argument("--config", default="fomc_placebos.yaml", help="File under config/")
     args = parser.parse_args()
     selected = set(args.placebos or [])
-    config = load_yaml(PROJECT_ROOT / "config" / "fomc_placebos.yaml")
+    config = load_yaml(PROJECT_ROOT / "config" / args.config)
     estimates = []
     for placebo in config["placebos"]:
         if selected and placebo["placebo_id"] not in selected:
