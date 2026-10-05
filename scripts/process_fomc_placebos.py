@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
@@ -93,12 +94,21 @@ def _inference(comparison: pd.DataFrame) -> pd.DataFrame:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Process matched-clock FOMC placebo windows")
+    parser.add_argument("--config", default="fomc_placebos.yaml", help="File under config/")
+    parser.add_argument(
+        "--actual-name",
+        default="fomc_sample",
+        help="Folder under data/processed/ holding the processed meeting windows",
+    )
+    parser.add_argument("--output-name", default="fomc_placebos", help="Output folder under data/processed/")
+    args = parser.parse_args()
     try:
         import databento as db
     except ImportError as exc:
         raise RuntimeError("Install requirements.txt before reading DBN") from exc
 
-    config = load_yaml(PROJECT_ROOT / "config" / "fomc_placebos.yaml")
+    config = load_yaml(PROJECT_ROOT / "config" / args.config)
     timing_rows: list[dict[str, object]] = []
     horizon_frames: list[pd.DataFrame] = []
     coverage_rows: list[dict[str, object]] = []
@@ -161,10 +171,12 @@ def main() -> None:
         )
     )
     actual = pd.read_parquet(
-        PROJECT_ROOT / "data" / "processed" / "fomc_sample" / "timing_liquidity.parquet"
+        PROJECT_ROOT / "data" / "processed" / args.actual_name / "timing_liquidity.parquet"
     )
+    matched = {p["matched_meeting"] for p in config["placebos"]}
     actual = actual.loc[
-        actual["subevent"].eq("statement")
+        actual["meeting"].isin(matched)
+        & actual["subevent"].eq("statement")
         & actual["dataset_condition"].eq("available")
     ][["meeting", "instrument", "pre60_to_baseline_depth_ratio"]].rename(
         columns={
@@ -179,7 +191,7 @@ def main() -> None:
     )
     inference = _inference(comparison)
 
-    output = PROJECT_ROOT / "data" / "processed" / "fomc_placebos"
+    output = PROJECT_ROOT / "data" / "processed" / args.output_name
     output.mkdir(parents=True, exist_ok=True)
     products = {
         "timing_liquidity": timing,
