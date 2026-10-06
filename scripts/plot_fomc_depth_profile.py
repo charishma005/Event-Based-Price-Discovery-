@@ -24,7 +24,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from scripts.build_fomc_pilot import normalize_mbp1
 from scripts.process_fomc_placebos import _matching_raw_file as placebo_raw_file
 from scripts.process_fomc_sample import _matching_raw_file as meeting_raw_file
 from src.analysis.event_summary import valid_quotes
@@ -34,14 +33,17 @@ INSTRUMENTS = ("ES.v.0", "NQ.v.0", "ZN.v.0")
 BASELINE_MINUTES = (-5, -2)  # inclusive minute labels, i.e. -5:00 to -1:00
 
 
-def minute_profile(
-    messages: pd.DataFrame, event: pd.Timestamp, first: int, last: int
+def depth_series(quotes: pd.DataFrame) -> pd.Series:
+    """Touch depth indexed by ts_event, last value per timestamp, from valid quotes."""
+    return quotes.sort_values("ts_event", kind="stable").groupby("ts_event")["touch_depth"].last()
+
+
+def minute_profile_from_depth(
+    depth: pd.Series, event: pd.Timestamp, first: int, last: int
 ) -> pd.Series:
     """Median one-second touch depth per minute; minute m covers [event+m, event+m+1)."""
-    quotes = valid_quotes(messages)
-    if quotes.empty:
+    if depth.empty:
         return pd.Series(dtype=float)
-    depth = quotes.groupby("ts_event")["touch_depth"].last()
     grid = pd.date_range(
         event + pd.Timedelta(minutes=first),
         event + pd.Timedelta(minutes=last + 1),
@@ -54,6 +56,46 @@ def minute_profile(
     return on_grid.groupby(minutes).median().rename_axis("minute")
 
 
+def minute_profile(
+    messages: pd.DataFrame, event: pd.Timestamp, first: int, last: int
+) -> pd.Series:
+    """Same as minute_profile_from_depth, starting from normalized MBP-1 messages."""
+    quotes = valid_quotes(messages)
+    if quotes.empty:
+        return pd.Series(dtype=float)
+    return minute_profile_from_depth(depth_series(quotes), event, first, last)
+
+
+def read_depth(path, chunk_rows: int = 2_000_000) -> dict[str, pd.Series]:
+    """Stream a DBN file in chunks, keeping only valid-quote touch depth per symbol.
+
+    Loading a whole MBP-1 window with every column can exhaust a laptop's memory;
+    this keeps four columns and drops trades and crossed or empty quotes per chunk.
+    """
+    import databento as db
+
+    keep = []
+    for chunk in db.DBNStore.from_file(path).to_df(count=chunk_rows):
+        if chunk.empty:
+            continue
+        chunk = chunk.reset_index()
+        action = chunk["action"].astype(str).str.upper()
+        valid = (
+            ~action.eq("T")
+            & chunk["bid_px_00"].gt(0)
+            & chunk["ask_px_00"].gt(chunk["bid_px_00"])
+        )
+        slim = chunk.loc[valid, ["ts_event", "symbol"]].copy()
+        slim["touch_depth"] = (chunk.loc[valid, "bid_sz_00"] + chunk.loc[valid, "ask_sz_00"]).astype(float)
+        keep.append(slim)
+        del chunk
+    if not keep:
+        return {}
+    quotes = pd.concat(keep, ignore_index=True)
+    quotes["ts_event"] = pd.to_datetime(quotes["ts_event"], utc=True)
+    return {symbol: depth_series(group) for symbol, group in quotes.groupby("symbol")}
+
+
 def _normalize(profile: pd.Series) -> pd.Series | None:
     base = profile.loc[BASELINE_MINUTES[0] : BASELINE_MINUTES[1]].mean()
     if not np.isfinite(base) or base <= 0:
@@ -61,43 +103,55 @@ def _normalize(profile: pd.Series) -> pd.Series | None:
     return profile / base
 
 
-def _collect(windows: list[dict], raw_file, kind: str) -> pd.DataFrame:
-    import databento as db
-
+def _window_rows(window: dict, path, kind: str) -> pd.DataFrame:
+    depth_by_symbol = read_depth(path)
     rows = []
+    for instrument in INSTRUMENTS:
+        depth = depth_by_symbol.get(instrument)
+        if depth is None or depth.empty:
+            continue
+        profile = minute_profile_from_depth(depth, window["event"], window["first"], window["last"])
+        normalized = _normalize(profile)
+        if normalized is None:
+            continue
+        for minute, value in profile.items():
+            rows.append(
+                {
+                    "kind": kind,
+                    "id": window["id"],
+                    "instrument": instrument,
+                    "minute": int(minute),
+                    "depth_contracts": float(value),
+                    "depth_relative": float(normalized.loc[minute]),
+                }
+            )
+    return pd.DataFrame(rows)
+
+
+def _collect(windows: list[dict], raw_file, kind: str, cache_dir) -> pd.DataFrame:
+    """Per-window results are cached, so an interrupted run resumes where it stopped."""
+    import gc
+
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    frames = []
     for i, window in enumerate(windows, 1):
+        tag = f"[{kind} {i}/{len(windows)}] {window['id']}"
+        cached = cache_dir / f"{window['id']}.parquet"
+        if cached.exists():
+            frames.append(pd.read_parquet(cached))
+            print(f"{tag}: cached")
+            continue
         path = raw_file(window)
         if path is None:
-            print(f"[{kind} {i}/{len(windows)}] {window['id']}: raw file not cached, skipped")
+            print(f"{tag}: raw file not cached, skipped")
             continue
-        frame = db.DBNStore.from_file(path).to_df()
-        if frame.empty:
-            print(f"[{kind} {i}/{len(windows)}] {window['id']}: empty file, skipped")
-            continue
-        for instrument in INSTRUMENTS:
-            raw = frame.loc[frame["symbol"].eq(instrument)]
-            if raw.empty:
-                continue
-            profile = minute_profile(
-                normalize_mbp1(raw), window["event"], window["first"], window["last"]
-            )
-            normalized = _normalize(profile)
-            if normalized is None:
-                continue
-            for minute, value in profile.items():
-                rows.append(
-                    {
-                        "kind": kind,
-                        "id": window["id"],
-                        "instrument": instrument,
-                        "minute": int(minute),
-                        "depth_contracts": float(value),
-                        "depth_relative": float(normalized.loc[minute]),
-                    }
-                )
-        print(f"[{kind} {i}/{len(windows)}] {window['id']}")
-        del frame
-    return pd.DataFrame(rows)
+        rows = _window_rows(window, path, kind)
+        rows.to_parquet(cached, index=False)  # empty results are cached too
+        frames.append(rows)
+        print(tag if not rows.empty else f"{tag}: no usable quotes")
+        gc.collect()
+    frames = [f for f in frames if not f.empty]
+    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
 
 
 def _summary(panel: pd.DataFrame) -> pd.DataFrame:
@@ -161,7 +215,8 @@ def main() -> None:
         offsets.append((pd.Timestamp(m["press_conference_time_utc"]) - event).total_seconds() / 60)
         end = (pd.Timestamp(m["request_end_utc"]) - event).total_seconds() / 60
         windows.append({**m, "id": m["label"], "event": event, "first": -5, "last": int(end) - 1})
-    panel = _collect(windows, meeting_raw_file, "fomc")
+    processed = PROJECT_ROOT / "data" / "processed" / "fomc_depth_profile"
+    panel = _collect(windows, meeting_raw_file, "fomc", processed / "cache" / "fomc")
 
     if not args.no_controls:
         placebos = load_yaml(PROJECT_ROOT / "config" / args.placebos)["placebos"]
@@ -172,14 +227,12 @@ def main() -> None:
             control_windows.append(
                 {**p, "id": p["placebo_id"], "event": event, "first": -5, "last": int(end) - 1}
             )
-        panel = pd.concat([panel, _collect(control_windows, placebo_raw_file, "control")])
+        panel = pd.concat([panel, _collect(control_windows, placebo_raw_file, "control", processed / "cache" / "control")])
 
     if panel.empty:
         raise RuntimeError("No cached raw windows found; run scripts/run_fomc_pipeline.sh first")
     summary = _summary(panel)
 
-    processed = PROJECT_ROOT / "data" / "processed" / "fomc_depth_profile"
-    processed.mkdir(parents=True, exist_ok=True)
     panel.to_parquet(processed / "minute_depth_by_event.parquet", index=False)
     summary.to_csv(PROJECT_ROOT / "tables" / "fomc_depth_profile_minute.csv", index=False)
 
