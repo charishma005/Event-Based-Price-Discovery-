@@ -48,14 +48,28 @@ def load_usmpd_sheet(sheet: str, path: str | Path = USMPD_DIR / "USMPD.xlsx") ->
 
 
 def _standardize(values: np.ndarray) -> np.ndarray:
-    return (values - values.mean(axis=0)) / values.std(axis=0, ddof=1)
+    """Z-score each column; zero-variance columns become NaN so degenerate inputs propagate cleanly."""
+    with np.errstate(all="ignore"):
+        std = values.std(axis=0, ddof=1)
+        std = np.where(np.isfinite(std) & (std > 0), std, np.nan)
+        return (values - values.mean(axis=0)) / std
 
 
 def _first_pc(values: np.ndarray) -> np.ndarray:
-    """First principal-component scores of standardized data (prcomp, scale=TRUE)."""
+    """First principal-component scores of standardized data (prcomp, scale=TRUE).
+
+    Degenerate inputs (a constant or single-observation column) have no
+    principal components; return NaN scores so callers drop them downstream.
+    Floating-point flags raised inside LAPACK for exactly-singular covariance
+    matrices are spurious for finite inputs, so they are suppressed here.
+    """
     standardized = _standardize(values)
-    eigenvalues, eigenvectors = np.linalg.eigh(np.cov(standardized, rowvar=False))
-    return standardized @ eigenvectors[:, np.argmax(eigenvalues)]
+    if not np.isfinite(standardized).all():
+        return np.full(len(values), np.nan)
+    with np.errstate(all="ignore"):
+        eigenvalues, eigenvectors = np.linalg.eigh(np.cov(standardized, rowvar=False))
+        scores = standardized @ eigenvectors[:, np.argmax(eigenvalues)]
+    return np.where(np.isfinite(scores), scores, np.nan)
 
 
 def _ols(y: np.ndarray, x: np.ndarray, intercept: bool = True) -> np.ndarray:
@@ -90,10 +104,14 @@ def compute_gss(futures: pd.DataFrame) -> pd.DataFrame:
     mp1 = futures["MP1"].to_numpy(float)
     ed4 = futures["ED4"].to_numpy(float)
     fut = _standardize(futures[list(FUTNAMES)].to_numpy(float))
+    if not np.isfinite(fut).all():
+        nan = np.full(len(futures), np.nan)
+        return pd.DataFrame({"Date": futures["Date"], "target": nan, "path": nan})
 
-    eigenvalues, eigenvectors = np.linalg.eigh(np.cov(fut, rowvar=False))
-    order = np.argsort(eigenvalues)[::-1][:2]
-    factors = fut @ eigenvectors[:, order] / np.sqrt(eigenvalues[order])
+    with np.errstate(all="ignore"):
+        eigenvalues, eigenvectors = np.linalg.eigh(np.cov(fut, rowvar=False))
+        order = np.argsort(eigenvalues)[::-1][:2]
+        factors = fut @ eigenvectors[:, order] / np.sqrt(eigenvalues[order])
 
     # Rotate so the second factor has no effect on MP1 (GSS appendix A8-A11).
     g = _ols(mp1, factors, intercept=False)
