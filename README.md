@@ -13,6 +13,26 @@ This repository implements the proposal's central empirical object: the share of
 
 The verified event calendar is at `data/events/event_calendar.csv`. It includes separate rows for the FOMC statement, SEP, and press-conference opening, as well as concurrent releases that can contaminate a macro window.
 
+## October 2026: the professor's next steps 1, 5 and 8
+
+`reports/professor_steps_1_5_8.md` reports three of the eight next steps from
+the professor meeting. Steps 2, 3, 4, 6 and 7 are done separately and are not
+in that report. In short:
+
+- **Step 1 (Q1).** A short-horizon quote-revision share, anchored on the market's own arrival, was pre-declared (`config/q1_short_horizon_prereg.yaml`) and frozen before any 2015-2023 window was run. Out of sample, CPI/PPI, the jobs report and the FOMC statement are all more trade-driven than ordinary trading; the press conference is not. H1 fails as written and the scalar-versus-narrative ordering does not replicate.
+- **Step 5 (macro arm back to 2015).** 437 release mornings (was 77, all in 2024-25) and 112 control mornings. Touch depth is withdrawn before 8:30 a.m. releases relative to the control mornings in ES and ZN; in NQ the spread widens instead.
+- **Step 8 (unscheduled arrivals, NQ).** Before 107 unscheduled arrivals (price-identified, two to four control days each) there is no withdrawal. NQ does withdraw before scheduled arrivals, through the spread, because it is not tick-constrained.
+
+One new local setting (optional, unset by default):
+
+- `T3_EXTRA_RAW_DIRS`: extra read-only folders of Databento files, searched after `data/raw/databento/`. Lets an existing raw cache outside the repository be reused instead of copied or downloaded again.
+
+The run order for the new scripts is at the end of the report, and
+`reports/data_files_steps_1_5_8.csv` lists every raw file they read, with its
+SHA-256. The raw files and the one-second panels are local only;
+`data/processed/tick_features/events.parquet` (per-event measures, no vendor
+records) is small enough to track.
+
 ## Data sources
 
 ### Databento
