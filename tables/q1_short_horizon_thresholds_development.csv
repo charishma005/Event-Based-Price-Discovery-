@@ -1,0 +1,9 @@
+sample,outcome,event_class,hypothesis,events,median_share,events_satisfying,one_sided_sign_p,opposite_side_sign_p
+development,primary,scalar_numeric,H1: share above 0.70,39,0.10543965283840136,2,0.9999999999272404,1.420630724169314e-09
+development,primary,multi_dimensional_numeric,H1: share above 0.70,38,0.15009421161008146,1,0.999999999996362,1.418811734765768e-10
+development,primary,narrative_text,H2: share below 0.40,13,0.33543668129603715,9,0.1334228515625,0.953857421875
+development,primary,extemporaneous_speech,H2: share below 0.40,13,0.5119072511910284,5,0.8665771484375,0.29052734375
+development,secondary,scalar_numeric,H1: share above 0.70,39,0.20100752936674607,5,0.9999998323419277,1.2149539543315768e-06
+development,secondary,multi_dimensional_numeric,H1: share above 0.70,37,0.41812140027002487,14,0.9505641252035275,0.09387077949941158
+development,secondary,narrative_text,H2: share below 0.40,13,0.23191658271344137,8,0.29052734375,0.8665771484375
+development,secondary,extemporaneous_speech,H2: share below 0.40,13,0.6997638816120267,3,0.98876953125,0.046142578125

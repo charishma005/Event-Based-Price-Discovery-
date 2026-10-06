@@ -1,0 +1,189 @@
+version: 1
+title: Short-horizon quote-revision share for Q1 (mechanism)
+status: frozen            # set to "frozen" by scripts/freeze_q1_preregistration.py
+kind: internal pre-declaration, not an external preregistration
+motivation: >-
+  The proposal's first-quote share is about zero for every event type, so it
+  cannot separate scalar from narrative news. The professor asked for a
+  pre-declared short-horizon quote-revision measure (for example 50 ms to 1 s),
+  fixed before it is run on 2015-2023 so that those years are an out-of-sample
+  check, and for the frequency with which a trade intervenes by representation class.
+
+samples:
+  development: {start: '2024-01-01', end: '2025-09-30', status: fully inspected}
+  oos_backward: {start: '2015-01-01', end: '2023-12-31', role: primary out-of-sample confirmation}
+  oos_forward: {start: '2025-10-01', end: '2026-09-30', role: secondary out-of-sample check}
+  instruments: [ES.v.0, NQ.v.0, ZN.v.0]
+  registry: data/events/event_registry.csv
+  out_of_sample_events:
+    scalar_numeric: CPI and PPI releases (official BLS schedule)
+    multi_dimensional_numeric: Employment Situation releases (official BLS schedule)
+    narrative_text: scheduled FOMC statements (USMPD clocks)
+    extemporaneous_speech: FOMC press-conference openings (USMPD clocks)
+
+inspection_before_freeze:
+  - Every development window was inspected, including alternative definitions that were rejected.
+  - >-
+    Out-of-sample files: only feed-format properties of records at least ten
+    seconds BEFORE each scheduled macro release were read (timestamp resolution,
+    action codes, flags, and the timestamp lag between a trade and its book
+    update). See reports/feed_format_census_pre_event.csv. No post-event record
+    of any out-of-sample window entered any statistic.
+  - >-
+    The team's earlier 2015-2026 FOMC tables (first-quote share, touch-depth
+    ratio, 5-minute speed metrics) had been seen. The measures defined here had
+    not been computed on any out-of-sample window.
+
+development_findings_that_shaped_the_definition:
+  - >-
+    In 2024-2025 the market response to both BLS releases and FOMC statements
+    starts about one second after the scheduled second (median 1.0-1.1 s for
+    macro releases). A fixed 50 ms to 1 s window on the scheduled clock therefore
+    measures pre-arrival noise. Dissemination latency is not expected to be the
+    same in 2015-2019, so the short horizon is anchored on the market's own
+    arrival rather than on the scheduled second.
+  - >-
+    Around the arrival the midpoint often moves through one large sweep. A signed
+    share is used so that quote moves that pull back against the sweep count as
+    negative rather than as quote revision.
+
+attribution:
+  unit: every change of the valid top-of-book midpoint between consecutive book updates (add, cancel, modify, clear)
+  trade_attributed: >-
+    the update carries the exchange timestamp of the most recent preceding trade
+    record of the same instrument, or is the first book update after that trade
+    and is stamped no later than the tolerance after it
+  quote_attributed: every other midpoint change between two valid book states
+  gap: a midpoint change across a locked, crossed or one-sided book; reported separately, in neither share
+  tolerance_ns: 0 when at least half of the window's trades are followed by a book update with the same timestamp, otherwise 100000
+  feed_formats_detected_pre_event:
+    - '2015-01 to 2015-11: millisecond stamps; same-millisecond updates cannot be separated from the trade'
+    - '2015-12 to 2017-05: nanosecond stamps, trade and book update stamped about 15-40 microseconds apart'
+    - '2017-06 onward: nanosecond stamps, trade and book update share one timestamp'
+
+clocks:
+  scheduled_clock: official release second t0; the pre-event state is the last book state strictly before t0
+  arrival_anchor: >-
+    the first midpoint change of the 100 ms window with the largest absolute net
+    attributed midpoint change among windows starting in [t0, t0 + 10 s]
+  pseudo_clock: t0 minus 120 s inside the same raw window; same anchor rule applied to [t0 - 120 s, t0 - 110 s]
+
+outcomes:
+  primary:
+    name: share_burst100
+    definition: QR / (QR + TR) over [arrival anchor, arrival anchor + 100 ms]
+    defined_when: abs(QR + TR) > 0
+  key_secondary:
+    name: share_fp50
+    definition: >-
+      QR / (QR + TR) cumulated from t0 through the update at which the midpoint
+      first covers 50% of its signed 300-second change
+    defined_when: abs(300 s midpoint change) >= 1 bp; not defined at pseudo clocks
+  horizon_sensitivity: the primary share over 0, 50, 250, 500 and 1000 ms after the arrival anchor, and over 50 ms to 5 s after the scheduled second
+  bounded_variant: sign(QR + TR) * QR / (abs(QR) + abs(TR)), used in regressions
+  legacy_kept_alongside:
+    - first valid post-event quote revision (proposal definition)
+    - last quote before the first post-event trade
+  trade_intervention:
+    - trade before the first valid post-event quote (the legacy eligibility screen)
+    - first midpoint change after t0 is trade-attributed
+    - trades in the first 100 ms and first second, and in the arrival window
+
+eligibility:
+  - provider dataset condition is available (degraded days excluded)
+  - not a closed session; pre-event book state valid
+  - at least 60 s of data before and 10.2 s after the clock
+  - matched-day controls whose quality flag starts with clean, no_scheduled_official_release_at_clock or bls_and_claims_screen_only
+  - mixed numeric bundles are reported but excluded from class contrasts
+  - no exclusion on response size or direction
+
+aggregation:
+  unit: event clock; the outcome is averaged over the instruments where it is defined
+  paired_contrasts: differences are taken within instrument, then averaged over instruments where both sides are defined
+  clusters: event day (macro bundle or FOMC meeting)
+
+primary_family:                 # Holm across these seven two-sided tests, separately in each sample
+  - scalar_numeric minus own pseudo clock (paired Wilcoxon signed-rank)
+  - multi_dimensional_numeric minus own pseudo clock (paired Wilcoxon signed-rank)
+  - narrative_text minus own pseudo clock (paired Wilcoxon signed-rank)
+  - extemporaneous_speech minus own pseudo clock (paired Wilcoxon signed-rank)
+  - statement minus press conference within meeting (paired Wilcoxon signed-rank)
+  - scalar_numeric vs narrative_text (Mann-Whitney U)
+  - scalar_numeric vs multi_dimensional_numeric (Mann-Whitney U)
+reported_outside_the_family:
+  - each class vs matched-day controls where the sample has them (Mann-Whitney U)
+  - 'H1 literal: event-level share above 0.70 for numeric releases (one-sided sign test)'
+  - 'H2 literal: event-level share below 0.40 for statements and press conferences (one-sided sign test)'
+  - Spearman trend across scalar, multi-dimensional, narrative, speech
+  - OLS of the bounded variant and of the share winsorized to [-1, 2] on class and instrument, clustered by event day
+directional_expectations_from_development:
+  - numeric releases and statements below their pseudo clocks; press conferences not different
+  - statement below press conference
+  - share rises from scalar to speech (opposite to the ordering H1 and H2 predict)
+replication_rule: >-
+  A development result counts as replicated when the out-of-sample (backward)
+  estimate has the same sign and its Holm-adjusted two-sided p-value is below 0.05.
+  Everything is reported, including results that fail this rule.
+
+robustness:                     # reported for every sample, never used to choose a headline
+  - each instrument separately
+  - excluding windows with an invalid-book gap inside the arrival window
+  - nanosecond same-stamped feed only (drops 2015-01 to 2017-05)
+  - events whose arrival move is at least 2 bp
+  - fixed 100 microsecond tolerance in every feed format
+
+controls:
+  within_window_pseudo: available for every event; valid for the quote/trade split, not for pre-event liquidity
+  matched_day_fomc: scripts/build_placebo_configs.py rule (one week before and after, screened calendars)
+  matched_day_macro: one control per month by the rule in scripts/build_placebo_configs.py when its calendars are available
+
+code:
+  measure_code: [src/microstructure/tick_arrays.py, src/microstructure/quote_revision.py, src/microstructure/event_features.py]
+  analysis_code: scripts/analyze_q1_short_horizon.py
+  extraction_guard: scripts/extract_tick_features.py refuses out-of-sample windows unless this file is frozen and the measure-code hash matches
+
+freeze:
+  frozen_at_utc: '2026-10-05T06:52:51Z'
+  measure_code_sha256: 3422fc8f4e513eece6ea29c6901364d13425ae5b00f61d67ccaf9c9b34e680c8
+  analysis_code_sha256: 3fb21e3775793fd42fef240060724205af6e2b7252f96f3100530c75683837a2
+  event_registry_sha256: 00117435db1025987556d897aed98ea402cac75c7ebb5b8c1d038bfc3b29f3f5
+  event_registry_rows: 1410
+  development_rows_processed_before_freeze: 792
+  out_of_sample_rows_processed_before_freeze: 0
+measure_code_sha256: 3422fc8f4e513eece6ea29c6901364d13425ae5b00f61d67ccaf9c9b34e680c8
+
+post_freeze_log:
+  - logged_at_utc: '2026-10-05T09:05:07Z'
+    change: >-
+      Added 92 rule-based 8:30 a.m. control days (82 in 2015-2023, 10 in
+      2025-10 to 2026-09) from config/macro_placebos_2015_2026.yaml. The rule
+      is the one already written in scripts/build_placebo_configs.py at the
+      freeze; the controls carry quality_flag bls_and_claims_screen_only, which
+      the frozen analysis script already listed as an eligible control. No
+      event or pseudo-clock row changed: all 1,410 rows of the registry at the
+      freeze are unchanged. Measure code and analysis script are unchanged.
+    effect_on_results: >-
+      Only the secondary contrasts "<class> vs matched-day macro_control" in the
+      out-of-sample panels gained observations (they had no macro controls
+      before). Every pre-declared primary contrast is unchanged.
+    event_registry_rows: 1502
+    event_registry_sha256: 947c8bcaef6ef1234af9cde0fae711cf3eaca419b50d21c0b97ca1fd412ba0e9
+  - logged_at_utc: '2026-10-06T05:26:00Z'
+    change: >-
+      Observation; no change to code or data. The development windows were
+      replayed before the vendor's per-day conditions were merged into the
+      event registry, so their rows in events.parquet carry no condition and
+      the frozen analysis reads a missing condition as available. Two
+      development clocks that the registry marks as degraded are therefore in
+      the development tables: the FOMC meeting of 2025-09-17 (statement, press
+      conference and their pseudo clocks) and the control afternoon of
+      2025-09-24. Out-of-sample windows were replayed with the conditions in
+      place. Added scripts/check_q1_vendor_flags.py, which repeats the
+      pre-declared contrasts with those clocks left out and writes
+      tables/q1_vendor_flag_check.csv. Measure code, analysis script, event
+      registry and events.parquet are unchanged.
+    effect_on_results: >-
+      Development sample only: 12 meetings instead of 13; statement minus own
+      pseudo clock -0.23 instead of -0.22, statement minus press conference
+      -0.05 in both, trend rho 0.29 instead of 0.31. Every out-of-sample
+      contrast is identical with and without the registry's conditions applied.

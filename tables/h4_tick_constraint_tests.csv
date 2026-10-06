@@ -1,0 +1,17 @@
+test,meetings,nq_geometric_mean,other_geometric_mean,statistic,p_two_sided
+"NQ against ES, depth_ratio in the final minute (paired by meeting)",90,0.6619399189949036,0.277973473072052,2.3813059329986572,1.0132163651501179e-15
+"NQ against ZN, depth_ratio in the final minute (paired by meeting)",90,0.6619399189949036,0.07987812906503677,8.286872863769531,2.132976212971756e-16
+"NQ against ES, composite_ratio in the final minute (paired by meeting)",90,0.25724682528611087,0.20419301234566534,1.259821882889088,0.00013318545470485696
+"NQ against ZN, composite_ratio in the final minute (paired by meeting)",90,0.25724682528611087,0.06699930238452514,3.8395448330149673,4.220340465084872e-15
+ES: normal_spread_ticks against depth_ratio across meetings (Spearman),90,,,0.4036026980906022,7.994510233147798e-05
+ES: normal_spread_ticks against spread_share_of_withdrawal across meetings (Spearman),89,,,0.4877158523649645,1.2492712373143386e-06
+ES: normal_one_tick_share against depth_ratio across meetings (Spearman),90,,,-0.4077412526176058,6.637976543676564e-05
+ES: normal_one_tick_share against spread_share_of_withdrawal across meetings (Spearman),89,,,-0.49219760213438474,9.634445340677655e-07
+NQ: normal_spread_ticks against depth_ratio across meetings (Spearman),90,,,0.6982730236317041,2.008435893677235e-14
+NQ: normal_spread_ticks against spread_share_of_withdrawal across meetings (Spearman),87,,,0.660719004902816,3.319541002851826e-12
+NQ: normal_one_tick_share against depth_ratio across meetings (Spearman),90,,,-0.716314830127353,2.070007984026342e-15
+NQ: normal_one_tick_share against spread_share_of_withdrawal across meetings (Spearman),87,,,-0.7043760367145814,2.6988621627707016e-14
+ZN: normal_spread_ticks against depth_ratio across meetings (Spearman),90,,,0.048236817919699304,0.6516430222584852
+ZN: normal_spread_ticks against spread_share_of_withdrawal across meetings (Spearman),90,,,0.2840522007784258,0.006663363559410978
+ZN: normal_one_tick_share against depth_ratio across meetings (Spearman),90,,,-0.04873328409517653,0.6482942554395805
+ZN: normal_one_tick_share against spread_share_of_withdrawal across meetings (Spearman),90,,,-0.28384993457119406,0.0067040071341693324

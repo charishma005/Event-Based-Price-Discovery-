@@ -1,5 +1,14 @@
 # H1–H6 status, 2015–2026 FOMC sample
 
+> **Update, October 2026.** `reports/professor_steps_1_5_8.md` adds to this
+> page. H1 and H2 were re-tested with a pre-declared short-horizon share, which
+> does vary across event types (step 1). For H4, the macro arm now reaches back
+> to 2015 with matched control mornings (step 5), and there is a larger
+> unscheduled sample with no withdrawal before the arrival, plus an account of
+> why NQ depth does not fall (step 8). Steps 2, 3, 4, 6 and 7 (H3, the H4
+> control tests for FOMC, H5 and H6, statement versus press conference) are
+> done separately. The text below is the status before that work.
+
 Sample: `config/fomc_sample_2015_2026.yaml`, 93 scheduled meetings (77 with
 press conferences), processed to `data/processed/fomc_sample_2015_2026/`. The
 sample includes the original twelve 2024–2025 meetings, so it is a larger

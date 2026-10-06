@@ -1,0 +1,38 @@
+\begin{tabular}{llllrrrrr}
+\toprule
+sample & outcome & event_class & hypothesis & events & median_share & events_satisfying & one_sided_sign_p & opposite_side_sign_p \\
+\midrule
+development & primary & scalar_numeric & H1: share above 0.70 & 39 & 0.1054 & 2 & 1.0000 & 0.0000 \\
+development & primary & multi_dimensional_numeric & H1: share above 0.70 & 38 & 0.1501 & 1 & 1.0000 & 0.0000 \\
+development & primary & narrative_text & H2: share below 0.40 & 13 & 0.3354 & 9 & 0.1334 & 0.9539 \\
+development & primary & extemporaneous_speech & H2: share below 0.40 & 13 & 0.5119 & 5 & 0.8666 & 0.2905 \\
+development & secondary & scalar_numeric & H1: share above 0.70 & 39 & 0.2010 & 5 & 1.0000 & 0.0000 \\
+development & secondary & multi_dimensional_numeric & H1: share above 0.70 & 37 & 0.4181 & 14 & 0.9506 & 0.0939 \\
+development & secondary & narrative_text & H2: share below 0.40 & 13 & 0.2319 & 8 & 0.2905 & 0.8666 \\
+development & secondary & extemporaneous_speech & H2: share below 0.40 & 13 & 0.6998 & 3 & 0.9888 & 0.0461 \\
+oos_backward & primary & scalar_numeric & H1: share above 0.70 & 212 & 0.3195 & 27 & 1.0000 & 0.0000 \\
+oos_backward & primary & multi_dimensional_numeric & H1: share above 0.70 & 108 & 0.2431 & 13 & 1.0000 & 0.0000 \\
+oos_backward & primary & narrative_text & H2: share below 0.40 & 71 & 0.2197 & 51 & 0.0002 & 0.9999 \\
+oos_backward & primary & extemporaneous_speech & H2: share below 0.40 & 55 & 0.4167 & 26 & 0.7050 & 0.3939 \\
+oos_backward & secondary & scalar_numeric & H1: share above 0.70 & 211 & 0.3160 & 58 & 1.0000 & 0.0000 \\
+oos_backward & secondary & multi_dimensional_numeric & H1: share above 0.70 & 108 & 0.2583 & 24 & 1.0000 & 0.0000 \\
+oos_backward & secondary & narrative_text & H2: share below 0.40 & 71 & 0.3701 & 39 & 0.2383 & 0.8288 \\
+oos_backward & secondary & extemporaneous_speech & H2: share below 0.40 & 55 & 0.3890 & 29 & 0.3939 & 0.7050 \\
+oos_forward & primary & scalar_numeric & H1: share above 0.70 & 21 & 0.1606 & 3 & 0.9999 & 0.0007 \\
+oos_forward & primary & multi_dimensional_numeric & H1: share above 0.70 & 11 & 0.1643 & 2 & 0.9941 & 0.0327 \\
+oos_forward & primary & narrative_text & H2: share below 0.40 & 8 & 0.3469 & 5 & 0.3633 & 0.8555 \\
+oos_forward & primary & extemporaneous_speech & H2: share below 0.40 & 8 & 0.6807 & 1 & 0.9961 & 0.0352 \\
+oos_forward & secondary & scalar_numeric & H1: share above 0.70 & 21 & 0.0308 & 4 & 0.9993 & 0.0036 \\
+oos_forward & secondary & multi_dimensional_numeric & H1: share above 0.70 & 11 & 0.2631 & 4 & 0.8867 & 0.2744 \\
+oos_forward & secondary & narrative_text & H2: share below 0.40 & 8 & -0.1248 & 5 & 0.3633 & 0.8555 \\
+oos_forward & secondary & extemporaneous_speech & H2: share below 0.40 & 8 & 0.7545 & 1 & 0.9961 & 0.0352 \\
+oos_all & primary & scalar_numeric & H1: share above 0.70 & 233 & 0.2962 & 30 & 1.0000 & 0.0000 \\
+oos_all & primary & multi_dimensional_numeric & H1: share above 0.70 & 119 & 0.2373 & 15 & 1.0000 & 0.0000 \\
+oos_all & primary & narrative_text & H2: share below 0.40 & 79 & 0.2282 & 56 & 0.0001 & 0.9999 \\
+oos_all & primary & extemporaneous_speech & H2: share below 0.40 & 63 & 0.4583 & 27 & 0.8963 & 0.1568 \\
+oos_all & secondary & scalar_numeric & H1: share above 0.70 & 232 & 0.2558 & 62 & 1.0000 & 0.0000 \\
+oos_all & secondary & multi_dimensional_numeric & H1: share above 0.70 & 119 & 0.2591 & 28 & 1.0000 & 0.0000 \\
+oos_all & secondary & narrative_text & H2: share below 0.40 & 79 & 0.3488 & 44 & 0.1841 & 0.8698 \\
+oos_all & secondary & extemporaneous_speech & H2: share below 0.40 & 63 & 0.4360 & 30 & 0.6927 & 0.4007 \\
+\bottomrule
+\end{tabular}
