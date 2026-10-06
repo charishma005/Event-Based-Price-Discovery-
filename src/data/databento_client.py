@@ -156,13 +156,15 @@ def download_request(estimate: Estimate, *, execute: bool = False) -> Path:
 
     client = historical_client()
     req = estimate.request
-    store = client.timeseries.get_range(
-        dataset=req.dataset,
-        schema=req.schema,
-        symbols=list(req.symbols),
-        stype_in=req.stype_in,
-        start=req.start,
-        end=req.end,
+    store = _retry(
+        lambda: client.timeseries.get_range(
+            dataset=req.dataset,
+            schema=req.schema,
+            symbols=list(req.symbols),
+            stype_in=req.stype_in,
+            start=req.start,
+            end=req.end,
+        )
     )
     store.to_file(target, mode="x")
     import databento as db
