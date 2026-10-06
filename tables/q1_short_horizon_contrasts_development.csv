@@ -1,0 +1,30 @@
+sample,outcome,contrast,test,n_left,n_right,estimate,estimate_kind,mean_difference,share_negative,p_two_sided,in_primary_family,holm_p
+development,primary,scalar_numeric minus own pseudo clock,paired Wilcoxon signed-rank,39,39,-0.3797021772067796,median paired difference,-0.39128112261428644,0.7692307692307693,2.3796659661456943e-05,True,0.0001665766176301986
+development,primary,multi_dimensional_numeric minus own pseudo clock,paired Wilcoxon signed-rank,38,38,-0.31057055100581576,median paired difference,-0.20174696393084868,0.7894736842105263,0.000726071280951146,True,0.004356427685706876
+development,primary,narrative_text minus own pseudo clock,paired Wilcoxon signed-rank,13,13,-0.2181024588019809,median paired difference,-0.297524381778899,0.6923076923076923,0.21630859375,True,0.64892578125
+development,primary,extemporaneous_speech minus own pseudo clock,paired Wilcoxon signed-rank,13,13,-0.17236119929574684,median paired difference,-0.01761176638917907,0.5384615384615384,1.0,True,1.0
+development,primary,statement minus press conference (same meeting),paired Wilcoxon signed-rank,13,13,-0.05334783287689995,median paired difference,-0.3272579973386127,0.8461538461538461,0.021484375,True,0.107421875
+development,primary,scalar_numeric vs narrative_text,Mann-Whitney U,39,13,-0.2299970284576358,difference in medians,-0.09063222999609864,,0.13906880551267184,True,0.5562752220506874
+development,primary,scalar_numeric vs multi_dimensional_numeric,Mann-Whitney U,39,38,-0.044654558771680106,difference in medians,-0.12676453750908062,,0.6948621614950612,True,1.0
+development,primary,scalar_numeric vs matched-day macro_control,Mann-Whitney U,39,20,-0.47915728540847363,difference in medians,-0.4740634414417193,,9.985952214579505e-07,False,
+development,primary,multi_dimensional_numeric vs matched-day macro_control,Mann-Whitney U,38,20,-0.4345027266367935,difference in medians,-0.34729890393263874,,4.123274748204612e-06,False,
+development,primary,narrative_text vs matched-day fomc_control,Mann-Whitney U,13,25,-0.20622996331415627,difference in medians,-0.291120728333529,,0.026733676398720686,False,
+development,primary,extemporaneous_speech vs matched-day fomc_control,Mann-Whitney U,13,25,-0.029759393419165003,difference in medians,0.013235268214878415,,0.9020461850450651,False,
+development,secondary,statement minus press conference (same meeting),paired Wilcoxon signed-rank,13,13,-0.5426644052370028,median paired difference,-0.21817091504907757,0.5384615384615384,0.587890625,True,1.0
+development,secondary,scalar_numeric vs narrative_text,Mann-Whitney U,39,13,-0.030909053346695303,difference in medians,0.10070092260587732,,0.7835304977741095,True,1.0
+development,secondary,scalar_numeric vs multi_dimensional_numeric,Mann-Whitney U,39,37,-0.2171138709032788,difference in medians,0.039000568412297265,,0.2085836711244764,True,0.6257510133734292
+development,secondary,scalar_numeric vs matched-day macro_control,Mann-Whitney U,39,20,-0.46060435801760435,difference in medians,-0.009470049664656366,,0.007315140068562632,False,
+development,secondary,multi_dimensional_numeric vs matched-day macro_control,Mann-Whitney U,37,20,-0.24349048711432553,difference in medians,-0.04847061807695363,,0.4078479654243531,False,
+development,secondary,narrative_text vs matched-day fomc_control,Mann-Whitney U,13,25,-0.24916063440110411,difference in medians,0.006929346350784127,,0.5383007490187228,False,
+development,secondary,extemporaneous_speech vs matched-day fomc_control,Mann-Whitney U,13,25,0.21868666449748125,difference in medians,0.16204704573397627,,0.2954900080039703,False,
+development,sensitivity: 100 us tolerance,scalar_numeric minus own pseudo clock,paired Wilcoxon signed-rank,39,39,-0.3797021772067796,median paired difference,-0.39151949104766376,0.7692307692307693,2.3796659661456943e-05,True,0.0001665766176301986
+development,sensitivity: 100 us tolerance,multi_dimensional_numeric minus own pseudo clock,paired Wilcoxon signed-rank,38,38,-0.31057055100581576,median paired difference,-0.2063533016430743,0.7894736842105263,0.0006831944847363047,True,0.004099166908417828
+development,sensitivity: 100 us tolerance,narrative_text minus own pseudo clock,paired Wilcoxon signed-rank,13,13,-0.2181024588019809,median paired difference,-0.297524381778899,0.6923076923076923,0.21630859375,True,0.64892578125
+development,sensitivity: 100 us tolerance,extemporaneous_speech minus own pseudo clock,paired Wilcoxon signed-rank,13,13,-0.17236119929574684,median paired difference,-0.016899481909262083,0.5384615384615384,1.0,True,1.0
+development,sensitivity: 100 us tolerance,statement minus press conference (same meeting),paired Wilcoxon signed-rank,13,13,-0.05334783287689995,median paired difference,-0.3279702818185297,0.8461538461538461,0.021484375,True,0.107421875
+development,sensitivity: 100 us tolerance,scalar_numeric vs narrative_text,Mann-Whitney U,39,13,-0.2299970284576358,difference in medians,-0.0909239947111583,,0.13906880551267184,True,0.5562752220506874
+development,sensitivity: 100 us tolerance,scalar_numeric vs multi_dimensional_numeric,Mann-Whitney U,39,38,-0.044654558771680106,difference in medians,-0.12260776781531127,,0.7252053889831234,True,1.0
+development,sensitivity: 100 us tolerance,scalar_numeric vs matched-day macro_control,Mann-Whitney U,39,20,-0.47915728540847363,difference in medians,-0.47435520615677895,,1.0831221912999939e-06,False,
+development,sensitivity: 100 us tolerance,multi_dimensional_numeric vs matched-day macro_control,Mann-Whitney U,38,20,-0.4345027266367935,difference in medians,-0.3517474383414677,,4.123274748204612e-06,False,
+development,sensitivity: 100 us tolerance,narrative_text vs matched-day fomc_control,Mann-Whitney U,13,25,-0.20622996331415627,difference in medians,-0.291120728333529,,0.026733676398720686,False,
+development,sensitivity: 100 us tolerance,extemporaneous_speech vs matched-day fomc_control,Mann-Whitney U,13,25,-0.029759393419165003,difference in medians,0.013947552694795418,,0.9509303845561745,False,

@@ -1,0 +1,72 @@
+\begin{tabular}{llllrrrlrrrrr}
+\toprule
+sample & variant & contrast & test & n_left & n_right & estimate & estimate_kind & mean_difference & share_negative & p_two_sided & in_primary_family & holm_p \\
+\midrule
+development & ES only & scalar_numeric minus own pseudo clock & paired Wilcoxon signed-rank & 39 & 39 & -0.4705 & median paired difference & -0.2548 & 0.6923 & 0.0197 & True & 0.1380 \\
+development & ES only & multi_dimensional_numeric minus own pseudo clock & paired Wilcoxon signed-rank & 37 & 37 & -0.2926 & median paired difference & 0.0807 & 0.6216 & 0.0286 & True & 0.1597 \\
+development & ES only & narrative_text minus own pseudo clock & paired Wilcoxon signed-rank & 13 & 13 & -0.3781 & median paired difference & -0.2569 & 0.8462 & 0.0266 & True & 0.1597 \\
+development & ES only & extemporaneous_speech minus own pseudo clock & paired Wilcoxon signed-rank & 13 & 13 & -0.1667 & median paired difference & 0.0455 & 0.6923 & 0.6848 & True & 1.0000 \\
+development & ES only & statement minus press conference (same meeting) & paired Wilcoxon signed-rank & 13 & 13 & -0.3781 & median paired difference & -0.3242 & 0.7692 & 0.0266 & True & 0.1597 \\
+development & ES only & scalar_numeric vs narrative_text & Mann-Whitney U & 39 & 13 & -0.0924 & difference in medians & 0.0754 & NaN & 0.7513 & True & 1.0000 \\
+development & ES only & scalar_numeric vs multi_dimensional_numeric & Mann-Whitney U & 39 & 38 & -0.0610 & difference in medians & -0.2560 & NaN & 0.8906 & True & 1.0000 \\
+development & ES only & scalar_numeric vs matched-day macro_control & Mann-Whitney U & 39 & 20 & -0.4705 & difference in medians & -0.3828 & NaN & 0.0014 & False & NaN \\
+development & ES only & multi_dimensional_numeric vs matched-day macro_control & Mann-Whitney U & 38 & 20 & -0.4096 & difference in medians & -0.1268 & NaN & 0.0002 & False & NaN \\
+development & ES only & narrative_text vs matched-day fomc_control & Mann-Whitney U & 13 & 25 & -0.3781 & difference in medians & -0.3218 & NaN & 0.0051 & False & NaN \\
+development & ES only & extemporaneous_speech vs matched-day fomc_control & Mann-Whitney U & 13 & 25 & -0.0000 & difference in medians & 0.0024 & NaN & 0.5383 & False & NaN \\
+development & NQ only & scalar_numeric minus own pseudo clock & paired Wilcoxon signed-rank & 39 & 39 & -0.4970 & median paired difference & -0.6006 & 0.8718 & 0.0000 & True & 0.0000 \\
+development & NQ only & multi_dimensional_numeric minus own pseudo clock & paired Wilcoxon signed-rank & 38 & 38 & -0.3128 & median paired difference & -0.4615 & 0.8158 & 0.0000 & True & 0.0003 \\
+development & NQ only & narrative_text minus own pseudo clock & paired Wilcoxon signed-rank & 13 & 13 & -0.1029 & median paired difference & -0.4542 & 0.6923 & 0.2163 & True & 0.9546 \\
+development & NQ only & extemporaneous_speech minus own pseudo clock & paired Wilcoxon signed-rank & 13 & 13 & 0.0186 & median paired difference & 0.0267 & 0.4615 & 0.8926 & True & 0.9546 \\
+development & NQ only & statement minus press conference (same meeting) & paired Wilcoxon signed-rank & 13 & 13 & -0.2606 & median paired difference & -0.4945 & 0.6154 & 0.1909 & True & 0.9546 \\
+development & NQ only & scalar_numeric vs narrative_text & Mann-Whitney U & 39 & 13 & -0.2119 & difference in medians & -0.0673 & NaN & 0.2907 & True & 0.9546 \\
+development & NQ only & scalar_numeric vs multi_dimensional_numeric & Mann-Whitney U & 39 & 38 & -0.1376 & difference in medians & -0.0822 & NaN & 0.3011 & True & 0.9546 \\
+development & NQ only & scalar_numeric vs matched-day macro_control & Mann-Whitney U & 39 & 20 & -0.5005 & difference in medians & -0.5869 & NaN & 0.0000 & False & NaN \\
+development & NQ only & multi_dimensional_numeric vs matched-day macro_control & Mann-Whitney U & 38 & 20 & -0.3629 & difference in medians & -0.5047 & NaN & 0.0005 & False & NaN \\
+development & NQ only & narrative_text vs matched-day fomc_control & Mann-Whitney U & 13 & 25 & -0.2690 & difference in medians & -0.4341 & NaN & 0.0649 & False & NaN \\
+development & NQ only & extemporaneous_speech vs matched-day fomc_control & Mann-Whitney U & 13 & 25 & 0.1029 & difference in medians & 0.0603 & NaN & 0.3560 & False & NaN \\
+development & ZN only & scalar_numeric minus own pseudo clock & paired Wilcoxon signed-rank & 24 & 24 & -0.3204 & median paired difference & -0.2547 & 0.6250 & 0.0564 & True & 0.2821 \\
+development & ZN only & multi_dimensional_numeric minus own pseudo clock & paired Wilcoxon signed-rank & 28 & 28 & -0.2620 & median paired difference & -0.2144 & 0.5714 & 0.1375 & True & 0.5501 \\
+development & ZN only & narrative_text minus own pseudo clock & paired Wilcoxon signed-rank & 5 & 5 & NaN & median paired difference & NaN & NaN & NaN & True & NaN \\
+development & ZN only & extemporaneous_speech minus own pseudo clock & paired Wilcoxon signed-rank & 6 & 6 & -0.3750 & median paired difference & -0.2917 & 0.6667 & 0.4375 & True & 1.0000 \\
+development & ZN only & statement minus press conference (same meeting) & paired Wilcoxon signed-rank & 9 & 9 & -0.1089 & median paired difference & -0.1393 & 0.5556 & 0.7344 & True & 1.0000 \\
+development & ZN only & scalar_numeric vs narrative_text & Mann-Whitney U & 39 & 13 & -0.2057 & difference in medians & -0.2800 & NaN & 0.0073 & True & 0.0437 \\
+development & ZN only & scalar_numeric vs multi_dimensional_numeric & Mann-Whitney U & 39 & 38 & -0.0376 & difference in medians & -0.0421 & NaN & 0.4916 & True & 1.0000 \\
+development & ZN only & scalar_numeric vs matched-day macro_control & Mann-Whitney U & 39 & 10 & -0.4422 & difference in medians & -0.2502 & NaN & 0.0166 & False & NaN \\
+development & ZN only & multi_dimensional_numeric vs matched-day macro_control & Mann-Whitney U & 38 & 10 & -0.4046 & difference in medians & -0.2080 & NaN & 0.1068 & False & NaN \\
+development & ZN only & narrative_text vs matched-day fomc_control & Mann-Whitney U & 13 & 7 & -0.2366 & difference in medians & 0.0441 & NaN & 0.6343 & False & NaN \\
+development & ZN only & extemporaneous_speech vs matched-day fomc_control & Mann-Whitney U & 9 & 7 & 0.0000 & difference in medians & 0.1032 & NaN & 1.0000 & False & NaN \\
+development & no invalid-book gap in the arrival window & scalar_numeric minus own pseudo clock & paired Wilcoxon signed-rank & 39 & 39 & -0.3797 & median paired difference & -0.3746 & 0.7949 & 0.0000 & True & 0.0000 \\
+development & no invalid-book gap in the arrival window & multi_dimensional_numeric minus own pseudo clock & paired Wilcoxon signed-rank & 38 & 38 & -0.3451 & median paired difference & -0.2941 & 0.8158 & 0.0002 & True & 0.0015 \\
+development & no invalid-book gap in the arrival window & narrative_text minus own pseudo clock & paired Wilcoxon signed-rank & 13 & 13 & -0.2181 & median paired difference & -0.2975 & 0.6923 & 0.2163 & True & 0.6489 \\
+development & no invalid-book gap in the arrival window & extemporaneous_speech minus own pseudo clock & paired Wilcoxon signed-rank & 13 & 13 & -0.1724 & median paired difference & -0.0176 & 0.5385 & 1.0000 & True & 1.0000 \\
+development & no invalid-book gap in the arrival window & statement minus press conference (same meeting) & paired Wilcoxon signed-rank & 13 & 13 & -0.0533 & median paired difference & -0.3273 & 0.8462 & 0.0215 & True & 0.1074 \\
+development & no invalid-book gap in the arrival window & scalar_numeric vs narrative_text & Mann-Whitney U & 39 & 13 & -0.2185 & difference in medians & -0.0921 & NaN & 0.0950 & True & 0.3801 \\
+development & no invalid-book gap in the arrival window & scalar_numeric vs multi_dimensional_numeric & Mann-Whitney U & 39 & 38 & 0.0086 & difference in medians & -0.0082 & NaN & 0.9797 & True & 1.0000 \\
+development & no invalid-book gap in the arrival window & scalar_numeric vs matched-day macro_control & Mann-Whitney U & 39 & 20 & -0.4676 & difference in medians & -0.4756 & NaN & 0.0000 & False & NaN \\
+development & no invalid-book gap in the arrival window & multi_dimensional_numeric vs matched-day macro_control & Mann-Whitney U & 38 & 20 & -0.4762 & difference in medians & -0.4674 & NaN & 0.0000 & False & NaN \\
+development & no invalid-book gap in the arrival window & narrative_text vs matched-day fomc_control & Mann-Whitney U & 13 & 25 & -0.2062 & difference in medians & -0.2911 & NaN & 0.0267 & False & NaN \\
+development & no invalid-book gap in the arrival window & extemporaneous_speech vs matched-day fomc_control & Mann-Whitney U & 13 & 25 & -0.0298 & difference in medians & 0.0132 & NaN & 0.9020 & False & NaN \\
+development & nanosecond same-stamped feed only & scalar_numeric minus own pseudo clock & paired Wilcoxon signed-rank & 39 & 39 & -0.3797 & median paired difference & -0.3913 & 0.7692 & 0.0000 & True & 0.0002 \\
+development & nanosecond same-stamped feed only & multi_dimensional_numeric minus own pseudo clock & paired Wilcoxon signed-rank & 38 & 38 & -0.3106 & median paired difference & -0.2017 & 0.7895 & 0.0007 & True & 0.0044 \\
+development & nanosecond same-stamped feed only & narrative_text minus own pseudo clock & paired Wilcoxon signed-rank & 13 & 13 & -0.2181 & median paired difference & -0.2975 & 0.6923 & 0.2163 & True & 0.6489 \\
+development & nanosecond same-stamped feed only & extemporaneous_speech minus own pseudo clock & paired Wilcoxon signed-rank & 13 & 13 & -0.1724 & median paired difference & -0.0176 & 0.5385 & 1.0000 & True & 1.0000 \\
+development & nanosecond same-stamped feed only & statement minus press conference (same meeting) & paired Wilcoxon signed-rank & 13 & 13 & -0.0533 & median paired difference & -0.3273 & 0.8462 & 0.0215 & True & 0.1074 \\
+development & nanosecond same-stamped feed only & scalar_numeric vs narrative_text & Mann-Whitney U & 39 & 13 & -0.2300 & difference in medians & -0.0906 & NaN & 0.1391 & True & 0.5563 \\
+development & nanosecond same-stamped feed only & scalar_numeric vs multi_dimensional_numeric & Mann-Whitney U & 39 & 38 & -0.0447 & difference in medians & -0.1268 & NaN & 0.6949 & True & 1.0000 \\
+development & nanosecond same-stamped feed only & scalar_numeric vs matched-day macro_control & Mann-Whitney U & 39 & 20 & -0.4792 & difference in medians & -0.4741 & NaN & 0.0000 & False & NaN \\
+development & nanosecond same-stamped feed only & multi_dimensional_numeric vs matched-day macro_control & Mann-Whitney U & 38 & 20 & -0.4345 & difference in medians & -0.3473 & NaN & 0.0000 & False & NaN \\
+development & nanosecond same-stamped feed only & narrative_text vs matched-day fomc_control & Mann-Whitney U & 13 & 25 & -0.2062 & difference in medians & -0.2911 & NaN & 0.0267 & False & NaN \\
+development & nanosecond same-stamped feed only & extemporaneous_speech vs matched-day fomc_control & Mann-Whitney U & 13 & 25 & -0.0298 & difference in medians & 0.0132 & NaN & 0.9020 & False & NaN \\
+development & arrival move of at least 2 bp, events only & scalar_numeric minus own pseudo clock & paired Wilcoxon signed-rank & 39 & 39 & -0.3797 & median paired difference & -0.3913 & 0.7692 & 0.0000 & True & 0.0001 \\
+development & arrival move of at least 2 bp, events only & multi_dimensional_numeric minus own pseudo clock & paired Wilcoxon signed-rank & 38 & 38 & -0.3106 & median paired difference & -0.2017 & 0.7895 & 0.0007 & True & 0.0029 \\
+development & arrival move of at least 2 bp, events only & narrative_text minus own pseudo clock & paired Wilcoxon signed-rank & 12 & 12 & -0.1945 & median paired difference & -0.3041 & 0.6667 & 0.3013 & True & 0.6025 \\
+development & arrival move of at least 2 bp, events only & extemporaneous_speech minus own pseudo clock & paired Wilcoxon signed-rank & 4 & 4 & NaN & median paired difference & NaN & NaN & NaN & True & NaN \\
+development & arrival move of at least 2 bp, events only & statement minus press conference (same meeting) & paired Wilcoxon signed-rank & 4 & 4 & NaN & median paired difference & NaN & NaN & NaN & True & NaN \\
+development & arrival move of at least 2 bp, events only & scalar_numeric vs narrative_text & Mann-Whitney U & 39 & 13 & -0.2300 & difference in medians & -0.1366 & NaN & 0.0993 & True & 0.2979 \\
+development & arrival move of at least 2 bp, events only & scalar_numeric vs multi_dimensional_numeric & Mann-Whitney U & 39 & 38 & -0.0447 & difference in medians & -0.1268 & NaN & 0.6949 & True & 0.6949 \\
+development & arrival move of at least 2 bp, events only & scalar_numeric vs matched-day macro_control & Mann-Whitney U & 39 & 20 & -0.4792 & difference in medians & -0.4741 & NaN & 0.0000 & False & NaN \\
+development & arrival move of at least 2 bp, events only & multi_dimensional_numeric vs matched-day macro_control & Mann-Whitney U & 38 & 20 & -0.4345 & difference in medians & -0.3473 & NaN & 0.0000 & False & NaN \\
+development & arrival move of at least 2 bp, events only & narrative_text vs matched-day fomc_control & Mann-Whitney U & 13 & 25 & -0.2062 & difference in medians & -0.2451 & NaN & 0.0849 & False & NaN \\
+development & arrival move of at least 2 bp, events only & extemporaneous_speech vs matched-day fomc_control & Mann-Whitney U & 4 & 25 & NaN & difference in medians & NaN & NaN & NaN & False & NaN \\
+\bottomrule
+\end{tabular}
