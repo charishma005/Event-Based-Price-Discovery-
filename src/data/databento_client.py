@@ -106,13 +106,29 @@ def historical_client() -> Any:
     return db.Historical(key)
 
 
+def _retry(call, attempts: int = 6):
+    """Retry transient Databento gateway errors (5xx, timeouts) with backoff."""
+    import time
+
+    for attempt in range(attempts):
+        try:
+            return call()
+        except Exception as exc:  # databento raises BentoServerError for 5xx
+            transient = type(exc).__name__ == "BentoServerError" or "timed out" in str(exc).lower()
+            if not transient or attempt == attempts - 1:
+                raise
+            wait = 2 ** (attempt + 1)
+            print(f"Transient Databento error ({exc}); retrying in {wait}s")
+            time.sleep(wait)
+
+
 def estimate_request(request: DatabentoRequest) -> Estimate:
     """Use free metadata endpoints to estimate bytes and dollars before retrieval."""
     client = historical_client()
     kwargs = asdict(request)
     kwargs["symbols"] = list(request.symbols)
-    size = int(client.metadata.get_billable_size(**kwargs))
-    cost = float(client.metadata.get_cost(**kwargs))
+    size = int(_retry(lambda: client.metadata.get_billable_size(**kwargs)))
+    cost = float(_retry(lambda: client.metadata.get_cost(**kwargs)))
     return Estimate(request, size, cost, request.output_path.exists())
 
 
@@ -166,13 +182,15 @@ def download_request(
 
     client = historical_client()
     req = estimate.request
-    store = client.timeseries.get_range(
-        dataset=req.dataset,
-        schema=req.schema,
-        symbols=list(req.symbols),
-        stype_in=req.stype_in,
-        start=req.start,
-        end=req.end,
+    store = _retry(
+        lambda: client.timeseries.get_range(
+            dataset=req.dataset,
+            schema=req.schema,
+            symbols=list(req.symbols),
+            stype_in=req.stype_in,
+            start=req.start,
+            end=req.end,
+        )
     )
     # Write under a temporary name first: an interrupted transfer must never
     # leave a truncated file that later looks like an immutable raw download.
