@@ -406,7 +406,7 @@ def report(s, params, t):
                       "but the holdout out-of-sample R2 is <= 0 by 30-60 s; see figure 13."))
     q.append((17, "Strongest hypothesis for further research: the first entry of the SUPPORTED list above if any; "
                   "otherwise the specification with the most consistent development/holdout sign in the regressions. "
-                  "This line is filled in by hand after reviewing the numbers (see Interpretation)."))
+                  "See the Interpretation section below."))
     current = None
     for number, text in sorted(q, key=lambda item: item[0]):     # stable: ES, NQ, ZN within each question
         if number != current:
@@ -414,6 +414,9 @@ def report(s, params, t):
             current = number
         lines.append(f"- {text}")
 
+    interpretation = REPORT.with_name("fomc_trading_strategy_interpretation.md")
+    if interpretation.exists():         # written by hand after reviewing the tables; kept across reruns
+        lines += ["", interpretation.read_text(encoding="utf-8").rstrip()]
     lines += ["", "## Strategy details", ""]
     for x in registry():
         insts = _labels(x)
