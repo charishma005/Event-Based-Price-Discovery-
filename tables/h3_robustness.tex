@@ -1,0 +1,16 @@
+\begin{tabular}{lrrrrrrr}
+\toprule
+variant & beta & se & p & ci_low & ci_high & rows & mornings \\
+\midrule
+log range in place of z-dispersion & 0.0068 & 0.0321 & 0.8324 & -0.0562 & 0.0698 & 1255 & 425 \\
+range / d2(n), no log n control & 0.0313 & 0.0217 & 0.1484 & -0.0111 & 0.0737 & 1255 & 425 \\
+drop March to July 2020 & 0.0534 & 0.0300 & 0.0746 & -0.0053 & 0.1122 & 1215 & 411 \\
+drop outlier-driven ranges & 0.0327 & 0.0218 & 0.1339 & -0.0101 & 0.0755 & 1208 & 409 \\
+drop mornings with a concurrent release & 0.0365 & 0.0231 & 0.1146 & -0.0088 & 0.0819 & 1105 & 373 \\
+no winsorization of S & 0.0386 & 0.0231 & 0.0944 & -0.0066 & 0.0838 & 1255 & 425 \\
+arrival move of at least 2 bp & 0.0254 & 0.0248 & 0.3056 & -0.0232 & 0.0740 & 995 & 377 \\
+ES only & 0.0237 & 0.0430 & 0.5813 & -0.0605 & 0.1079 & 415 & 415 \\
+NQ only & 0.0675 & 0.0237 & 0.0044 & 0.0211 & 0.1139 & 421 & 421 \\
+ZN only & 0.0072 & 0.0222 & 0.7442 & -0.0362 & 0.0507 & 419 & 419 \\
+\bottomrule
+\end{tabular}
