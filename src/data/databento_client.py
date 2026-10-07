@@ -9,7 +9,7 @@ from typing import Any, Iterable
 
 import pandas as pd
 
-from src.utils.config import PROJECT_ROOT, settings
+from src.utils.config import PROJECT_ROOT, raw_databento_dirs, settings
 from src.utils.io import sha256_file, utc_now_iso, write_json_exclusive
 
 
@@ -55,9 +55,21 @@ class DatabentoRequest:
         return hashlib.sha256(body).hexdigest()[:16]
 
     @property
+    def file_name(self) -> str:
+        return f"{self.dataset}-{self.schema}-{self.request_id}.dbn.zst"
+
+    @property
     def output_path(self) -> Path:
-        stem = f"{self.dataset}-{self.schema}-{self.request_id}.dbn.zst"
-        return PROJECT_ROOT / "data" / "raw" / "databento" / stem
+        return PROJECT_ROOT / "data" / "raw" / "databento" / self.file_name
+
+    @property
+    def existing_path(self) -> Path | None:
+        """The cached file in the project cache or any ``T3_EXTRA_RAW_DIRS`` cache."""
+        for directory in raw_databento_dirs():
+            candidate = directory / self.file_name
+            if candidate.exists():
+                return candidate
+        return None
 
 
 @dataclass(frozen=True)
@@ -66,6 +78,11 @@ class Estimate:
     billable_bytes: int
     cost_usd: float
     cached: bool
+
+    @property
+    def available(self) -> bool:
+        """True when the file is in the project cache or in a ``T3_EXTRA_RAW_DIRS`` cache."""
+        return self.cached or self.request.existing_path is not None
 
 
 def _utc_timestamp(value: str | pd.Timestamp) -> pd.Timestamp:
@@ -132,21 +149,30 @@ def print_summary(estimate: Estimate) -> None:
     print(f"Window: {req.start} to {req.end}")
     print(f"Estimated size: {human_size(estimate.billable_bytes)}")
     print(f"Estimated cost: ${estimate.cost_usd:,.4f}")
-    print(f"Cached: {'yes' if estimate.cached else 'no'}")
+    print(f"Cached: {'yes' if estimate.available else 'no'}")
 
 
-def download_request(estimate: Estimate, *, execute: bool = False) -> Path:
-    """Download an estimated request only after explicit opt-in and cost checks."""
-    print_summary(estimate)
+def download_request(
+    estimate: Estimate, *, execute: bool = False, size_guard_bytes: int | None = None,
+    quiet: bool = False,
+) -> Path:
+    """Download an estimated request only after explicit opt-in and cost checks.
+
+    ``size_guard_bytes`` replaces the configured billable-size tripwire for one
+    call; the caller must have reviewed the estimate. The dollar guard always applies.
+    """
+    if not quiet:
+        print_summary(estimate)
     if not execute:
         raise RuntimeError("Estimate only. Re-run with explicit execution enabled.")
-    if estimate.cached:
-        return estimate.request.output_path
+    if estimate.available:
+        return estimate.request.existing_path or estimate.request.output_path
 
     guards = settings()["cost_control"]
     if estimate.cost_usd > float(guards["max_auto_cost_usd"]):
         raise RuntimeError("Estimated monetary cost exceeds configured guard")
-    if estimate.billable_bytes > int(guards["max_auto_billable_bytes"]):
+    size_guard = int(guards["max_auto_billable_bytes"]) if size_guard_bytes is None else int(size_guard_bytes)
+    if estimate.billable_bytes > size_guard:
         raise RuntimeError("Estimated size exceeds configured guard")
 
     target = estimate.request.output_path
@@ -166,10 +192,16 @@ def download_request(estimate: Estimate, *, execute: bool = False) -> Path:
             end=req.end,
         )
     )
-    store.to_file(target, mode="x")
+    # Write under a temporary name first: an interrupted transfer must never
+    # leave a truncated file that later looks like an immutable raw download.
+    partial = target.with_name(target.name + ".part")
+    store.to_file(partial, mode="w")
+    if target.exists():
+        raise FileExistsError(target)
+    os.replace(partial, target)
     import databento as db
 
-    record_count = sum(1 for _ in db.DBNStore.from_file(target))
+    record_count = int(db.DBNStore.from_file(target).to_ndarray().shape[0])
     manifest = {
         "provider": "Databento",
         **asdict(req),

@@ -1,0 +1,113 @@
+sample,outcome,specification,term,coefficient,se_clustered,p_two_sided,observations,clusters
+development,"share, winsorized to [-1, 2]",class + instrument,Intercept,0.12442239474476466,0.07532658889731894,0.09858091861427105,305,89
+development,"share, winsorized to [-1, 2]",class + instrument,C(event_class)[T.multi_dimensional_numeric],0.015842640871282516,0.06970623241051709,0.8202081614382863,305,89
+development,"share, winsorized to [-1, 2]",class + instrument,C(event_class)[T.narrative_text],0.14470455848547709,0.1058307326814631,0.17152478547635552,305,89
+development,"share, winsorized to [-1, 2]",class + instrument,C(event_class)[T.extemporaneous_speech],0.36473222364138996,0.09451971263513881,0.00011394732304993402,305,89
+development,"share, winsorized to [-1, 2]",class + instrument,C(instrument)[T.NQ.v.0],0.03730823998010154,0.07907140995413013,0.6370483467647543,305,89
+development,"share, winsorized to [-1, 2]",class + instrument,C(instrument)[T.ZN.v.0],-0.054135858464593005,0.0684788150043948,0.42920721991352595,305,89
+development,"share, winsorized to [-1, 2]",plus spread and move size,Intercept,0.308737439191194,0.18490985044166128,0.09498573313618582,305,89
+development,"share, winsorized to [-1, 2]",plus spread and move size,C(event_class)[T.multi_dimensional_numeric],-0.016513322048709256,0.07437304302921416,0.8242876479092861,305,89
+development,"share, winsorized to [-1, 2]",plus spread and move size,C(event_class)[T.narrative_text],0.08883465685660295,0.1161455646813439,0.44435716971323846,305,89
+development,"share, winsorized to [-1, 2]",plus spread and move size,C(event_class)[T.extemporaneous_speech],0.25387182742273146,0.1627170335759788,0.11871159245614273,305,89
+development,"share, winsorized to [-1, 2]",plus spread and move size,C(instrument)[T.NQ.v.0],-0.06964125948518289,0.11580804481044611,0.5476063661223145,305,89
+development,"share, winsorized to [-1, 2]",plus spread and move size,C(instrument)[T.ZN.v.0],0.0260027361330208,0.07810944217322534,0.7392087756226534,305,89
+development,"share, winsorized to [-1, 2]",plus spread and move size,log_pre_spread,0.07827690694142919,0.0524078101602974,0.13527719690630197,305,89
+development,"share, winsorized to [-1, 2]",plus spread and move size,log_burst,-0.10210457521475635,0.056610375492857544,0.07128821125758628,305,89
+development,"directional share in [-1, 1]",class + instrument,Intercept,0.13220289097649726,0.04659042508590653,0.0045460521986186745,305,89
+development,"directional share in [-1, 1]",class + instrument,C(event_class)[T.multi_dimensional_numeric],0.04791868194435365,0.047487396149273435,0.31293525660297283,305,89
+development,"directional share in [-1, 1]",class + instrument,C(event_class)[T.narrative_text],0.12495429082131262,0.07016405288763987,0.07493081690893069,305,89
+development,"directional share in [-1, 1]",class + instrument,C(event_class)[T.extemporaneous_speech],0.3195244595017402,0.05916484425065335,6.642587432706256e-08,305,89
+development,"directional share in [-1, 1]",class + instrument,C(instrument)[T.NQ.v.0],0.07673173176601529,0.0504816566238345,0.12851289890318737,305,89
+development,"directional share in [-1, 1]",class + instrument,C(instrument)[T.ZN.v.0],-0.04287568567183763,0.04451857601197353,0.3354990875720122,305,89
+development,"directional share in [-1, 1]",plus spread and move size,Intercept,0.33466354487345257,0.11915153737652469,0.0049738575666822896,305,89
+development,"directional share in [-1, 1]",plus spread and move size,C(event_class)[T.multi_dimensional_numeric],0.018150078682885748,0.048547868923698424,0.7085089002139227,305,89
+development,"directional share in [-1, 1]",plus spread and move size,C(event_class)[T.narrative_text],0.0702523350317033,0.07522821449250174,0.35037807145522315,305,89
+development,"directional share in [-1, 1]",plus spread and move size,C(event_class)[T.extemporaneous_speech],0.1869677731400674,0.09930901019061679,0.059742810968883765,305,89
+development,"directional share in [-1, 1]",plus spread and move size,C(instrument)[T.NQ.v.0],0.015141382828657669,0.07436788725875766,0.8386652421109445,305,89
+development,"directional share in [-1, 1]",plus spread and move size,C(instrument)[T.ZN.v.0],0.013143316461121254,0.049577800421664237,0.7909286738612274,305,89
+development,"directional share in [-1, 1]",plus spread and move size,log_pre_spread,0.04982409647935986,0.03442552890974072,0.14781268746538936,305,89
+development,"directional share in [-1, 1]",plus spread and move size,log_burst,-0.0949721898810419,0.035113309526349674,0.006835894179608011,305,89
+oos_backward,"share, winsorized to [-1, 2]",class + instrument,Intercept,0.32281288102769284,0.029522438871564798,7.884605536384408e-28,1300,380
+oos_backward,"share, winsorized to [-1, 2]",class + instrument,C(event_class)[T.multi_dimensional_numeric],-0.08966488915099485,0.037756516424187536,0.017557561786602924,1300,380
+oos_backward,"share, winsorized to [-1, 2]",class + instrument,C(event_class)[T.narrative_text],-0.11889009326808572,0.03969766193330088,0.0027454468076876983,1300,380
+oos_backward,"share, winsorized to [-1, 2]",class + instrument,C(event_class)[T.extemporaneous_speech],0.06609899443056774,0.04214569439286264,0.11680060966690545,1300,380
+oos_backward,"share, winsorized to [-1, 2]",class + instrument,C(instrument)[T.NQ.v.0],0.022571903336376337,0.03516612369214111,0.5209608531166521,1300,380
+oos_backward,"share, winsorized to [-1, 2]",class + instrument,C(instrument)[T.ZN.v.0],0.008578265244404262,0.032254761746427565,0.7902750578628446,1300,380
+oos_backward,"share, winsorized to [-1, 2]",plus spread and move size,Intercept,0.4418905585204504,0.03743799117099959,3.7545217516430965e-32,1300,380
+oos_backward,"share, winsorized to [-1, 2]",plus spread and move size,C(event_class)[T.multi_dimensional_numeric],-0.039212326576779914,0.03853670222157809,0.3089004310432022,1300,380
+oos_backward,"share, winsorized to [-1, 2]",plus spread and move size,C(event_class)[T.narrative_text],-0.09824678092468876,0.03855149427481725,0.010820098316519684,1300,380
+oos_backward,"share, winsorized to [-1, 2]",plus spread and move size,C(event_class)[T.extemporaneous_speech],0.019312204887183073,0.0441370389813459,0.6617118089765851,1300,380
+oos_backward,"share, winsorized to [-1, 2]",plus spread and move size,C(instrument)[T.NQ.v.0],0.010156745572007313,0.0438786111868352,0.8169467957391046,1300,380
+oos_backward,"share, winsorized to [-1, 2]",plus spread and move size,C(instrument)[T.ZN.v.0],0.030402520140950406,0.03323669894161909,0.36033474152316547,1300,380
+oos_backward,"share, winsorized to [-1, 2]",plus spread and move size,log_pre_spread,0.019372854441124562,0.028633279928044247,0.4986691494681009,1300,380
+oos_backward,"share, winsorized to [-1, 2]",plus spread and move size,log_burst,-0.08260078524029114,0.019584676724584887,2.468910256648222e-05,1300,380
+oos_backward,"directional share in [-1, 1]",class + instrument,Intercept,0.3227922621820776,0.02255813957397401,1.9129925851928993e-46,1302,380
+oos_backward,"directional share in [-1, 1]",class + instrument,C(event_class)[T.multi_dimensional_numeric],-0.08999454345166633,0.02801554583336841,0.0013167343160428759,1302,380
+oos_backward,"directional share in [-1, 1]",class + instrument,C(event_class)[T.narrative_text],-0.09835997743751482,0.029617408685453185,0.0008968942636601111,1302,380
+oos_backward,"directional share in [-1, 1]",class + instrument,C(event_class)[T.extemporaneous_speech],0.08289478457653184,0.03421568307168955,0.015405086369314315,1302,380
+oos_backward,"directional share in [-1, 1]",class + instrument,C(instrument)[T.NQ.v.0],0.024324279524508222,0.025192692876390626,0.33427983912487425,1302,380
+oos_backward,"directional share in [-1, 1]",class + instrument,C(instrument)[T.ZN.v.0],-0.0039567789358329435,0.024810728471730648,0.8732918587216381,1302,380
+oos_backward,"directional share in [-1, 1]",plus spread and move size,Intercept,0.44616096860854454,0.028403152237204212,1.33004447192151e-55,1302,380
+oos_backward,"directional share in [-1, 1]",plus spread and move size,C(event_class)[T.multi_dimensional_numeric],-0.035680373277175784,0.028749890273813253,0.2145831420644806,1302,380
+oos_backward,"directional share in [-1, 1]",plus spread and move size,C(event_class)[T.narrative_text],-0.07569431796642798,0.028159376972100796,0.007186677647169185,1302,380
+oos_backward,"directional share in [-1, 1]",plus spread and move size,C(event_class)[T.extemporaneous_speech],0.032276477321674706,0.035543556434900016,0.36383469897667264,1302,380
+oos_backward,"directional share in [-1, 1]",plus spread and move size,C(instrument)[T.NQ.v.0],0.019848001531880256,0.03143671266730058,0.527802697224218,1302,380
+oos_backward,"directional share in [-1, 1]",plus spread and move size,C(instrument)[T.ZN.v.0],0.017226899524982475,0.024830021557935615,0.4878119225292854,1302,380
+oos_backward,"directional share in [-1, 1]",plus spread and move size,log_pre_spread,0.011152528615104464,0.020740307220648322,0.5907686843882252,1302,380
+oos_backward,"directional share in [-1, 1]",plus spread and move size,log_burst,-0.08377367873119816,0.014390062722455015,5.827504730112302e-09,1302,380
+oos_forward,"share, winsorized to [-1, 2]",class + instrument,Intercept,0.2076785319072426,0.1301299016869283,0.11050387721279523,140,39
+oos_forward,"share, winsorized to [-1, 2]",class + instrument,C(event_class)[T.multi_dimensional_numeric],-0.01281622339772659,0.13477128041395692,0.9242384943833128,140,39
+oos_forward,"share, winsorized to [-1, 2]",class + instrument,C(event_class)[T.narrative_text],0.09515559486175676,0.11241704585815565,0.3973008309731155,140,39
+oos_forward,"share, winsorized to [-1, 2]",class + instrument,C(event_class)[T.extemporaneous_speech],0.363105709577762,0.10252958555275872,0.00039790030544161793,140,39
+oos_forward,"share, winsorized to [-1, 2]",class + instrument,C(instrument)[T.NQ.v.0],0.15162494548522543,0.1261645570898474,0.22943985586969073,140,39
+oos_forward,"share, winsorized to [-1, 2]",class + instrument,C(instrument)[T.ZN.v.0],-0.011542544601548993,0.11750877715200166,0.9217519760088347,140,39
+oos_forward,"share, winsorized to [-1, 2]",plus spread and move size,Intercept,0.5135423504819999,0.24724467627451288,0.03779590118646472,140,39
+oos_forward,"share, winsorized to [-1, 2]",plus spread and move size,C(event_class)[T.multi_dimensional_numeric],0.04599502031986885,0.13783888820080556,0.7386158959685624,140,39
+oos_forward,"share, winsorized to [-1, 2]",plus spread and move size,C(event_class)[T.narrative_text],0.010622164974020652,0.1246861429754304,0.9321093684838088,140,39
+oos_forward,"share, winsorized to [-1, 2]",plus spread and move size,C(event_class)[T.extemporaneous_speech],0.12900507560552527,0.20865596690779745,0.5363994240705243,140,39
+oos_forward,"share, winsorized to [-1, 2]",plus spread and move size,C(instrument)[T.NQ.v.0],0.2900032547451514,0.2714532312112633,0.2853689824477975,140,39
+oos_forward,"share, winsorized to [-1, 2]",plus spread and move size,C(instrument)[T.ZN.v.0],-0.07447384849128613,0.17644517129890894,0.6729671609163363,140,39
+oos_forward,"share, winsorized to [-1, 2]",plus spread and move size,log_pre_spread,-0.06680771757566253,0.12524703114224198,0.5937514616275235,140,39
+oos_forward,"share, winsorized to [-1, 2]",plus spread and move size,log_burst,-0.09447477866117499,0.09567921996109094,0.3234408641429295,140,39
+oos_forward,"directional share in [-1, 1]",class + instrument,Intercept,0.15862926360560475,0.06438578111586632,0.013749915040433458,140,39
+oos_forward,"directional share in [-1, 1]",class + instrument,C(event_class)[T.multi_dimensional_numeric],-0.002468227976507031,0.08423887808599143,0.9766250537758834,140,39
+oos_forward,"directional share in [-1, 1]",class + instrument,C(event_class)[T.narrative_text],0.10028320405221773,0.08037218230033034,0.21212803200165464,140,39
+oos_forward,"directional share in [-1, 1]",class + instrument,C(event_class)[T.extemporaneous_speech],0.3994316663216591,0.07885364258915345,4.0736937974554516e-07,140,39
+oos_forward,"directional share in [-1, 1]",class + instrument,C(instrument)[T.NQ.v.0],0.1592528261842447,0.06501480985787972,0.014306051773182891,140,39
+oos_forward,"directional share in [-1, 1]",class + instrument,C(instrument)[T.ZN.v.0],0.03681825178911631,0.06848993398172132,0.5908727567505068,140,39
+oos_forward,"directional share in [-1, 1]",plus spread and move size,Intercept,0.43612088514997716,0.14403556886508162,0.0024628453570548488,140,39
+oos_forward,"directional share in [-1, 1]",plus spread and move size,C(event_class)[T.multi_dimensional_numeric],0.04911291970280897,0.08424197933443452,0.5598945328420193,140,39
+oos_forward,"directional share in [-1, 1]",plus spread and move size,C(event_class)[T.narrative_text],0.02492542476354009,0.07792225694598404,0.7490626734632904,140,39
+oos_forward,"directional share in [-1, 1]",plus spread and move size,C(event_class)[T.extemporaneous_speech],0.17878178275024245,0.13071255389118275,0.17139109270036834,140,39
+oos_forward,"directional share in [-1, 1]",plus spread and move size,C(instrument)[T.NQ.v.0],0.3169677905935931,0.13006591274654222,0.014810573260242033,140,39
+oos_forward,"directional share in [-1, 1]",plus spread and move size,C(instrument)[T.ZN.v.0],-0.03936236212168474,0.10453409255667429,0.7065076988204955,140,39
+oos_forward,"directional share in [-1, 1]",plus spread and move size,log_pre_spread,-0.07888267756531558,0.06618360249159448,0.2333096912713679,140,39
+oos_forward,"directional share in [-1, 1]",plus spread and move size,log_burst,-0.07524190906280588,0.05233414698304488,0.15051319460951862,140,39
+oos_all,"share, winsorized to [-1, 2]",class + instrument,Intercept,0.31209157900320783,0.02933451214828164,1.961016374941899e-26,1440,419
+oos_all,"share, winsorized to [-1, 2]",class + instrument,C(event_class)[T.multi_dimensional_numeric],-0.08251245514829597,0.03636503190539039,0.023267995173571452,1440,419
+oos_all,"share, winsorized to [-1, 2]",class + instrument,C(event_class)[T.narrative_text],-0.09778550215479852,0.03761520898706076,0.009332521620296625,1440,419
+oos_all,"share, winsorized to [-1, 2]",class + instrument,C(event_class)[T.extemporaneous_speech],0.09993052651670224,0.03972928197570432,0.01189356897785224,1440,419
+oos_all,"share, winsorized to [-1, 2]",class + instrument,C(instrument)[T.NQ.v.0],0.03523619097140809,0.03402541463126193,0.3003960402963274,1440,419
+oos_all,"share, winsorized to [-1, 2]",class + instrument,C(instrument)[T.ZN.v.0],0.006042918953656884,0.031185871389445223,0.8463551583806067,1440,419
+oos_all,"share, winsorized to [-1, 2]",plus spread and move size,Intercept,0.44191116088389426,0.0370398431882142,8.188459110973458e-33,1440,419
+oos_all,"share, winsorized to [-1, 2]",plus spread and move size,C(event_class)[T.multi_dimensional_numeric],-0.0312791147356303,0.03720379862773294,0.400487686400414,1440,419
+oos_all,"share, winsorized to [-1, 2]",plus spread and move size,C(event_class)[T.narrative_text],-0.0834957966207615,0.03644513247761074,0.021963416653582358,1440,419
+oos_all,"share, winsorized to [-1, 2]",plus spread and move size,C(event_class)[T.extemporaneous_speech],0.04591552858853439,0.04163034171880639,0.2700557310523859,1440,419
+oos_all,"share, winsorized to [-1, 2]",plus spread and move size,C(instrument)[T.NQ.v.0],0.0175895529958455,0.04291178263249195,0.6818790781013617,1440,419
+oos_all,"share, winsorized to [-1, 2]",plus spread and move size,C(instrument)[T.ZN.v.0],0.030058627100923704,0.03240960534687655,0.35368751814792054,1440,419
+oos_all,"share, winsorized to [-1, 2]",plus spread and move size,log_pre_spread,0.023716284852377253,0.025386968858014707,0.3502052346237914,1440,419
+oos_all,"share, winsorized to [-1, 2]",plus spread and move size,log_burst,-0.08778651507463793,0.018943219737520365,3.583345134733058e-06,1440,419
+oos_all,"directional share in [-1, 1]",class + instrument,Intercept,0.3073911331422057,0.02139313818325002,8.136860031020749e-47,1442,419
+oos_all,"directional share in [-1, 1]",class + instrument,C(event_class)[T.multi_dimensional_numeric],-0.08185757685071919,0.026599472321898465,0.0020880538692410497,1442,419
+oos_all,"directional share in [-1, 1]",class + instrument,C(event_class)[T.narrative_text],-0.07904843890175516,0.028008200810011336,0.0047675806976965485,1442,419
+oos_all,"directional share in [-1, 1]",class + instrument,C(event_class)[T.extemporaneous_speech],0.11769120018066426,0.03252055045004419,0.0002957672481166727,1442,419
+oos_all,"directional share in [-1, 1]",class + instrument,C(instrument)[T.NQ.v.0],0.03767834447314623,0.02363626537919212,0.11091578177732243,1442,419
+oos_all,"directional share in [-1, 1]",class + instrument,C(instrument)[T.ZN.v.0],-0.0005900822277862193,0.02330234063438565,0.9797974292401374,1442,419
+oos_all,"directional share in [-1, 1]",plus spread and move size,Intercept,0.440730770657969,0.027461199102884287,5.788884005257918e-58,1442,419
+oos_all,"directional share in [-1, 1]",plus spread and move size,C(event_class)[T.multi_dimensional_numeric],-0.026729705191985864,0.027099589625809595,0.32396093992950015,1442,419
+oos_all,"directional share in [-1, 1]",plus spread and move size,C(event_class)[T.narrative_text],-0.06290291574528997,0.026280290235158602,0.016686679282555284,1442,419
+oos_all,"directional share in [-1, 1]",plus spread and move size,C(event_class)[T.extemporaneous_speech],0.05850334021315233,0.033737293370597325,0.08290297188055767,1442,419
+oos_all,"directional share in [-1, 1]",plus spread and move size,C(instrument)[T.NQ.v.0],0.033967044495107984,0.029164416457396182,0.2441508810864076,1442,419
+oos_all,"directional share in [-1, 1]",plus spread and move size,C(instrument)[T.ZN.v.0],0.02051490544747444,0.023567172571844538,0.3840345964129812,1442,419
+oos_all,"directional share in [-1, 1]",plus spread and move size,log_pre_spread,0.010304626491802955,0.01790017539730722,0.564837028419223,1442,419
+oos_all,"directional share in [-1, 1]",plus spread and move size,log_burst,-0.08661248938298574,0.013516563829717646,1.4755909295323756e-10,1442,419

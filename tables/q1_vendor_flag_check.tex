@@ -1,0 +1,42 @@
+\begin{tabular}{lrlrrrrrrrrrr}
+\toprule
+sample & clocks_left_out_by_the_flags & contrast & n_left & n_right & estimate & p_two_sided & holm_p & n_left_flags_applied & n_right_flags_applied & estimate_flags_applied & p_two_sided_flags_applied & holm_p_flags_applied \\
+\midrule
+development & 5 & scalar_numeric minus own pseudo clock & 39 & 39.0000 & -0.3797 & 0.0000 & 0.0002 & 39 & 39.0000 & -0.3797 & 0.0000 & 0.0002 \\
+development & 5 & multi_dimensional_numeric minus own pseudo clock & 38 & 38.0000 & -0.3106 & 0.0007 & 0.0044 & 38 & 38.0000 & -0.3106 & 0.0007 & 0.0044 \\
+development & 5 & narrative_text minus own pseudo clock & 13 & 13.0000 & -0.2181 & 0.2163 & 0.6489 & 12 & 12.0000 & -0.2267 & 0.2661 & 0.7983 \\
+development & 5 & extemporaneous_speech minus own pseudo clock & 13 & 13.0000 & -0.1724 & 1.0000 & 1.0000 & 12 & 12.0000 & -0.1731 & 0.6772 & 1.0000 \\
+development & 5 & statement minus press conference (same meeting) & 13 & 13.0000 & -0.0533 & 0.0215 & 0.1074 & 12 & 12.0000 & -0.0524 & 0.0425 & 0.2124 \\
+development & 5 & scalar_numeric vs narrative_text & 39 & 13.0000 & -0.2300 & 0.1391 & 0.5563 & 39 & 12.0000 & -0.2365 & 0.1398 & 0.5590 \\
+development & 5 & scalar_numeric vs multi_dimensional_numeric & 39 & 38.0000 & -0.0447 & 0.6949 & 1.0000 & 39 & 38.0000 & -0.0447 & 0.6949 & 1.0000 \\
+development & 5 & scalar_numeric vs matched-day macro_control & 39 & 20.0000 & -0.4792 & 0.0000 & NaN & 39 & 20.0000 & -0.4792 & 0.0000 & NaN \\
+development & 5 & multi_dimensional_numeric vs matched-day macro_control & 38 & 20.0000 & -0.4345 & 0.0000 & NaN & 38 & 20.0000 & -0.4345 & 0.0000 & NaN \\
+development & 5 & narrative_text vs matched-day fomc_control & 13 & 25.0000 & -0.2062 & 0.0267 & NaN & 12 & 24.0000 & -0.1938 & 0.0580 & NaN \\
+development & 5 & extemporaneous_speech vs matched-day fomc_control & 13 & 25.0000 & -0.0298 & 0.9020 & NaN & 12 & 24.0000 & -0.0774 & 0.7246 & NaN \\
+development & 5 & trend across classes (Spearman rho) & 103 & NaN & 0.3064 & 0.0016 & NaN & 101 & NaN & 0.2912 & 0.0031 & NaN \\
+oos_backward & 0 & scalar_numeric minus own pseudo clock & 202 & 202.0000 & -0.1726 & 0.0000 & 0.0000 & 202 & 202.0000 & -0.1726 & 0.0000 & 0.0000 \\
+oos_backward & 0 & multi_dimensional_numeric minus own pseudo clock & 107 & 107.0000 & -0.2132 & 0.0002 & 0.0014 & 107 & 107.0000 & -0.2132 & 0.0002 & 0.0014 \\
+oos_backward & 0 & narrative_text minus own pseudo clock & 71 & 71.0000 & -0.2500 & 0.0006 & 0.0026 & 71 & 71.0000 & -0.2500 & 0.0006 & 0.0026 \\
+oos_backward & 0 & extemporaneous_speech minus own pseudo clock & 55 & 55.0000 & -0.0278 & 0.3107 & 0.3107 & 55 & 55.0000 & -0.0278 & 0.3107 & 0.3107 \\
+oos_backward & 0 & statement minus press conference (same meeting) & 55 & 55.0000 & -0.1960 & 0.0005 & 0.0026 & 55 & 55.0000 & -0.1960 & 0.0005 & 0.0026 \\
+oos_backward & 0 & scalar_numeric vs narrative_text & 212 & 71.0000 & 0.0999 & 0.0046 & 0.0139 & 212 & 71.0000 & 0.0999 & 0.0046 & 0.0139 \\
+oos_backward & 0 & scalar_numeric vs multi_dimensional_numeric & 212 & 108.0000 & 0.0765 & 0.0145 & 0.0291 & 212 & 108.0000 & 0.0765 & 0.0145 & 0.0291 \\
+oos_backward & 0 & scalar_numeric vs matched-day macro_control & 212 & 82.0000 & -0.1805 & 0.0015 & NaN & 212 & 82.0000 & -0.1805 & 0.0015 & NaN \\
+oos_backward & 0 & multi_dimensional_numeric vs matched-day macro_control & 108 & 82.0000 & -0.2569 & 0.0000 & NaN & 108 & 82.0000 & -0.2569 & 0.0000 & NaN \\
+oos_backward & 0 & narrative_text vs matched-day fomc_control & 71 & 132.0000 & -0.2803 & 0.0000 & NaN & 71 & 132.0000 & -0.2803 & 0.0000 & NaN \\
+oos_backward & 0 & extemporaneous_speech vs matched-day fomc_control & 55 & 132.0000 & -0.0833 & 0.0406 & NaN & 55 & 132.0000 & -0.0833 & 0.0406 & NaN \\
+oos_backward & 0 & trend across classes (Spearman rho) & 446 & NaN & -0.0296 & 0.5329 & NaN & 446 & NaN & -0.0296 & 0.5329 & NaN \\
+oos_forward & 0 & scalar_numeric minus own pseudo clock & 21 & 21.0000 & -0.5584 & 0.0029 & 0.0200 & 21 & 21.0000 & -0.5584 & 0.0029 & 0.0200 \\
+oos_forward & 0 & multi_dimensional_numeric minus own pseudo clock & 11 & 11.0000 & -0.4220 & 0.0420 & 0.2344 & 11 & 11.0000 & -0.4220 & 0.0420 & 0.2344 \\
+oos_forward & 0 & narrative_text minus own pseudo clock & 8 & 8.0000 & -0.0738 & 0.6406 & 1.0000 & 8 & 8.0000 & -0.0738 & 0.6406 & 1.0000 \\
+oos_forward & 0 & extemporaneous_speech minus own pseudo clock & 8 & 8.0000 & 0.0374 & 0.3828 & 1.0000 & 8 & 8.0000 & 0.0374 & 0.3828 & 1.0000 \\
+oos_forward & 0 & statement minus press conference (same meeting) & 8 & 8.0000 & -0.2908 & 0.0391 & 0.2344 & 8 & 8.0000 & -0.2908 & 0.0391 & 0.2344 \\
+oos_forward & 0 & scalar_numeric vs narrative_text & 21 & 8.0000 & -0.1863 & 0.1677 & 0.6707 & 21 & 8.0000 & -0.1863 & 0.1677 & 0.6707 \\
+oos_forward & 0 & scalar_numeric vs multi_dimensional_numeric & 21 & 11.0000 & -0.0037 & 0.8739 & 1.0000 & 21 & 11.0000 & -0.0037 & 0.8739 & 1.0000 \\
+oos_forward & 0 & scalar_numeric vs matched-day macro_control & 21 & 10.0000 & -0.4378 & 0.0295 & NaN & 21 & 10.0000 & -0.4378 & 0.0295 & NaN \\
+oos_forward & 0 & multi_dimensional_numeric vs matched-day macro_control & 11 & 10.0000 & -0.4341 & 0.0980 & NaN & 11 & 10.0000 & -0.4341 & 0.0980 & NaN \\
+oos_forward & 0 & narrative_text vs matched-day fomc_control & 8 & 14.0000 & -0.2855 & 0.0698 & NaN & 8 & 14.0000 & -0.2855 & 0.0698 & NaN \\
+oos_forward & 0 & extemporaneous_speech vs matched-day fomc_control & 8 & 14.0000 & 0.0484 & 0.5252 & NaN & 8 & 14.0000 & 0.0484 & 0.5252 & NaN \\
+oos_forward & 0 & trend across classes (Spearman rho) & 48 & NaN & 0.4064 & 0.0042 & NaN & 48 & NaN & 0.4064 & 0.0042 & NaN \\
+\bottomrule
+\end{tabular}

@@ -1,0 +1,118 @@
+\begin{tabular}{llllrrrrr}
+\toprule
+sample & outcome & specification & term & coefficient & se_clustered & p_two_sided & observations & clusters \\
+\midrule
+development & share, winsorized to [-1, 2] & class + instrument & Intercept & 0.1244 & 0.0753 & 0.0986 & 305 & 89 \\
+development & share, winsorized to [-1, 2] & class + instrument & C(event_class)[T.multi_dimensional_numeric] & 0.0158 & 0.0697 & 0.8202 & 305 & 89 \\
+development & share, winsorized to [-1, 2] & class + instrument & C(event_class)[T.narrative_text] & 0.1447 & 0.1058 & 0.1715 & 305 & 89 \\
+development & share, winsorized to [-1, 2] & class + instrument & C(event_class)[T.extemporaneous_speech] & 0.3647 & 0.0945 & 0.0001 & 305 & 89 \\
+development & share, winsorized to [-1, 2] & class + instrument & C(instrument)[T.NQ.v.0] & 0.0373 & 0.0791 & 0.6370 & 305 & 89 \\
+development & share, winsorized to [-1, 2] & class + instrument & C(instrument)[T.ZN.v.0] & -0.0541 & 0.0685 & 0.4292 & 305 & 89 \\
+development & share, winsorized to [-1, 2] & plus spread and move size & Intercept & 0.3087 & 0.1849 & 0.0950 & 305 & 89 \\
+development & share, winsorized to [-1, 2] & plus spread and move size & C(event_class)[T.multi_dimensional_numeric] & -0.0165 & 0.0744 & 0.8243 & 305 & 89 \\
+development & share, winsorized to [-1, 2] & plus spread and move size & C(event_class)[T.narrative_text] & 0.0888 & 0.1161 & 0.4444 & 305 & 89 \\
+development & share, winsorized to [-1, 2] & plus spread and move size & C(event_class)[T.extemporaneous_speech] & 0.2539 & 0.1627 & 0.1187 & 305 & 89 \\
+development & share, winsorized to [-1, 2] & plus spread and move size & C(instrument)[T.NQ.v.0] & -0.0696 & 0.1158 & 0.5476 & 305 & 89 \\
+development & share, winsorized to [-1, 2] & plus spread and move size & C(instrument)[T.ZN.v.0] & 0.0260 & 0.0781 & 0.7392 & 305 & 89 \\
+development & share, winsorized to [-1, 2] & plus spread and move size & log_pre_spread & 0.0783 & 0.0524 & 0.1353 & 305 & 89 \\
+development & share, winsorized to [-1, 2] & plus spread and move size & log_burst & -0.1021 & 0.0566 & 0.0713 & 305 & 89 \\
+development & directional share in [-1, 1] & class + instrument & Intercept & 0.1322 & 0.0466 & 0.0045 & 305 & 89 \\
+development & directional share in [-1, 1] & class + instrument & C(event_class)[T.multi_dimensional_numeric] & 0.0479 & 0.0475 & 0.3129 & 305 & 89 \\
+development & directional share in [-1, 1] & class + instrument & C(event_class)[T.narrative_text] & 0.1250 & 0.0702 & 0.0749 & 305 & 89 \\
+development & directional share in [-1, 1] & class + instrument & C(event_class)[T.extemporaneous_speech] & 0.3195 & 0.0592 & 0.0000 & 305 & 89 \\
+development & directional share in [-1, 1] & class + instrument & C(instrument)[T.NQ.v.0] & 0.0767 & 0.0505 & 0.1285 & 305 & 89 \\
+development & directional share in [-1, 1] & class + instrument & C(instrument)[T.ZN.v.0] & -0.0429 & 0.0445 & 0.3355 & 305 & 89 \\
+development & directional share in [-1, 1] & plus spread and move size & Intercept & 0.3347 & 0.1192 & 0.0050 & 305 & 89 \\
+development & directional share in [-1, 1] & plus spread and move size & C(event_class)[T.multi_dimensional_numeric] & 0.0182 & 0.0485 & 0.7085 & 305 & 89 \\
+development & directional share in [-1, 1] & plus spread and move size & C(event_class)[T.narrative_text] & 0.0703 & 0.0752 & 0.3504 & 305 & 89 \\
+development & directional share in [-1, 1] & plus spread and move size & C(event_class)[T.extemporaneous_speech] & 0.1870 & 0.0993 & 0.0597 & 305 & 89 \\
+development & directional share in [-1, 1] & plus spread and move size & C(instrument)[T.NQ.v.0] & 0.0151 & 0.0744 & 0.8387 & 305 & 89 \\
+development & directional share in [-1, 1] & plus spread and move size & C(instrument)[T.ZN.v.0] & 0.0131 & 0.0496 & 0.7909 & 305 & 89 \\
+development & directional share in [-1, 1] & plus spread and move size & log_pre_spread & 0.0498 & 0.0344 & 0.1478 & 305 & 89 \\
+development & directional share in [-1, 1] & plus spread and move size & log_burst & -0.0950 & 0.0351 & 0.0068 & 305 & 89 \\
+oos_backward & share, winsorized to [-1, 2] & class + instrument & Intercept & 0.3228 & 0.0295 & 0.0000 & 1300 & 380 \\
+oos_backward & share, winsorized to [-1, 2] & class + instrument & C(event_class)[T.multi_dimensional_numeric] & -0.0897 & 0.0378 & 0.0176 & 1300 & 380 \\
+oos_backward & share, winsorized to [-1, 2] & class + instrument & C(event_class)[T.narrative_text] & -0.1189 & 0.0397 & 0.0027 & 1300 & 380 \\
+oos_backward & share, winsorized to [-1, 2] & class + instrument & C(event_class)[T.extemporaneous_speech] & 0.0661 & 0.0421 & 0.1168 & 1300 & 380 \\
+oos_backward & share, winsorized to [-1, 2] & class + instrument & C(instrument)[T.NQ.v.0] & 0.0226 & 0.0352 & 0.5210 & 1300 & 380 \\
+oos_backward & share, winsorized to [-1, 2] & class + instrument & C(instrument)[T.ZN.v.0] & 0.0086 & 0.0323 & 0.7903 & 1300 & 380 \\
+oos_backward & share, winsorized to [-1, 2] & plus spread and move size & Intercept & 0.4419 & 0.0374 & 0.0000 & 1300 & 380 \\
+oos_backward & share, winsorized to [-1, 2] & plus spread and move size & C(event_class)[T.multi_dimensional_numeric] & -0.0392 & 0.0385 & 0.3089 & 1300 & 380 \\
+oos_backward & share, winsorized to [-1, 2] & plus spread and move size & C(event_class)[T.narrative_text] & -0.0982 & 0.0386 & 0.0108 & 1300 & 380 \\
+oos_backward & share, winsorized to [-1, 2] & plus spread and move size & C(event_class)[T.extemporaneous_speech] & 0.0193 & 0.0441 & 0.6617 & 1300 & 380 \\
+oos_backward & share, winsorized to [-1, 2] & plus spread and move size & C(instrument)[T.NQ.v.0] & 0.0102 & 0.0439 & 0.8169 & 1300 & 380 \\
+oos_backward & share, winsorized to [-1, 2] & plus spread and move size & C(instrument)[T.ZN.v.0] & 0.0304 & 0.0332 & 0.3603 & 1300 & 380 \\
+oos_backward & share, winsorized to [-1, 2] & plus spread and move size & log_pre_spread & 0.0194 & 0.0286 & 0.4987 & 1300 & 380 \\
+oos_backward & share, winsorized to [-1, 2] & plus spread and move size & log_burst & -0.0826 & 0.0196 & 0.0000 & 1300 & 380 \\
+oos_backward & directional share in [-1, 1] & class + instrument & Intercept & 0.3228 & 0.0226 & 0.0000 & 1302 & 380 \\
+oos_backward & directional share in [-1, 1] & class + instrument & C(event_class)[T.multi_dimensional_numeric] & -0.0900 & 0.0280 & 0.0013 & 1302 & 380 \\
+oos_backward & directional share in [-1, 1] & class + instrument & C(event_class)[T.narrative_text] & -0.0984 & 0.0296 & 0.0009 & 1302 & 380 \\
+oos_backward & directional share in [-1, 1] & class + instrument & C(event_class)[T.extemporaneous_speech] & 0.0829 & 0.0342 & 0.0154 & 1302 & 380 \\
+oos_backward & directional share in [-1, 1] & class + instrument & C(instrument)[T.NQ.v.0] & 0.0243 & 0.0252 & 0.3343 & 1302 & 380 \\
+oos_backward & directional share in [-1, 1] & class + instrument & C(instrument)[T.ZN.v.0] & -0.0040 & 0.0248 & 0.8733 & 1302 & 380 \\
+oos_backward & directional share in [-1, 1] & plus spread and move size & Intercept & 0.4462 & 0.0284 & 0.0000 & 1302 & 380 \\
+oos_backward & directional share in [-1, 1] & plus spread and move size & C(event_class)[T.multi_dimensional_numeric] & -0.0357 & 0.0287 & 0.2146 & 1302 & 380 \\
+oos_backward & directional share in [-1, 1] & plus spread and move size & C(event_class)[T.narrative_text] & -0.0757 & 0.0282 & 0.0072 & 1302 & 380 \\
+oos_backward & directional share in [-1, 1] & plus spread and move size & C(event_class)[T.extemporaneous_speech] & 0.0323 & 0.0355 & 0.3638 & 1302 & 380 \\
+oos_backward & directional share in [-1, 1] & plus spread and move size & C(instrument)[T.NQ.v.0] & 0.0198 & 0.0314 & 0.5278 & 1302 & 380 \\
+oos_backward & directional share in [-1, 1] & plus spread and move size & C(instrument)[T.ZN.v.0] & 0.0172 & 0.0248 & 0.4878 & 1302 & 380 \\
+oos_backward & directional share in [-1, 1] & plus spread and move size & log_pre_spread & 0.0112 & 0.0207 & 0.5908 & 1302 & 380 \\
+oos_backward & directional share in [-1, 1] & plus spread and move size & log_burst & -0.0838 & 0.0144 & 0.0000 & 1302 & 380 \\
+oos_forward & share, winsorized to [-1, 2] & class + instrument & Intercept & 0.2077 & 0.1301 & 0.1105 & 140 & 39 \\
+oos_forward & share, winsorized to [-1, 2] & class + instrument & C(event_class)[T.multi_dimensional_numeric] & -0.0128 & 0.1348 & 0.9242 & 140 & 39 \\
+oos_forward & share, winsorized to [-1, 2] & class + instrument & C(event_class)[T.narrative_text] & 0.0952 & 0.1124 & 0.3973 & 140 & 39 \\
+oos_forward & share, winsorized to [-1, 2] & class + instrument & C(event_class)[T.extemporaneous_speech] & 0.3631 & 0.1025 & 0.0004 & 140 & 39 \\
+oos_forward & share, winsorized to [-1, 2] & class + instrument & C(instrument)[T.NQ.v.0] & 0.1516 & 0.1262 & 0.2294 & 140 & 39 \\
+oos_forward & share, winsorized to [-1, 2] & class + instrument & C(instrument)[T.ZN.v.0] & -0.0115 & 0.1175 & 0.9218 & 140 & 39 \\
+oos_forward & share, winsorized to [-1, 2] & plus spread and move size & Intercept & 0.5135 & 0.2472 & 0.0378 & 140 & 39 \\
+oos_forward & share, winsorized to [-1, 2] & plus spread and move size & C(event_class)[T.multi_dimensional_numeric] & 0.0460 & 0.1378 & 0.7386 & 140 & 39 \\
+oos_forward & share, winsorized to [-1, 2] & plus spread and move size & C(event_class)[T.narrative_text] & 0.0106 & 0.1247 & 0.9321 & 140 & 39 \\
+oos_forward & share, winsorized to [-1, 2] & plus spread and move size & C(event_class)[T.extemporaneous_speech] & 0.1290 & 0.2087 & 0.5364 & 140 & 39 \\
+oos_forward & share, winsorized to [-1, 2] & plus spread and move size & C(instrument)[T.NQ.v.0] & 0.2900 & 0.2715 & 0.2854 & 140 & 39 \\
+oos_forward & share, winsorized to [-1, 2] & plus spread and move size & C(instrument)[T.ZN.v.0] & -0.0745 & 0.1764 & 0.6730 & 140 & 39 \\
+oos_forward & share, winsorized to [-1, 2] & plus spread and move size & log_pre_spread & -0.0668 & 0.1252 & 0.5938 & 140 & 39 \\
+oos_forward & share, winsorized to [-1, 2] & plus spread and move size & log_burst & -0.0945 & 0.0957 & 0.3234 & 140 & 39 \\
+oos_forward & directional share in [-1, 1] & class + instrument & Intercept & 0.1586 & 0.0644 & 0.0137 & 140 & 39 \\
+oos_forward & directional share in [-1, 1] & class + instrument & C(event_class)[T.multi_dimensional_numeric] & -0.0025 & 0.0842 & 0.9766 & 140 & 39 \\
+oos_forward & directional share in [-1, 1] & class + instrument & C(event_class)[T.narrative_text] & 0.1003 & 0.0804 & 0.2121 & 140 & 39 \\
+oos_forward & directional share in [-1, 1] & class + instrument & C(event_class)[T.extemporaneous_speech] & 0.3994 & 0.0789 & 0.0000 & 140 & 39 \\
+oos_forward & directional share in [-1, 1] & class + instrument & C(instrument)[T.NQ.v.0] & 0.1593 & 0.0650 & 0.0143 & 140 & 39 \\
+oos_forward & directional share in [-1, 1] & class + instrument & C(instrument)[T.ZN.v.0] & 0.0368 & 0.0685 & 0.5909 & 140 & 39 \\
+oos_forward & directional share in [-1, 1] & plus spread and move size & Intercept & 0.4361 & 0.1440 & 0.0025 & 140 & 39 \\
+oos_forward & directional share in [-1, 1] & plus spread and move size & C(event_class)[T.multi_dimensional_numeric] & 0.0491 & 0.0842 & 0.5599 & 140 & 39 \\
+oos_forward & directional share in [-1, 1] & plus spread and move size & C(event_class)[T.narrative_text] & 0.0249 & 0.0779 & 0.7491 & 140 & 39 \\
+oos_forward & directional share in [-1, 1] & plus spread and move size & C(event_class)[T.extemporaneous_speech] & 0.1788 & 0.1307 & 0.1714 & 140 & 39 \\
+oos_forward & directional share in [-1, 1] & plus spread and move size & C(instrument)[T.NQ.v.0] & 0.3170 & 0.1301 & 0.0148 & 140 & 39 \\
+oos_forward & directional share in [-1, 1] & plus spread and move size & C(instrument)[T.ZN.v.0] & -0.0394 & 0.1045 & 0.7065 & 140 & 39 \\
+oos_forward & directional share in [-1, 1] & plus spread and move size & log_pre_spread & -0.0789 & 0.0662 & 0.2333 & 140 & 39 \\
+oos_forward & directional share in [-1, 1] & plus spread and move size & log_burst & -0.0752 & 0.0523 & 0.1505 & 140 & 39 \\
+oos_all & share, winsorized to [-1, 2] & class + instrument & Intercept & 0.3121 & 0.0293 & 0.0000 & 1440 & 419 \\
+oos_all & share, winsorized to [-1, 2] & class + instrument & C(event_class)[T.multi_dimensional_numeric] & -0.0825 & 0.0364 & 0.0233 & 1440 & 419 \\
+oos_all & share, winsorized to [-1, 2] & class + instrument & C(event_class)[T.narrative_text] & -0.0978 & 0.0376 & 0.0093 & 1440 & 419 \\
+oos_all & share, winsorized to [-1, 2] & class + instrument & C(event_class)[T.extemporaneous_speech] & 0.0999 & 0.0397 & 0.0119 & 1440 & 419 \\
+oos_all & share, winsorized to [-1, 2] & class + instrument & C(instrument)[T.NQ.v.0] & 0.0352 & 0.0340 & 0.3004 & 1440 & 419 \\
+oos_all & share, winsorized to [-1, 2] & class + instrument & C(instrument)[T.ZN.v.0] & 0.0060 & 0.0312 & 0.8464 & 1440 & 419 \\
+oos_all & share, winsorized to [-1, 2] & plus spread and move size & Intercept & 0.4419 & 0.0370 & 0.0000 & 1440 & 419 \\
+oos_all & share, winsorized to [-1, 2] & plus spread and move size & C(event_class)[T.multi_dimensional_numeric] & -0.0313 & 0.0372 & 0.4005 & 1440 & 419 \\
+oos_all & share, winsorized to [-1, 2] & plus spread and move size & C(event_class)[T.narrative_text] & -0.0835 & 0.0364 & 0.0220 & 1440 & 419 \\
+oos_all & share, winsorized to [-1, 2] & plus spread and move size & C(event_class)[T.extemporaneous_speech] & 0.0459 & 0.0416 & 0.2701 & 1440 & 419 \\
+oos_all & share, winsorized to [-1, 2] & plus spread and move size & C(instrument)[T.NQ.v.0] & 0.0176 & 0.0429 & 0.6819 & 1440 & 419 \\
+oos_all & share, winsorized to [-1, 2] & plus spread and move size & C(instrument)[T.ZN.v.0] & 0.0301 & 0.0324 & 0.3537 & 1440 & 419 \\
+oos_all & share, winsorized to [-1, 2] & plus spread and move size & log_pre_spread & 0.0237 & 0.0254 & 0.3502 & 1440 & 419 \\
+oos_all & share, winsorized to [-1, 2] & plus spread and move size & log_burst & -0.0878 & 0.0189 & 0.0000 & 1440 & 419 \\
+oos_all & directional share in [-1, 1] & class + instrument & Intercept & 0.3074 & 0.0214 & 0.0000 & 1442 & 419 \\
+oos_all & directional share in [-1, 1] & class + instrument & C(event_class)[T.multi_dimensional_numeric] & -0.0819 & 0.0266 & 0.0021 & 1442 & 419 \\
+oos_all & directional share in [-1, 1] & class + instrument & C(event_class)[T.narrative_text] & -0.0790 & 0.0280 & 0.0048 & 1442 & 419 \\
+oos_all & directional share in [-1, 1] & class + instrument & C(event_class)[T.extemporaneous_speech] & 0.1177 & 0.0325 & 0.0003 & 1442 & 419 \\
+oos_all & directional share in [-1, 1] & class + instrument & C(instrument)[T.NQ.v.0] & 0.0377 & 0.0236 & 0.1109 & 1442 & 419 \\
+oos_all & directional share in [-1, 1] & class + instrument & C(instrument)[T.ZN.v.0] & -0.0006 & 0.0233 & 0.9798 & 1442 & 419 \\
+oos_all & directional share in [-1, 1] & plus spread and move size & Intercept & 0.4407 & 0.0275 & 0.0000 & 1442 & 419 \\
+oos_all & directional share in [-1, 1] & plus spread and move size & C(event_class)[T.multi_dimensional_numeric] & -0.0267 & 0.0271 & 0.3240 & 1442 & 419 \\
+oos_all & directional share in [-1, 1] & plus spread and move size & C(event_class)[T.narrative_text] & -0.0629 & 0.0263 & 0.0167 & 1442 & 419 \\
+oos_all & directional share in [-1, 1] & plus spread and move size & C(event_class)[T.extemporaneous_speech] & 0.0585 & 0.0337 & 0.0829 & 1442 & 419 \\
+oos_all & directional share in [-1, 1] & plus spread and move size & C(instrument)[T.NQ.v.0] & 0.0340 & 0.0292 & 0.2442 & 1442 & 419 \\
+oos_all & directional share in [-1, 1] & plus spread and move size & C(instrument)[T.ZN.v.0] & 0.0205 & 0.0236 & 0.3840 & 1442 & 419 \\
+oos_all & directional share in [-1, 1] & plus spread and move size & log_pre_spread & 0.0103 & 0.0179 & 0.5648 & 1442 & 419 \\
+oos_all & directional share in [-1, 1] & plus spread and move size & log_burst & -0.0866 & 0.0135 & 0.0000 & 1442 & 419 \\
+\bottomrule
+\end{tabular}
