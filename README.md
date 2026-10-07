@@ -33,6 +33,27 @@ SHA-256. The raw files and the one-second panels are local only;
 `data/processed/tick_features/events.parquet` (per-event measures, no vendor
 records) is small enough to track.
 
+## Liquidity stress, move size and execution (pre-declared, not yet run)
+
+`config/liquidity_trading_prereg.yaml` fixes one liquidity-stress measure,
+ELS = log(depth ratio) - log(spread ratio) (the log of depth per tick of spread),
+and five tests on the one-second FOMC session panel: A) |move| and continuation on
+ELS; B) out-of-sample prediction of top-quartile moves; C) execution cost of a
+user schedule, TWAP, a fixed blackout around 2:00 p.m. and an ELS-adaptive rule;
+D) a stressed-move fade and E) short momentum, both exploratory and confirmed
+only on meetings after the freeze. Run order:
+
+```bash
+python -m scripts.extract_session_panels && python -m scripts.extract_session_panels --merge  # if not built
+python -m scripts.analyze_liquidity_trading --check-data      # coverage only, no outcomes
+# complete inspection_before_freeze in the YAML, then:
+python -m scripts.freeze_liquidity_trading_preregistration
+python -m scripts.analyze_liquidity_trading                   # tables/liq_*.csv, figures/liquidity_trading/
+```
+
+An optional `data/external/implied_vol.csv` (columns `date`, `implied_vol`) is
+added to the baseline of part B if present at the freeze.
+
 ## Data sources
 
 ### Databento

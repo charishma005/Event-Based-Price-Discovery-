@@ -1,0 +1,121 @@
+version: 1
+title: Liquidity stress, event-move size and execution around FOMC statements
+status: draft              # set to "frozen" by scripts/freeze_liquidity_trading_preregistration.py
+kind: internal pre-declaration, not an external preregistration
+origin: >-
+  Five trading-oriented ideas discussed on 2026-10-07 after the results update.
+  One stress measure (ELS) and three horizons are fixed here before any outcome
+  is computed with it. Parts A to C are pre-declared tests. Parts D and E were
+  generated from patterns already seen in this study, so their results on the
+  2015-2026 sample are exploratory; only events after the freeze date confirm them.
+
+data:
+  panel: data/processed/fomc_sessions/panel.parquet          # scripts/extract_session_panels.py, bbo-1s
+  sessions: data/processed/fomc_sessions/sessions.parquet
+  registry: data/events/fomc_session_windows.csv
+  implied_vol: data/external/implied_vol.csv                  # optional; columns date, implied_vol (e.g. VIX close the day before)
+  implied_vol_used: auto      # "auto": used in parts B and E if the file exists at the freeze, and hashed
+
+sample:
+  events: rows of the registry with family fomc and dataset_condition available
+  controls: family fomc_control, dataset_condition available (same 2:00 p.m. clock, no announcement)
+  instruments: [ES.v.0, NQ.v.0, ZN.v.0]
+  splits: registry column "sample" (development, oos_backward, oos_forward); after_freeze for events after the freeze date
+
+measures:
+  tick: {ES.v.0: 0.25, NQ.v.0: 0.25, ZN.v.0: 0.015625}
+  depth: mean of best-bid and best-ask size, one-second as-of book
+  spread: (ask - bid) / tick
+  els: >-
+    log(mean depth over the window / mean depth over the baseline)
+    - log(mean spread over the window / mean spread over the baseline);
+    equal to the log of the depth-per-tick-of-spread ratio. Lower is worse liquidity.
+  baseline_seconds: [-240, -60]        # 4 to 1 minutes before the clock, as in the H4 depth ratio
+  pre_window_seconds: [-60, -5]        # ELS_pre: final minute, stopping 5 s before the clock
+  live_window_seconds: 30              # trailing window for live ELS (execution, exits)
+  anchor_second: -5                    # returns start from the midpoint 5 s before the clock
+  horizons_seconds: [60, 300, 1200]
+  continuation_pairs_seconds: [[30, 120], [60, 300], [300, 1200]]
+  continuation_els_window_seconds: 60  # ELS at the end of the first leg: trailing 60 s (from 0 at most)
+  realized_vol: {window_seconds: [-1800, -60], step_seconds: 10}
+  ffill_seconds: 5
+
+part_a_els_regressions:      # idea 3
+  move_size:
+    model: log(1 + |r(-5, h)|) = a + b * ELS_pre + c * log(RV) + SEP meeting + press conference + e, HC1
+    run: each instrument and each horizon (9 regressions), plus pooled with instrument effects, clustered by meeting
+    prediction: b < 0 (worse pre-event liquidity, larger move)
+    multiplicity: Holm across the 9 per-instrument b
+  continuation:
+    model: r(t1, t2) = a + b1 * r(-5, t1) + b2 * ELS(t1) + b3 * r(-5, t1) * ELS(t1) + e, HC1
+    run: each instrument and each continuation pair (9 regressions)
+    prediction: none on sign; b3 is reported, Holm across the 9
+  sample: event days only
+
+part_b_move_size_prediction:  # idea 2
+  target: top quartile of |r(-5, 300)| within instrument over all events
+  base_features: [log RV, SEP meeting, press conference, log implied vol if used]
+  full_features: base plus ELS_pre of ES, NQ and ZN
+  model: >-
+    logistic regression with an L2 penalty of 1.0 on standardized features (intercept
+    not penalized; standardization from the training years only), because the early
+    training years hold about 24 meetings; also OLS of log(1 + |r(-5, 300)|) on the same features
+  validation: expanding window by calendar year; first test year 2018; train on all earlier years
+  decisive_quantity: out-of-sample AUC of full minus base, pooled over test years, per instrument
+  interval: 95% bootstrap over meetings, 2000 draws, seed 20261007
+  supported: interval above zero in at least two of three instruments
+  also_reported: out-of-sample R2 of the OLS, full and base, against the training mean
+
+part_c_execution:             # idea 1
+  order: 100 contracts, buy and sell run separately, decided at -300 s (arrival midpoint)
+  fills: at the touch; quantity beyond the touch size fills one tick worse per further multiple (approximation)
+  strategies:
+    user_schedule: {-240: 0.2, -120: 0.2, 60: 0.2, 180: 0.2, 300: 0.2}
+    twap: equal slices every 30 s over [-300, 600)
+    calendar: twap with the slots in [-120, 60) dropped, the same total spread over the rest
+    adaptive: twap slots; a slice is deferred while live ELS (trailing 30 s against the
+      execution baseline, which ends at the decision time) < -0.5 and added to the next slot with ELS >= -0.5;
+      after the last twap slot the backlog is retried every 30 s and forced at +900 s
+  adaptive_threshold_els: -0.5
+  execution_baseline_seconds: [-900, -300]   # live ELS for execution uses only what precedes the -300 s decision
+  deadline_second: 900
+  twap: {start_second: -300, end_second: 600, step_seconds: 30}
+  calendar_blackout_seconds: [-120, 60]
+  primary: >-
+    event days, per instrument: paired difference in spread cost (bp, mean of buy and sell),
+    adaptive minus calendar, Wilcoxon signed-rank two-sided; Holm across the three instruments
+  secondary: adaptive minus twap; calendar minus twap; user_schedule minus calendar; standard deviation of the timing part
+  control_days: same strategies on control afternoons; adaptive minus twap should be close to zero
+  interpretation: >-
+    if adaptive does not beat calendar, a fixed blackout around the clock captures the gain
+    and live ELS adds nothing for scheduled news; that is a result, not a failure
+
+part_d_stressed_fade:         # idea 4, exploratory: hypothesis generated in this study
+  entry: +300 s when |r(-5, 300)| > Q75 and ELS over the trailing 60 s at +300 < Q25 (quantiles within instrument, all events)
+  position: -sign(r(-5, 300))
+  exit: first second after +300 with live ELS > median of ELS at +300 across events, or +1200
+  pnl: gross midpoint bp and net of half spreads at entry and exit
+  confirmatory_sample: events after the freeze date only (thresholds fixed from the pre-freeze events)
+
+part_e_short_momentum:        # idea 5, exploratory
+  condition: out-of-sample top-quartile probability from part B (full model) above its Q75;
+    |r(-5, 30)| > Q75 within instrument; ES and NQ first-30-s returns of the same sign
+  position: sign(r(-5, 30)) in ES and NQ, from +30 to +120 s
+  pnl: gross midpoint bp and net of half spreads at entry and exit
+  confirmatory_sample: events after the freeze date only
+
+inspection_before_freeze:   # complete this list before freezing; it is what makes the freeze honest
+  - >-
+    The ELS components as aggregates: tables/h4_tick_constraint_by_period.csv
+    (final minute against control days) and the post-event depth paths in
+    figures/unscheduled/.
+  - >-
+    Earlier exploratory trading tests run outside this repository: a follow
+    strategy on large first moves in stressed liquidity (NQ about -30.5 bp in
+    development and -37.2 bp in the holdout), an interaction |r(0, 5m)| x stress
+    at 5 minutes of about -0.17 (p about 0.01), and a remark that pre-event
+    liquidity relates more to absolute than to signed returns. Those used a
+    different stress measure. Parts D and E come from them.
+  - No execution cost had been computed on this panel.
+
+post_freeze_log: []          # anything changed after the freeze goes here, dated
