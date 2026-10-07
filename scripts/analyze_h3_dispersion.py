@@ -90,10 +90,16 @@ def series_measures(surveys: pd.DataFrame) -> pd.DataFrame:
     by_ticker = rows.groupby("ticker")
     for column, name in (("range", "D"), ("range_d2", "D_d2")):
         rows[name] = (rows[column] - by_ticker[column].transform("mean")) / by_ticker[column].transform("std")
+    # Post-freeze addition (2026-10-07): robust standardization, so 2020 does not set the payroll scale.
+    # Scale is 1.4826 * MAD, or IQR / 1.349 where the MAD is zero (core CPI ranges sit at 0.2 in half the releases).
+    mad = by_ticker["range"].transform(lambda r: (r - r.median()).abs().median())
+    iqr = by_ticker["range"].transform(lambda r: r.quantile(0.75) - r.quantile(0.25))
+    robust_scale = (SURPRISE_SCALE * mad).where(mad > 0, iqr / 1.349)
+    rows["D_mad"] = ((rows["range"] - by_ticker["range"].transform("median")) / robust_scale).clip(-SURPRISE_CAP, SURPRISE_CAP)
     rows["D_log"] = rows["log_range"] - by_ticker["log_range"].transform("mean")
     scale = SURPRISE_SCALE * by_ticker["surprise"].transform(lambda s: s.abs().median())
     rows["abs_u"] = (rows["surprise"] / scale).abs().clip(upper=SURPRISE_CAP)
-    return rows[["ticker", "release", "release_date", "D", "D_d2", "D_log", "log_n", "abs_u", "outlier_range"]]
+    return rows[["ticker", "release", "release_date", "D", "D_d2", "D_log", "D_mad", "log_n", "abs_u", "outlier_range"]]
 
 
 def morning_measures(measures: pd.DataFrame, series_map: dict[str, list[str]], suffix: str = "") -> pd.DataFrame:
@@ -102,7 +108,7 @@ def morning_measures(measures: pd.DataFrame, series_map: dict[str, list[str]], s
     for release, tickers in series_map.items():
         part = measures.loc[measures["release"].eq(release) & measures["ticker"].isin(tickers)]
         agg = part.groupby("release_date").agg(
-            D=("D", "mean"), D_d2=("D_d2", "mean"), D_log=("D_log", "mean"), log_n=("log_n", "mean"),
+            D=("D", "mean"), D_d2=("D_d2", "mean"), D_log=("D_log", "mean"), D_mad=("D_mad", "mean"), log_n=("log_n", "mean"),
             abs_u=("abs_u", "mean"), outlier_range=("outlier_range", "any"), series_count=("ticker", "size"),
         ).reset_index()
         agg["release"] = release
@@ -201,6 +207,7 @@ def robustness_table(panel: pd.DataFrame) -> pd.DataFrame:
     no_log_n = PRIMARY_RHS.replace("D +", "D_d2 +").replace(" + log_n", "")
     variants = [
         ("log range in place of z-dispersion", panel, "S_w", PRIMARY_RHS.replace("D +", "D_log +"), "D_log"),
+        ("post-freeze: robust standardization (median, MAD; capped at 5)", panel, "S_w", PRIMARY_RHS.replace("D +", "D_mad +"), "D_mad"),
         ("range / d2(n), no log n control", panel, "S_w", no_log_n, "D_d2"),
         ("drop March to July 2020", panel.loc[~panel["event_date"].between("2020-03-01", "2020-07-31")], "S_w", PRIMARY_RHS, "D"),
         ("drop outlier-driven ranges", panel.loc[~panel["outlier_range"]], "S_w", PRIMARY_RHS, "D"),
@@ -218,7 +225,7 @@ def sample_table(panel: pd.DataFrame) -> pd.DataFrame:
     mornings = panel.drop_duplicates("event_id")
     return mornings.groupby(["release", "period"]).agg(
         mornings=("event_id", "size"), rows=("event_id", lambda s: int(panel["event_id"].isin(s).sum())),
-        mean_D=("D", "mean"), sd_D=("D", "std"), mean_abs_u=("abs_u", "mean"), outlier_ranges=("outlier_range", "sum"),
+        mean_D=("D", "mean"), sd_D=("D", "std"), sd_D_mad=("D_mad", "std"), mean_abs_u=("abs_u", "mean"), outlier_ranges=("outlier_range", "sum"),
     ).reset_index()
 
 

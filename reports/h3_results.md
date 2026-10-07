@@ -72,8 +72,11 @@ not visible at the arrival.
   other period the payroll z-dispersion has a standard deviation of about 0.02
   (`tables/h3_sample.csv`), so the jobs-report slope is identified almost
   entirely by 2020. The log-range run, which does not have this problem, gives
-  +0.007. A robust standardization (median and MAD of the range) would be the
-  natural post-freeze addition.
+  +0.007. **Post-freeze addition (logged in the YAML):** standardizing the range
+  by its series median and MAD instead of mean and standard deviation, capped at
+  plus or minus 5, gives the payroll measure a standard deviation of 0.6 to 0.8
+  in every period. The primary coefficient on that measure is +0.015 (se 0.011,
+  p = 0.19, interval -0.007 to +0.036), still positive and further from -0.05.
 - **CPI ranges are quantized to 0.1**, so the dispersion variable takes a
   handful of values. The forecast standard deviation from ECOS, being pulled
   separately, will be used as a calibration check and a further robustness run

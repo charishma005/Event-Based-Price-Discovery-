@@ -99,7 +99,21 @@ inspection_before_freeze:
   - S by event class, pseudo clock and control day, and the step 1 regression of S on class, spread and move size (tables/q1_*).
   - Nothing relating dispersion or the surprise to S had been computed; the survey data had not been merged onto events.parquet.
 
-post_freeze_log: []        # anything changed after the freeze goes here, dated
+post_freeze_log:           # anything changed after the freeze goes here, dated
+  - date: '2026-10-07'
+    change: >-
+      Added one robustness run, "robust standardization (median, MAD; capped at 5)":
+      z-dispersion with the series median and 1.4826 * MAD in place of mean and sd
+      (IQR / 1.349 where the MAD is zero), winsorized at +/-5. Also a sd_D_mad column
+      in tables/h3_sample.csv. No pre-declared quantity was changed; the primary
+      result is identical.
+    why: >-
+      After the first run, tables/h3_sample.csv showed the payroll z-dispersion
+      has a standard deviation of about 0.02 in every period except 2020-21,
+      because the full-sample sd of the range is set by the 2020 prints. The
+      jobs-report slope was therefore identified almost only by 2020.
+    result: beta +0.0145, se 0.0109, p = 0.19, 95% interval -0.007 to +0.036
+    analysis_code_sha256_after: ae792f788b71e0de4b921a1d1a600f79a42f30d6a7df9d52c1d1ac63dca7ec6f
 
 freeze:
   frozen_at_utc: '2026-10-07T07:01:09Z'
