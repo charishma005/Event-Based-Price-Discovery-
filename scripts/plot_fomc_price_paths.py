@@ -11,7 +11,7 @@ H6, "without mod" (direction): R_h = a + b_hawk S+ + b_dove S- + e, on meetings
     without the smallest 25% of |S| (their sign is close to arbitrary), as in
     analyze_fomc_h6_horizons. Slopes are shown as bp per bp of surprise in the
     direction the news implies (hawkish should lower all three contracts).
-S = USMPD statement surprise. HC1 standard errors; Holm across horizons per
+S = USMPD statement surprise, converted from percentage points to bp. HC1 standard errors; Holm across horizons per
 instrument for H5; Wald test of b_hawk = b_dove for H6.
 
 Figures (figures/paper/):
@@ -23,6 +23,8 @@ Figures (figures/paper/):
   figure_h6_paths_{surprise,action}.png            1x3  aligned move per group
   figure_h6_paths_action_x_surprise.png            3x3
   figure_h6_slopes.png                             1x2  hawkish vs dovish slopes
+  *_es_nq.png versions of the H5 path figures, H6 hawk/dove paths and H6 slopes show
+  ES and NQ separately; figure_h5_slopes.png shows ES, NQ, ES+NQ and ZN.
 
 Run: python -m scripts.plot_fomc_price_paths
 """
@@ -48,7 +50,10 @@ LAST_SECOND = 40 * 60 - 1
 SMALL_SURPRISE_QUANTILE = 0.25
 MIN_FOR_BAND = 5
 UNITS = {"equity_average": ("ES+NQ average", "#2a78d6"), "ZN.v.0": ("ZN (10-year Treasury)", "#1baf7a")}
+EQUITY_UNITS = {"ES.v.0": ("ES (S&P 500)", "#2a78d6"), "NQ.v.0": ("NQ (Nasdaq-100)", "#eb6834")}
+SLOPE_UNITS = {**EQUITY_UNITS, **UNITS}
 ALL_UNITS = ("ES.v.0", "NQ.v.0", "ZN.v.0", "equity_average")
+PP_TO_BP = 100  # USMPD surprises are in percentage points; slopes are reported per bp, as on the slides
 GROUP_SHADES = {"small": "#9cc3f0", "medium": "#4a8fdc", "large": "#123e75",
                 "hike": "#c0392b", "hold": "#7f8c8d", "cut": "#1f5fa8"}
 HAWK, DOVE = "#d64545", "#2a78d6"
@@ -114,14 +119,15 @@ def h5_slopes(data: pd.DataFrame) -> pd.DataFrame:
             sample = data.loc[data["instrument"].eq(unit) & data["second"].eq(h)].dropna(subset=["absR", "surprise_value"])
             if len(sample) < 10:
                 continue
-            fit = sm.OLS(sample["absR"], sm.add_constant(sample["surprise_value"].abs())).fit(cov_type="HC1")
+            x = sample["surprise_value"].abs() * PP_TO_BP
+            fit = sm.OLS(sample["absR"], sm.add_constant(x)).fit(cov_type="HC1")
             beta, se = fit.params.iloc[1], fit.bse.iloc[1]
             rows.append({"instrument": unit, "horizon_seconds": h, "horizon": LABEL[h], "n": len(sample),
                          "alpha_bp": fit.params.iloc[0], "beta": beta, "se": se,
                          "ci_low": beta - 1.96 * se, "ci_high": beta + 1.96 * se,
-                         "p_one_sided": fit.pvalues.iloc[1] / 2 if beta > 0 else 1 - fit.pvalues.iloc[1] / 2})
+                         "p": fit.pvalues.iloc[1]})
     out = pd.DataFrame(rows)
-    out["holm_p"] = out.groupby("instrument")["p_one_sided"].transform(lambda p: multipletests(p, method="holm")[1])
+    out["holm_p"] = out.groupby("instrument")["p"].transform(lambda p: multipletests(p, method="holm")[1])
     return out
 
 
@@ -140,7 +146,7 @@ def h6_slopes(sample: pd.DataFrame) -> pd.DataFrame:
             data = sample.loc[sample["instrument"].eq(unit) & sample["second"].eq(h)].dropna(subset=["R"])
             if len(data) < 10:
                 continue
-            s = data["surprise_value"]
+            s = data["surprise_value"] * PP_TO_BP
             X = sm.add_constant(pd.DataFrame({"hawk": s.clip(lower=0), "dove": s.clip(upper=0)}))
             fit = sm.OLS(data["R"], X).fit(cov_type="HC1")
             equal = fit.wald_test("hawk = dove", scalar=True)
@@ -183,10 +189,10 @@ def _line(ax, data, color, label, band=True):
     ax.plot(data["second"], data["median"], color=color, lw=2, label=label)
 
 
-def plot_overlay(prof, grouping, order, title, ylabel, output, zero=False):
+def plot_overlay(prof, grouping, order, title, ylabel, output, zero=False, units=UNITS):
     """Slide style: one panel per unit, a line per group."""
     fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-    for ax, (unit, (name, _)) in zip(axes, UNITS.items()):
+    for ax, (unit, (name, _)) in zip(axes, units.items()):
         for group in order:
             data = _series(prof, unit, grouping, group)
             n = 0 if data.empty else int(data["n"].max())
@@ -202,12 +208,12 @@ def plot_overlay(prof, grouping, order, title, ylabel, output, zero=False):
     plt.close(fig)
 
 
-def plot_panels(prof, grouping, order, title, ylabel, output, zero=False):
+def plot_panels(prof, grouping, order, title, ylabel, output, zero=False, units=UNITS):
     """One panel per group, a line per unit with its 25-75% band."""
     fig, axes = plt.subplots(1, 3, figsize=(17, 4.8), sharey=True)
     for ax, group in zip(axes, order):
         n = 0
-        for unit, (name, color) in UNITS.items():
+        for unit, (name, color) in units.items():
             data = _series(prof, unit, grouping, group)
             n = max(n, 0 if data.empty else int(data["n"].max()))
             _line(ax, data, color, name)
@@ -222,7 +228,7 @@ def plot_panels(prof, grouping, order, title, ylabel, output, zero=False):
     plt.close(fig)
 
 
-def plot_grid(prof, data, value, title, ylabel, output, zero=False):
+def plot_grid(prof, data, value, title, ylabel, output, zero=False, units=UNITS):
     fig, axes = plt.subplots(3, 3, figsize=(17, 11), sharex=True, sharey=True)
     for r, action in enumerate(ACTIONS):
         for c, surprise in enumerate(SURPRISES):
@@ -230,7 +236,7 @@ def plot_grid(prof, data, value, title, ylabel, output, zero=False):
             cell = f"{action}|{surprise}"
             members = data.loc[data["action_x_surprise"].eq(cell)]
             n = members["id"].nunique()
-            for unit, (name, color) in UNITS.items():
+            for unit, (name, color) in units.items():
                 if n >= MIN_FOR_BAND:
                     _line(ax, _series(prof, unit, "action_x_surprise", cell), color, name)
                 else:
@@ -244,7 +250,7 @@ def plot_grid(prof, data, value, title, ylabel, output, zero=False):
                 ax.set_xlabel("")
             if c == 0:
                 ax.set_ylabel(ylabel)
-    handles = [plt.Line2D([], [], color=color, lw=2, label=name) for name, color in UNITS.values()]
+    handles = [plt.Line2D([], [], color=color, lw=2, label=name) for name, color in units.values()]
     fig.legend(handles=handles, loc="upper right", frameon=False)
     fig.suptitle(title)
     fig.tight_layout(rect=(0, 0, 1, 0.96))
@@ -252,11 +258,12 @@ def plot_grid(prof, data, value, title, ylabel, output, zero=False):
     plt.close(fig)
 
 
-def plot_h5_slopes(slopes, output):
-    fig, ax = plt.subplots(figsize=(12, 5))
-    for k, (unit, (name, color)) in enumerate(UNITS.items()):
+def plot_h5_slopes(slopes, output, units=SLOPE_UNITS):
+    fig, ax = plt.subplots(figsize=(13, 5))
+    width = 0.8 / len(units)
+    for k, (unit, (name, color)) in enumerate(units.items()):
         data = slopes.loc[slopes["instrument"].eq(unit)]
-        x = np.arange(len(data)) + (k - 0.5) * 0.25
+        x = np.arange(len(data)) + (k - (len(units) - 1) / 2) * width
         ax.vlines(x, data["ci_low"], data["ci_high"], color=color, lw=2.5)
         for xi, (_, row) in zip(x, data.iterrows()):
             filled = row["holm_p"] < 0.05
@@ -276,9 +283,9 @@ def plot_h5_slopes(slopes, output):
     plt.close(fig)
 
 
-def plot_h6_slopes(slopes, output):
-    fig, axes = plt.subplots(1, 2, figsize=(15, 5))
-    for ax, (unit, (name, _)) in zip(axes, UNITS.items()):
+def plot_h6_slopes(slopes, output, units=UNITS):
+    fig, axes = plt.subplots(1, len(units), figsize=(7.5 * len(units), 5))
+    for ax, (unit, (name, _)) in zip(axes, units.items()):
         data = slopes.loc[slopes["instrument"].eq(unit)].reset_index(drop=True)
         for side, color, shift in (("hawk", HAWK, -0.12), ("dove", DOVE, 0.12)):
             x = np.arange(len(data)) + shift
@@ -320,6 +327,14 @@ def main() -> None:
     plot_grid(h5, data, "absR", "H5: median |return|, rate action x surprise size", "Median |return| (bp)",
               FIGURES / "figure_h5_paths_action_x_surprise.png")
     plot_h5_slopes(slopes5, FIGURES / "figure_h5_slopes.png")
+    # ES and NQ separately (the figures above pool them as ES+NQ)
+    for grouping, order in (("surprise", SURPRISES), ("action", ACTIONS)):
+        plot_overlay(h5, grouping, order, f"H5: median |return| by {grouping}, ES and NQ separately",
+                     "Median |return| (bp)", FIGURES / f"figure_h5_paths_overlay_{grouping}_es_nq.png", units=EQUITY_UNITS)
+        plot_panels(h5, grouping, order, f"H5: median |return| by {grouping}, ES and NQ (25-75% band)",
+                    "Median |return| (bp)", FIGURES / f"figure_h5_paths_{grouping}_es_nq.png", units=EQUITY_UNITS)
+    plot_grid(h5, data, "absR", "H5: median |return|, rate action x surprise size, ES and NQ", "Median |return| (bp)",
+              FIGURES / "figure_h5_paths_action_x_surprise_es_nq.png", units=EQUITY_UNITS)
 
     # H6, without mod: signed R
     sample = h6_sample(data)
@@ -339,14 +354,17 @@ def main() -> None:
     plot_grid(h6_aligned, data, "aligned", "H6: move in the direction the news implies, rate action x surprise size",
               "Median aligned return (bp)", FIGURES / "figure_h6_paths_action_x_surprise.png", zero=True)
     plot_h6_slopes(slopes6, FIGURES / "figure_h6_slopes.png")
+    plot_overlay(h6_signed, "side", ("dovish", "hawkish"), "H6: hawkish vs dovish, ES and NQ separately (median return)",
+                 "Median return (bp)", FIGURES / "figure_h6_paths_hawk_dove_es_nq.png", zero=True, units=EQUITY_UNITS)
+    plot_h6_slopes(slopes6, FIGURES / "figure_h6_slopes_es_nq.png", units=EQUITY_UNITS)
 
     cols5 = ["instrument", "horizon", "n", "beta", "ci_low", "ci_high", "holm_p"]
     print("\nH5 slopes (bp of |move| per bp of |surprise|):")
-    print(slopes5.loc[slopes5["instrument"].isin(UNITS), cols5].round(3).to_string(index=False))
+    print(slopes5.loc[slopes5["instrument"].isin(SLOPE_UNITS), cols5].round(3).to_string(index=False))
     cols6 = ["instrument", "horizon", "n_hawkish", "n_dovish", "hawk_move_per_bp", "dove_move_per_bp", "p_equal"]
     print("\nH6 slopes (bp per bp of surprise, in the implied direction):")
-    print(slopes6.loc[slopes6["instrument"].isin(UNITS), cols6].round(3).to_string(index=False))
-    print("\nWrote 12 figures to figures/paper/ and 4 tables to tables/")
+    print(slopes6.loc[slopes6["instrument"].isin(SLOPE_UNITS), cols6].round(3).to_string(index=False))
+    print("\nWrote 18 figures to figures/paper/ and 4 tables to tables/")
 
 
 if __name__ == "__main__":
