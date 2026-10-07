@@ -1,0 +1,124 @@
+version: 1
+title: H3, forecast dispersion and the quote-revision share
+status: frozen             # set to "frozen" by scripts/freeze_h3_preregistration.py
+kind: internal pre-declaration, not an external preregistration
+hypothesis: >-
+  Across scheduled macro releases, the quote-revision share S at the arrival is
+  lower when economists disagreed more before the release, holding the size of
+  the surprise fixed. This is the proposal's H3 ("the order-flow share rises in
+  ex-ante forecast dispersion") on the step 1 measure, where a lower S means more
+  of the move came through trades.
+
+data:
+  outcome: data/processed/tick_features/events.parquet      # S and the pseudo-clock S, frozen in step 1
+  registry: data/events/event_registry.csv
+  survey_workbook: data/raw/bloomberg/bbg_eco.xlsx           # local only; Bloomberg BDH export, one sheet per ticker
+  survey_table: data/processed/bloomberg_surveys.parquet     # written by scripts/build_bloomberg_surveys.py
+  join_key: release date
+  coverage_checked_2026_10_06: 138 of 140 CPI, 139 of 140 PPI, 139 of 140 jobs, 20 of 20 retail mornings have survey and actual
+
+series:
+  headline:                 # one dispersion per release morning; CPI averages its two series
+    cpi: [CPI CHNG Index, CPUPXCHG Index]
+    ppi: [FDIDFDMO Index]
+    employment_situation: [NFP TCH Index]
+    retail_sales: [RSTAMOM Index]
+  composite:                # secondary: every surveyed series in the release
+    cpi: [CPI CHNG Index, CPUPXCHG Index]
+    ppi: [FDIDFDMO Index, FDIDSGMO Index]
+    employment_situation: [NFP TCH Index, USURTOT Index, AHE MOM% Index]
+    retail_sales: [RSTAMOM Index, RSTAXMOM Index]
+
+measures:
+  outcome: share_burst100 from events.parquet, winsorized to [-1, 2], one row per release morning and contract
+  dispersion: >-
+    survey high minus survey low (Bloomberg returned no standard deviation),
+    standardized within series over 2015-2026: (range - mean range) / sd of range.
+    For a release with several headline series, the mean of their z-dispersions.
+    The two CPI ranges correlate at 0.52, so they are averaged rather than entered separately.
+  forecaster_count_control: log of the number of forecasters, averaged across the release's headline series
+  surprise: >-
+    actual as first released minus survey median, divided by 1.4826 times the
+    median absolute surprise of that series over 2015-2026; the regression uses
+    the absolute value, winsorized at 5, averaged across the release's headline series
+  placebo_outcome: the same share at the pseudo clock two minutes before the release (share_burst100 of the matched pseudo row)
+
+sample:
+  releases: [cpi, ppi, employment_situation, retail_sales]
+  period: 2015-01-01 to 2026-09-30, all step 1 samples together; no held-out period
+  eligibility: step 1 eligibility flag and S defined
+  dropped: same-clock bundles, mornings without survey data, vendor-degraded days
+  concurrent_release_mornings: >-
+    kept in the primary, dropped in a robustness run; a morning is concurrent when
+    the registry flags another release at the clock (jobless claims, import prices,
+    trade) other than Real Earnings, which accompanies every CPI
+  periods_for_fixed_effects: {2015-17: [2015, 2017], 2018-19: [2018, 2019], 2020-21: [2020, 2021], 2022-23: [2022, 2023], 2024-26: [2024, 2026]}
+
+primary_test:
+  model: >-
+    OLS on morning-contract rows:
+    S = beta * D + gamma * |u| + delta * log n + release-type effects + contract effects + period effects,
+    standard errors clustered by release day
+  decisive_quantity: beta on D, with its 95% interval
+  supported: beta < 0 and p < 0.05 two-sided, and a negative point estimate with no period effects and with year effects in place of period effects
+  rejected: the 95% interval excludes -0.05 (one sd of dispersion moves S by less than 0.05)
+  inconclusive: neither
+  smallest_effect_of_interest: -0.05 in S per sd of dispersion, about a quarter of the 0.18 gap between CPI/PPI arrivals (median S 0.32, 2015-2023) and the no-news level 0.5
+  multiplicity: one primary coefficient, no adjustment
+  placebo: the same regression with the pseudo-clock S as outcome; a beta as negative as the primary would mean the result is about the day, not the release
+
+secondary_family:          # Holm-adjusted within the family; reported, never decisive
+  - beta by release type, four slopes from one interacted regression
+  - composite dispersion (every surveyed series in the release) in place of the headline series
+  - CPI headline-only dispersion, and CPI core-only dispersion, in two separate runs
+  - within-day outcome, S at the announcement minus S at the pseudo clock
+  - speed outcome, fp300s_50_seconds (seconds to half of the five-minute move); prediction positive
+
+robustness_runs:           # the primary beta under a changed sample or definition
+  - no period effects
+  - year effects instead of period effects
+  - log range in place of z-dispersion
+  - range divided by d2(n), the expected range of n standard normal draws, without the log n control
+  - drop March to July 2020
+  - drop releases whose range looks driven by one stray forecaster (|survey average - median| > 0.1 * range)
+  - drop mornings with a concurrent release
+  - one contract at a time (ES, NQ, ZN)
+  - no winsorization of S
+  - drop arrival moves under 2 bp
+
+inspection_before_freeze:
+  - 2026-10-06: the workbook's coverage, field completeness and forecaster counts; the registry match.
+  - >-
+    2026-10-06: the distribution of the high-low range for CPI CHNG, FDIDFDMO and
+    NFP TCH (median 0.4, 0.5, 155) and its correlation with the absolute surprise
+    (-0.01, 0.21, 0.58); the correlation of the headline and core CPI ranges (0.52).
+  - >-
+    2026-10-07: the shape of the surprise distribution for six series (sd against
+    the robust scale, kurtosis, tail counts) and the gap between survey average
+    and median, as diagnostics for the range measure.
+  - S by event class, pseudo clock and control day, and the step 1 regression of S on class, spread and move size (tables/q1_*).
+  - Nothing relating dispersion or the surprise to S had been computed; the survey data had not been merged onto events.parquet.
+
+post_freeze_log:           # anything changed after the freeze goes here, dated
+  - date: '2026-10-07'
+    change: >-
+      Added one robustness run, "robust standardization (median, MAD; capped at 5)":
+      z-dispersion with the series median and 1.4826 * MAD in place of mean and sd
+      (IQR / 1.349 where the MAD is zero), winsorized at +/-5. Also a sd_D_mad column
+      in tables/h3_sample.csv. No pre-declared quantity was changed; the primary
+      result is identical.
+    why: >-
+      After the first run, tables/h3_sample.csv showed the payroll z-dispersion
+      has a standard deviation of about 0.02 in every period except 2020-21,
+      because the full-sample sd of the range is set by the 2020 prints. The
+      jobs-report slope was therefore identified almost only by 2020.
+    result: beta +0.0145, se 0.0109, p = 0.19, 95% interval -0.007 to +0.036
+    analysis_code_sha256_after: ae792f788b71e0de4b921a1d1a600f79a42f30d6a7df9d52c1d1ac63dca7ec6f
+
+freeze:
+  frozen_at_utc: '2026-10-07T07:01:09Z'
+  survey_workbook_sha256: 9af2cee10736e6290cbaf872e832b6406fbad28c5294fab4793e9f65cbdd9456
+  events_sha256: 052d87569636731e7c2efd4a70808b58072ddeb44bff5f321615d9e64671099a
+  event_registry_sha256: 947c8bcaef6ef1234af9cde0fae711cf3eaca419b50d21c0b97ca1fd412ba0e9
+  survey_parser_sha256: d92556d622a7f98edde8b85c963d4e7dc4106b82d91ea4028db89a65c79d981d
+  analysis_code_sha256: a08517f158caf7f6d2e9d1e508dd259a75da1ec61a7e6846c3ea136952ed7562
