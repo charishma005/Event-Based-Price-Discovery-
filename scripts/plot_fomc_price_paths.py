@@ -2,9 +2,9 @@
 
 Reads the one-second books from extract_fomc_book_seconds. The return to second
 h is R_h = 10,000 x ln(mid_h / mid_0) in bp, where mid_0 is the book in force at
-the statement second (2:00:00.000). ES, NQ and ZN are plotted separately; the
-tables also carry "equity_average", the mean of the ES and NQ returns. Minute 30 is the press-conference start; later points mix in the
-press conference.
+the statement second (2:00:00.000). Figures show ES and NQ separately; the tables
+also carry ZN and "equity_average", the mean of the ES and NQ returns. Minute
+30 is the press-conference start; later points mix in the press conference.
 
 H5, "with mod" (size only):   |R_h| = a + b |S| + e
 H6, "without mod" (direction): R_h = a + b_hawk S+ + b_dove S- + e, on meetings
@@ -15,14 +15,14 @@ S = USMPD statement surprise, converted from percentage points to bp. HC1 standa
 instrument for H5; Wald test of b_hawk = b_dove for H6.
 
 Figures (figures/paper/):
-  figure_h5_paths_overlay_{surprise,action}.png   1x3  ES, NQ, ZN; a line per group
+  figure_h5_paths_overlay_{surprise,action}.png   1x2  ES, NQ; a line per group
   figure_h5_paths_{surprise,action}.png            1x3  one panel per group
   figure_h5_paths_action_x_surprise.png            3x3
   figure_h5_slopes.png                                  slope per horizon, 95% CI
-  figure_h6_paths_hawk_dove.png                    1x3  ES, NQ, ZN; signed paths
+  figure_h6_paths_hawk_dove.png                    1x2  ES, NQ; signed paths
   figure_h6_paths_{surprise,action}.png            1x3  aligned move per group
   figure_h6_paths_action_x_surprise.png            3x3
-  figure_h6_slopes.png                             1x3  hawkish vs dovish slopes
+  figure_h6_slopes.png                             1x2  hawkish vs dovish slopes
 
 Run: python -m scripts.plot_fomc_price_paths
 """
@@ -47,9 +47,10 @@ LABEL = {1: "1s", 5: "5s", 30: "30s", 60: "1m", 300: "5m", 600: "10m", 1200: "20
 LAST_SECOND = 40 * 60 - 1
 SMALL_SURPRISE_QUANTILE = 0.25
 MIN_FOR_BAND = 5
-# Plotted separately; the ES+NQ average ("equity_average") is kept in the tables only.
-UNITS = {"ES.v.0": ("ES (S&P 500)", "#2a78d6"), "NQ.v.0": ("NQ (Nasdaq-100)", "#eb6834"),
-         "ZN.v.0": ("ZN (10-year Treasury)", "#1baf7a")}
+# Plotted: ES and NQ separately. ZN is left out of the figures because the USMPD
+# surprise is built from rate-futures moves, so ZN's response to it is partly
+# mechanical; ZN and the ES+NQ average ("equity_average") stay in the tables.
+UNITS = {"ES.v.0": ("ES (S&P 500)", "#2a78d6"), "NQ.v.0": ("NQ (Nasdaq-100)", "#eb6834")}
 ALL_UNITS = ("ES.v.0", "NQ.v.0", "ZN.v.0", "equity_average")
 PP_TO_BP = 100  # USMPD surprises are in percentage points; slopes are reported per bp, as on the slides
 GROUP_SHADES = {"small": "#9cc3f0", "medium": "#4a8fdc", "large": "#123e75",
@@ -347,10 +348,10 @@ def main() -> None:
 
     cols5 = ["instrument", "horizon", "n", "beta", "ci_low", "ci_high", "holm_p"]
     print("\nH5 slopes (bp of |move| per bp of |surprise|):")
-    print(slopes5.loc[slopes5["instrument"].isin(UNITS), cols5].round(3).to_string(index=False))
+    print(slopes5.loc[slopes5["instrument"].isin(ALL_UNITS), cols5].round(3).to_string(index=False))
     cols6 = ["instrument", "horizon", "n_hawkish", "n_dovish", "hawk_move_per_bp", "dove_move_per_bp", "p_equal"]
     print("\nH6 slopes (bp per bp of surprise, in the implied direction):")
-    print(slopes6.loc[slopes6["instrument"].isin(UNITS), cols6].round(3).to_string(index=False))
+    print(slopes6.loc[slopes6["instrument"].isin(ALL_UNITS), cols6].round(3).to_string(index=False))
     print("\nWrote 11 figures to figures/paper/ and 4 tables to tables/")
 
 
