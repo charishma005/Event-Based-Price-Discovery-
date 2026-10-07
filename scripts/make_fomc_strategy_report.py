@@ -1,4 +1,7 @@
-"""Steps 17-18: figures and reports/fomc_trading_strategy_results.md.
+"""Steps 17-18: figures and the generated strategy-by-strategy report (output/fomc_strategy_report_generated.md).
+
+The written summary of all trading tests is reports/trading_strategies.md; this script regenerates
+the detailed tables and figures it draws on.
 
 Reads only outputs of build_fomc_strategy_features and run_fomc_strategy_tests. The
 USMPD surprise appears in one clearly separated ex-post section at the end and is
@@ -35,7 +38,7 @@ DATA = PROJECT_ROOT / "data" / "processed" / "fomc_strategy"
 TABLES = PROJECT_ROOT / "tables"
 OUTPUT = PROJECT_ROOT / "output"
 FIG = PROJECT_ROOT / "figures" / "fomc_strategy"
-REPORT = PROJECT_ROOT / "reports" / "fomc_trading_strategy_results.md"
+REPORT = PROJECT_ROOT / "output" / "fomc_strategy_report_generated.md"
 NAMES = {"ES.v.0": "ES", "NQ.v.0": "NQ", "ZN.v.0": "ZN"}
 COLORS = {"ES": "#2a78d6", "NQ": "#eb6834", "ZN": "#1baf7a", "portfolio": "#555555"}
 
@@ -406,7 +409,7 @@ def report(s, params, t):
                       "but the holdout out-of-sample R2 is <= 0 by 30-60 s; see figure 13."))
     q.append((17, "Strongest hypothesis for further research: the first entry of the SUPPORTED list above if any; "
                   "otherwise the specification with the most consistent development/holdout sign in the regressions. "
-                  "See the Interpretation section below."))
+                  "See reports/trading_strategies.md for the interpretation."))
     current = None
     for number, text in sorted(q, key=lambda item: item[0]):     # stable: ES, NQ, ZN within each question
         if number != current:
@@ -414,9 +417,6 @@ def report(s, params, t):
             current = number
         lines.append(f"- {text}")
 
-    interpretation = REPORT.with_name("fomc_trading_strategy_interpretation.md")
-    if interpretation.exists():         # written by hand after reviewing the tables; kept across reruns
-        lines += ["", interpretation.read_text(encoding="utf-8").rstrip()]
     lines += ["", "## Strategy details", ""]
     for x in registry():
         insts = _labels(x)

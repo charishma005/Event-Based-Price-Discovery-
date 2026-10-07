@@ -1,4 +1,4 @@
-"""Follow-up ideas 1, 3, 4 and 5 (pre-registered in reports/followup_ideas_registry.md).
+"""Follow-up ideas 1, 3, 4 and 5 (specification: reports/trading_strategies.md, appendix A).
 
 Reads data/processed/tick_features/events.parquet and writes tables/followup_*.csv. Thresholds,
 z-score moments and prediction coefficients come from development events (before 2023) only.

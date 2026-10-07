@@ -36,7 +36,7 @@ development and holdout, at least 3 holdout trades, full-sample event-bootstrap 
 WEAK EVIDENCE = positive in both but not all of the rest; NOT SUPPORTED otherwise.
 
 Disclosure: the 0 -> 5 minute press-conference return was already compared with the statement move
-in reports/followup_ideas_results.md (idea 3, no relation). The longer windows here are new.
+in reports/trading_strategies.md (section 4, no relation). The longer windows here are new.
 
 Run: python -m scripts.analyze_statement_vs_pc
 Writes tables/statement_pc_correlations.csv, tables/statement_pc_strategies.csv,
