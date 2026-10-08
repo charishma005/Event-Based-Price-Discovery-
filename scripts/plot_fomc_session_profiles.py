@@ -1,8 +1,8 @@
 """Full-session depth and spread profiles around FOMC statements, from the one-second session panel.
 
 Extends figures/paper/figure_fomc_depth_profile_minute.png (scripts/plot_fomc_depth_profile.py),
-which covers -5 to +40 minutes with controls only to +10, to the whole session panel: -30 to +120
-minutes for FOMC days and matched control days alike.
+which covers -5 to +40 minutes with controls only to +10, to +120 minutes for FOMC days and matched
+control days alike, keeping the same depth definition.
 
 Input: data/processed/fomc_sessions/panel.parquet (scripts/extract_session_panels.py; one-second
 best bid/ask and sizes on the vendor's bbo-1s sampling) and data/events/fomc_session_windows.csv.
@@ -11,9 +11,8 @@ Method
 - Touch depth = best-bid size + best-ask size; spread in ticks. Invalid seconds are dropped and the
   last valid quote is carried forward, so each second holds the book in force at that second.
 - Each minute gets the median of its 60 seconds (minute m covers [m, m+1) minutes from 2:00 p.m.).
-- Depth: each session and instrument is divided by its own mean over the baseline minutes. The default
-  baseline is minutes -30 to -16, well before the pre-statement withdrawal; the H4-style baseline
-  (minutes -5 to -2) is drawn as a second version for comparison with the old figure.
+- Depth: each session and instrument is divided by its own mean over minutes -5 to -2 (i.e. -5:00 to
+  -1:00), the same baseline as the original figure and the H4 ratio. Plotted from -5 to +120 minutes.
 - Spread is shown in absolute ticks: the mean over each minute's seconds, then the mean across
   sessions (spreads are whole ticks, so medians are almost always exactly one tick).
 - Depth lines show the cross-session median per minute and the 25-75% band, by group:
@@ -43,7 +42,8 @@ FIG = PROJECT_ROOT / "figures" / "fomc_session_profiles"
 TABLE = PROJECT_ROOT / "tables" / "fomc_session_profiles.csv"
 INSTRUMENTS = ("ES.v.0", "NQ.v.0", "ZN.v.0")
 NAMES = {"ES.v.0": "ES", "NQ.v.0": "NQ", "ZN.v.0": "ZN"}
-BASELINES = {"quiet": (-30, -16), "h4": (-5, -2)}
+BASELINES = {"h4": (-5, -2)}
+X_START = -5
 GROUPS = {"fomc_pc": ("FOMC with press conference", "#2a5ea8"),
           "fomc_no_pc": ("FOMC, no press conference (2015-2018)", "#b04a2e"),
           "control": ("matched normal days", "#808080")}
@@ -101,7 +101,7 @@ def summary(n: pd.DataFrame, baseline_name: str) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-DEPTH_YMAX = 1.6
+DEPTH_YMAX = 3.0
 SETTLEMENTS = ((60, "3:00 p.m. ZN settlement"), (119.5, "4:00 p.m. equity close"))
 
 
@@ -126,8 +126,9 @@ def plot(s: pd.DataFrame, measure: str, baseline_name: str) -> None:
                 ax.fill_between(x, d["q25"], d["q75"], color=color, alpha=0.15, lw=0)
             if depth:
                 over = d.loc[d[stat] > DEPTH_YMAX]
-                for minute, value in zip(over["minute"], over[stat]):
-                    ax.annotate(f"{value:.1f}", (minute + 0.5, DEPTH_YMAX), xytext=(0, -10),
+                if len(over):                         # label only the highest off-scale point per line
+                    top = over.loc[over[stat].idxmax()]
+                    ax.annotate(f"max {top[stat]:.1f}", (top["minute"] + 0.5, DEPTH_YMAX), xytext=(0, -10),
                                 textcoords="offset points", ha="center", fontsize=7, color=color)
         if depth:
             ax.axvspan(lo, hi + 1, color="#f0e6c8", alpha=0.6, lw=0)
@@ -141,23 +142,23 @@ def plot(s: pd.DataFrame, measure: str, baseline_name: str) -> None:
             ax.text(t - 1, 0.97, text, transform=ax.get_xaxis_transform(), fontsize=7, color="#666666",
                     rotation=90, ha="right", va="top")
         ax.set_title(inst)
-        ax.set_xlim(-30, 120)
+        ax.set_xlim(X_START, 120)
         ax.set_xlabel("Minutes from 2:00 p.m. (FOMC statement)")
         ax.spines[["top", "right"]].set_visible(False)
     if depth:
         axes[0].set_ylabel(f"Median touch depth\n(relative to minutes {lo} to {hi + 1}, shaded)")
-        title = (f"Touch depth from -30 to +120 minutes, minute by minute (median and 25-75% band; "
-                 f"values above {DEPTH_YMAX} printed at the top)")
+        title = (f"Touch depth around FOMC statements, -5 to +120 minutes, minute by minute "
+                 f"(median and 25-75% band; axis capped at {DEPTH_YMAX:g})")
     else:
         axes[0].set_ylabel("Mean quoted spread (ticks)")
-        title = "Quoted spread from -30 to +120 minutes, minute by minute (mean across sessions)"
+        title = "Quoted spread around FOMC statements, -5 to +120 minutes, minute by minute (mean across sessions)"
     order = [g for g in ("fomc_pc", "fomc_no_pc", "control") if g in handles]
     fig.legend([handles[g][0] for g in order], [handles[g][1] for g in order], loc="lower center", ncol=3,
                frameon=False, fontsize=9)
     fig.suptitle(title)
     fig.tight_layout(rect=(0, 0.06, 1, 1))
     FIG.mkdir(parents=True, exist_ok=True)
-    name = f"depth_profile_baseline_{baseline_name}.png" if depth else "spread_profile.png"
+    name = "depth_profile.png" if depth else "spread_profile.png"
     fig.savefig(FIG / name, dpi=160)
     plt.close(fig)
 
@@ -171,13 +172,13 @@ def main() -> None:
         s = summary(normalized(m, baseline), name)
         out.append(s)
         plot(s, "depth_ratio", name)
-    plot(out[0], "spread_ticks", "quiet")            # spread is in absolute ticks: baseline-free
+    plot(out[0], "spread_ticks", "h4")               # spread is in absolute ticks: baseline-free
     table = pd.concat(out, ignore_index=True)
     TABLE.parent.mkdir(exist_ok=True)
     table.to_csv(TABLE, index=False)
-    key = table.loc[table["baseline"].eq("quiet") & table["measure"].eq("depth_ratio")
-                    & table["minute"].isin([-10, -5, -1, 0, 1, 5, 10, 25, 30, 45, 60, 90, 119])]
-    print("\nMedian depth ratio (quiet baseline, minutes -30 to -16):\n"
+    key = table.loc[table["measure"].eq("depth_ratio")
+                    & table["minute"].isin([-5, -1, 0, 1, 5, 10, 20, 30, 45, 60, 90, 119])]
+    print("\nMedian depth ratio (relative to minutes -5 to -1):\n"
           + key.pivot_table(index=["group", "instrument"], columns="minute", values="median").round(2).to_string())
     print(f"\nWrote {TABLE.relative_to(PROJECT_ROOT)} and figures in {FIG.relative_to(PROJECT_ROOT)}")
 
