@@ -6,7 +6,7 @@ figures in `figures/`.
 
 ## Bottom line
 
-- **No strategy survived.** About 50 pre-specified trading rules were tested. None was profitable
+- **No strategy survived.** About 65 pre-specified trading rules were tested. None was profitable
   after bid/ask costs in both 2015-2022 (development) and 2023-2026 (holdout) with a confidence
   interval above zero.
 - **Direction is not predictable** from price or order-book data after FOMC statements, press
@@ -14,6 +14,9 @@ figures in `figures/`.
 - **Size is predictable.** A wider spread (and, in ZN, a thinner book) just before the news means a
   bigger move. This holds out of sample for macro releases. It is a volatility and position-sizing
   result, not a direction signal.
+- **ES and NQ are almost perfectly in step at one second.** There is no lead long enough to trade,
+  and the hedged spread's mean reversion (about +0.05 bp) is far smaller than the cost of four bid/ask
+  crossings (about 0.6 bp).
 - **Several 2015-2022 patterns faded after 2023:** stressed NQ moves reversing, the press conference
   reversing the statement, and ZN leading ES and NQ in the first seconds.
 - **The one lead worth retesting on new events:** a large FOMC move in NQ made while the book is still
@@ -29,6 +32,7 @@ figures in `figures/`.
 | 6. ZN leads ES/NQ in the first seconds | regression | no | Strong before 2023, gone since |
 | 7. H5 with the order book instead of the surprise | regression | size yes, direction no | Book adds a little to the surprise for size; nothing for sign |
 | 8. Statement vs full press conference | 7 | 0 | Every rule flips sign after 2022 |
+| 9. ES/NQ lead-lag and pairs trading (one-second) | 5 rules x 3 groups x 5 periods | 0 | Spread barely mean-reverts; costs win every time |
 
 ## How every test was run
 
@@ -226,6 +230,46 @@ direction cannot be read from the statement window.
 ![Statement vs press conference](../figures/statement_pc/statement_vs_pc_scatter.png)
 
 ![Window correlations](../figures/statement_pc/window_correlations.png)
+
+## 9. ES/NQ lead-lag and pairs trading (one-second session panel)
+
+Script: `scripts/analyze_es_nq_pairs.py` (specification in its docstring, written before the run).
+Tables: `tables/es_nq_*.csv`. Same session panel as section 8: 75 meetings with a press conference
+(47 / 28), 16 without one, 174 control days.
+
+**Lead-lag.** ES and NQ move together within the same second: the same-second correlation of
+one-second returns is 0.70 on control days and 0.85-0.90 on FOMC days, and has risen to 0.94-0.95
+since 2023. Correlations one second apart are about 0.02 in every period and group. The only visible
+lead appears in the first five minutes after a statement in 2015-2022 (about 0.05-0.09, in both
+directions, which points to stale quotes rather than one market leading). It is gone in 2023-2026.
+
+In regressions, last second's NQ return predicts next second's ES return (+0.19 on control days,
+p < 0.001, holdout out-of-sample R2 1.2%). ES's lag predicts NQ much less (+0.03 to +0.08). ES has
+a large tick, so its midpoint updates in jumps and lags NQ's finer-grained price by a second or so.
+The out-of-sample R2 on FOMC days is below 0.1%, and the effect fades by 5-30 s.
+
+**Strategies** (executable bp per session, all phases after 0; s = sessions, t = trades):
+
+| Rule | FOMC with press conference, dev / holdout | Control days, dev / holdout | Mid-price gross (FOMC) | Verdict |
+|---|---|---|---|---|
+| Pairs: 60 s signal, 5 min hold | -0.73 / -0.37 (1,532 trades) | -0.57 / -0.43 | +0.05 | NOT SUPPORTED |
+| Pairs: 30 s signal, 1 min hold | -0.69 / -0.46 (6,306 trades) | -0.62 / -0.35 | +0.03 | NOT SUPPORTED |
+| Pairs: 5 min signal, 15 min hold | -0.72 / -0.47 (485 trades) | -0.28 / -0.48 | +0.07 | NOT SUPPORTED |
+| Lead-lag: big ES 5 s move, buy/sell NQ, 5 s hold | -0.73 / -1.44 | -0.80 / -0.90 | -0.15 | NOT SUPPORTED |
+| Lead-lag: same, 30 s hold | -0.17 / -0.61 | -0.31 / -1.22 | +0.42 | NOT SUPPORTED |
+
+- The hedged ES/NQ spread does mean-revert, but by only +0.03 to +0.25 bp at the mid. Four
+  crossings of the bid/ask cost about 0.6 bp, so every configuration loses, on FOMC days and on
+  ordinary days alike.
+- By the time an order fills one second later, NQ has already caught up with a big ES move.
+- 3 of 60 rule x group x period cells are WEAK EVIDENCE: for example the 5-minute pairs rule entered
+  between +5 and +30 min (+0.51 / +0.45 bp, p = 0.37). That is about what chance gives.
+- Making this work would need passive (limit-order) execution, which would save most of the 0.6 bp,
+  and a queue-position model to simulate fills. That is outside what this data can test.
+
+![ES-NQ cross-correlation](../figures/es_nq/es_nq_cross_correlation.png)
+
+![ES-NQ strategy returns](../figures/es_nq/es_nq_strategy_returns.png)
 
 ---
 
