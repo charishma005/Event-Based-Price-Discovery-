@@ -44,11 +44,14 @@ information.
 | 60 s exit | -6.1 bp |
 
 Kill criterion met. The loss is concentrated in CPI (-11.9 bp, t = -3.1 over 96 trades in
-2015-2023) and in 2022 (-35.7 bp), and it is a sign error rather than noise: on those mornings ES
-moved with ZN, not against it (hot inflation, yields up, equities down). The pre-declared mapping
-"yields up, equities down" holds only for the growth releases in the 2015-2019 regime, where the
-leg is flat. A sign learned per release type, as in the first backtest, would flip CPI; that is a
-post-hoc change and is not claimed here.
+2015-2023) and in 2022 (-35.7 bp), and it is a sign error rather than noise. The rule traded ES
+opposite to the ZN price move (bond price down, buy stocks), which is the growth-news regime where
+stock and bond prices move against each other. On release mornings that regime ended around 2018:
+the correlation between the five-minute ES and ZN price moves is -0.28 in 2015-2017, +0.14 in
+2018-2019, +0.77 in 2020-2023 and +0.50 in 2024-2026, and on CPI mornings it is +0.39 even in
+2015-2017 and +0.90 in 2020-2023 (hot inflation: yields up and equities down together). A sign
+learned per release type and period, as in the first backtest, would flip it; that is a post-hoc
+change and is not claimed here.
 
 ## 3. Own-asset legs (`tables/strategy_trigger_summary_300s.csv`, `_60s`, `_30s`)
 
