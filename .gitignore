@@ -47,6 +47,7 @@ data/processed/fomc_sample_2015_2026/*
 !figures/es_nq/
 !figures/fomc_session_profiles/
 !figures/audit_p2_p3/
+!figures/liquidity_quintiles/
 
 # Per-event measures behind the Q1 and macro-extension tables (summary statistics, no vendor records).
 !data/processed/tick_features/
