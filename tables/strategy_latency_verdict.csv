@@ -1,0 +1,2 @@
+primary,n,mean_net_bp,t_net,hit_rate,dev_mean_net_bp,dev_n,placebo,placebo_n,placebo_mean_net_bp,placebo_t,mean_net_500ms,mean_net_2s,years_positive,years,threshold_met,gate_latencies,gate_years,gate_placebo,supported_as_predeclared
+ZN.v.0 clock L=1s oos_backward,281.0,9.965736894093672,8.037272582234909,0.6725978647686833,19.298395552271845,74.0,"matched control days (replaces the pseudo clock, whose 300 s exit straddles the release)",81.0,-1.5312110605760831,-3.453057001696878,10.237837279829188,1.7943977737217267,9,9,True,True,True,False,False
