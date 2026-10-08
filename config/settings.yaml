@@ -12,8 +12,10 @@ event_windows:
 
 cost_control:
   # Downloads always require --execute as well. These are additional tripwires.
-  max_auto_cost_usd: 1.00
-  max_auto_billable_bytes: 250000000
+  # Raised for the one-off FOMC MBP-10 full-book download (93 meetings x 3
+  # instruments, ~$1.23 / ~2.4 GiB per 120-minute window, ~$114 total).
+  max_auto_cost_usd: 3.00
+  max_auto_billable_bytes: 4000000000
   never_overwrite_raw: true
 
 news:
