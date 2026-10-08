@@ -11,10 +11,12 @@ Method
 - Touch depth = best-bid size + best-ask size; spread in ticks. Invalid seconds are dropped and the
   last valid quote is carried forward, so each second holds the book in force at that second.
 - Each minute gets the median of its 60 seconds (minute m covers [m, m+1) minutes from 2:00 p.m.).
-- Each session and instrument is divided by its own mean over the baseline minutes. The default
+- Depth: each session and instrument is divided by its own mean over the baseline minutes. The default
   baseline is minutes -30 to -16, well before the pre-statement withdrawal; the H4-style baseline
   (minutes -5 to -2) is drawn as a second version for comparison with the old figure.
-- Lines show the cross-session median per minute and the 25-75% band, by group:
+- Spread is shown in absolute ticks: the mean over each minute's seconds, then the mean across
+  sessions (spreads are whole ticks, so medians are almost always exactly one tick).
+- Depth lines show the cross-session median per minute and the 25-75% band, by group:
     fomc_pc     statements followed by a press conference
     fomc_no_pc  statement-only meetings (2015-2018)
     control     matched control days at the same clock
@@ -69,7 +71,8 @@ def minute_medians(meta: pd.DataFrame) -> pd.DataFrame:
     p[["depth", "spread_ticks"]] = p.groupby(["event_id", "instrument"])[["depth", "spread_ticks"]].ffill()
     p["minute"] = np.floor(p["seconds"] / 60).astype(int)
     p = p.loc[p["minute"].between(-30, 119)]          # minute 120 would hold a single second
-    m = p.groupby(["event_id", "instrument", "minute"])[["depth", "spread_ticks"]].median().reset_index()
+    g = p.groupby(["event_id", "instrument", "minute"])
+    m = g["depth"].median().to_frame().join(g["spread_ticks"].mean()).reset_index()
     return m.join(meta, on="event_id")
 
 
@@ -85,20 +88,31 @@ def normalized(m: pd.DataFrame, baseline: tuple[int, int]) -> pd.DataFrame:
 def summary(n: pd.DataFrame, baseline_name: str) -> pd.DataFrame:
     rows = []
     for (group, inst, minute), g in n.groupby(["group", "instrument", "minute"]):
-        for measure in ("depth_ratio", "spread_ratio"):
-            v = g[measure].replace([np.inf, -np.inf], np.nan).dropna()
-            if len(v) < 5:
-                continue
+        v = g["depth_ratio"].replace([np.inf, -np.inf], np.nan).dropna()
+        if len(v) >= 5:
             rows.append({"baseline": baseline_name, "group": group, "instrument": NAMES[inst], "minute": minute,
-                         "measure": measure, "median": v.median(), "q25": v.quantile(0.25), "q75": v.quantile(0.75),
-                         "N_sessions": len(v)})
+                         "measure": "depth_ratio", "median": v.median(), "q25": v.quantile(0.25),
+                         "q75": v.quantile(0.75), "mean": v.mean(), "N_sessions": len(v)})
+        w = g["spread_ticks"].dropna()
+        if len(w) >= 5:
+            rows.append({"baseline": baseline_name, "group": group, "instrument": NAMES[inst], "minute": minute,
+                         "measure": "spread_ticks", "median": w.median(), "q25": w.quantile(0.25),
+                         "q75": w.quantile(0.75), "mean": w.mean(), "N_sessions": len(w)})
     return pd.DataFrame(rows)
 
 
+DEPTH_YMAX = 1.6
+SETTLEMENTS = ((60, "3:00 p.m. ZN settlement"), (119.5, "4:00 p.m. equity close"))
+
+
 def plot(s: pd.DataFrame, measure: str, baseline_name: str) -> None:
+    """Depth: median ratio to the baseline with 25-75% band. Spread: mean quoted spread in ticks
+    (spreads are whole ticks, so the median is almost always exactly one tick and hides widening)."""
     lo, hi = BASELINES[baseline_name]
-    label = {"depth_ratio": "touch depth", "spread_ratio": "quoted spread (ticks)"}[measure]
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5), sharey=measure == "depth_ratio")
+    depth = measure == "depth_ratio"
+    stat = "median" if depth else "mean"
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5.4), sharey=depth)
+    handles = {}
     for ax, inst in zip(axes, ("ES", "NQ", "ZN")):
         for group in ("control", "fomc_no_pc", "fomc_pc"):
             d = s.loc[s["measure"].eq(measure) & s["group"].eq(group) & s["instrument"].eq(inst)].sort_values("minute")
@@ -106,25 +120,45 @@ def plot(s: pd.DataFrame, measure: str, baseline_name: str) -> None:
                 continue
             name, color = GROUPS[group]
             x = d["minute"] + 0.5
-            ax.plot(x, d["median"], color=color, lw=1.8 if group == "fomc_pc" else 1.3,
-                    label=f"{name} (n={int(d['N_sessions'].max())})")
-            if group != "fomc_no_pc":
+            (line,) = ax.plot(x, d[stat], color=color, lw=1.8 if group == "fomc_pc" else 1.3)
+            handles[group] = (line, f"{name}, n = {int(d['N_sessions'].max())}")
+            if depth and group != "fomc_no_pc":
                 ax.fill_between(x, d["q25"], d["q75"], color=color, alpha=0.15, lw=0)
-        ax.axvspan(lo, hi + 1, color="#f0e6c8", alpha=0.5, lw=0)
+            if depth:
+                over = d.loc[d[stat] > DEPTH_YMAX]
+                for minute, value in zip(over["minute"], over[stat]):
+                    ax.annotate(f"{value:.1f}", (minute + 0.5, DEPTH_YMAX), xytext=(0, -10),
+                                textcoords="offset points", ha="center", fontsize=7, color=color)
+        if depth:
+            ax.axvspan(lo, hi + 1, color="#f0e6c8", alpha=0.6, lw=0)
+            ax.set_ylim(0, DEPTH_YMAX)
+            ax.axhline(1, color="black", lw=0.5, ls=":")
         for t, text, ls in ((0, "statement", "--"), (30, "press conf.", "-."), (90, "about end of PC", ":")):
             ax.axvline(t, color="black", ls=ls, lw=0.9)
             ax.text(t + 1, 0.02, text, transform=ax.get_xaxis_transform(), fontsize=8)
-        ax.axhline(1, color="black", lw=0.5, ls=":")
+        for t, text in SETTLEMENTS:
+            ax.axvline(t, color="#9a9a9a", lw=0.7, ls=(0, (1, 2)))
+            ax.text(t - 1, 0.97, text, transform=ax.get_xaxis_transform(), fontsize=7, color="#666666",
+                    rotation=90, ha="right", va="top")
         ax.set_title(inst)
         ax.set_xlim(-30, 120)
         ax.set_xlabel("Minutes from 2:00 p.m. (FOMC statement)")
         ax.spines[["top", "right"]].set_visible(False)
-    axes[0].set_ylabel(f"Median {label}\n(relative to minutes {lo} to {hi + 1}, shaded)")
-    axes[0].legend(frameon=False, fontsize=8, loc="upper right")
-    fig.suptitle(f"{label.capitalize()} from -30 to +120 minutes, minute by minute (median and 25-75% band)")
-    fig.tight_layout()
+    if depth:
+        axes[0].set_ylabel(f"Median touch depth\n(relative to minutes {lo} to {hi + 1}, shaded)")
+        title = (f"Touch depth from -30 to +120 minutes, minute by minute (median and 25-75% band; "
+                 f"values above {DEPTH_YMAX} printed at the top)")
+    else:
+        axes[0].set_ylabel("Mean quoted spread (ticks)")
+        title = "Quoted spread from -30 to +120 minutes, minute by minute (mean across sessions)"
+    order = [g for g in ("fomc_pc", "fomc_no_pc", "control") if g in handles]
+    fig.legend([handles[g][0] for g in order], [handles[g][1] for g in order], loc="lower center", ncol=3,
+               frameon=False, fontsize=9)
+    fig.suptitle(title)
+    fig.tight_layout(rect=(0, 0.06, 1, 1))
     FIG.mkdir(parents=True, exist_ok=True)
-    fig.savefig(FIG / f"{measure.replace('_ratio', '')}_profile_baseline_{baseline_name}.png", dpi=160)
+    name = f"depth_profile_baseline_{baseline_name}.png" if depth else "spread_profile.png"
+    fig.savefig(FIG / name, dpi=160)
     plt.close(fig)
 
 
@@ -136,8 +170,8 @@ def main() -> None:
     for name, baseline in BASELINES.items():
         s = summary(normalized(m, baseline), name)
         out.append(s)
-        for measure in ("depth_ratio", "spread_ratio"):
-            plot(s, measure, name)
+        plot(s, "depth_ratio", name)
+    plot(out[0], "spread_ticks", "quiet")            # spread is in absolute ticks: baseline-free
     table = pd.concat(out, ignore_index=True)
     TABLE.parent.mkdir(exist_ok=True)
     table.to_csv(TABLE, index=False)
