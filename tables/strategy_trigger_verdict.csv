@@ -1,0 +1,2 @@
+primary,n,mean_net_bp,t_net,hit_rate,dev_n,dev_mean_net_bp,control_n,control_mean_gross_bp,control_t_gross,years_positive,years,mean_net_ex2022,mean_net_60s,threshold_met,gate_years,gate_ex2022,gate_60s,supported
+"ZN trigger -> ES, macro, 2015-2023, 300 s",294.0,-6.339171843348892,-3.6730519990416095,0.3843537414965986,76.0,-0.7135110355811891,52.0,-0.06991548815708609,-0.06686662260216343,2,9,-3.131651206145871,-6.122666695969857,False,False,False,False,False
